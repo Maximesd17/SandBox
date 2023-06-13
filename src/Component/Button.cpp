@@ -8,13 +8,13 @@
 #include "Button.hpp"
 #include <SFML/Window/Mouse.hpp>
 
-MySandBox::Components::Button::Button(std::string text, sf::Vector2i pos, sf::Vector2f size,
+MySandBox::Component::Button::Button(std::string text, sf::Vector2i pos, sf::Vector2f size,
     sf::Vector2u window_origin_size):
-    _state(MySandBox::Components::IDLE), _window_origin_size(window_origin_size)
+    _state(MySandBox::Component::IDLE), _window_origin_size(window_origin_size)
 {
     _rect.setPosition(pos.x, pos.y);
     _rect.setSize(size);
-    _font.loadFromFile("ressources/fonts/button.ttf");
+    _font.loadFromFile("resources/fonts/button.ttf");
     _text.setFont(_font);
     _text.setString(text);
     _text.setCharacterSize(size.y / 2);
@@ -26,11 +26,11 @@ MySandBox::Components::Button::Button(std::string text, sf::Vector2i pos, sf::Ve
     _colors[CLICKED] = sf::Color::Red;
 }
 
-MySandBox::Components::Button::~Button()
+MySandBox::Component::Button::~Button()
 {
 };
 
-bool MySandBox::Components::Button::isHovered(sf::Vector2i mouse_pos, sf::Vector2u window_size)
+bool MySandBox::Component::Button::isHovered(sf::Vector2i mouse_pos, sf::Vector2u window_size)
 {
     sf::Vector2f pos = _rect.getPosition();
     sf::Vector2f size = _rect.getSize();
@@ -44,7 +44,7 @@ bool MySandBox::Components::Button::isHovered(sf::Vector2i mouse_pos, sf::Vector
     return false;
 }
 
-bool MySandBox::Components::Button::check(sf::RenderWindow &window)
+bool MySandBox::Component::Button::check(sf::RenderWindow &window)
 {
     sf::Vector2i mouse_pos = sf::Mouse::getPosition(window);
 
@@ -63,7 +63,7 @@ bool MySandBox::Components::Button::check(sf::RenderWindow &window)
     return false;
 }
 
-void MySandBox::Components::Button::display(sf::RenderWindow &window)
+void MySandBox::Component::Button::display(sf::RenderWindow &window)
 {
     _rect.setFillColor(_colors[_state]);
     window.draw(_rect);

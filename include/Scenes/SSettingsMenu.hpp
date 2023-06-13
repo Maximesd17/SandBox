@@ -19,7 +19,7 @@ namespace MySandBox {
                 void display();
             protected:
             private:
-                MySandBox::Components::Button _return_button;
+                MySandBox::Component::Button _return_button;
         };
     };
 };

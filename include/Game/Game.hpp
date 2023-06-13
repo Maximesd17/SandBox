@@ -9,6 +9,8 @@
 #include <SFML/Graphics.hpp>
 #include <memory>
 
+#include "Player.hpp"
+
 namespace MySandBox {
     enum Sprite {
         NONE,
@@ -35,6 +37,7 @@ namespace MySandBox {
             sf::Sprite _s_wall;
             std::vector<sf::Sprite> _s_player;
             std::vector<sf::Sprite> _sprites;
+            MySandBox::Component::Player _player;
 
     };
 };

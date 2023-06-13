@@ -20,9 +20,9 @@ namespace MySandBox {
                 void display();
             protected:
             private:
-                MySandBox::Components::Button _play_button;
-                MySandBox::Components::Button _settings_button;
-                MySandBox::Components::Button _exit_button;
+                MySandBox::Component::Button _play_button;
+                MySandBox::Component::Button _settings_button;
+                MySandBox::Component::Button _exit_button;
                 std::string _map_path;
         };
     };

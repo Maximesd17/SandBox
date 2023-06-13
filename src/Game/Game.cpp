@@ -8,6 +8,7 @@
 #include "Game.hpp"
 #include <fstream>
 #include <iostream>
+#include <memory>
 
 MySandBox::Game::Game(sf::RenderWindow &window) : _window(window)
 {
@@ -26,12 +27,14 @@ void MySandBox::Game::reset()
 {
     std::string line;
 
-    _t_wall.loadFromFile("ressources/textures.png", sf::IntRect(0, 0, 64, 64));
+    _t_wall.loadFromFile("resources/textures.png", sf::IntRect(0, 0, 64, 64));
     for (size_t i = 0; i < 3; ++i)
     {
-        _t_player.push_back(sf::Texture());
-        _t_player[i].loadFromFile("ressources/player.png", sf::IntRect(i * 40, 0, 40, 58));
+        sf::Texture texture;
+        texture.loadFromFile("resources/player.png", sf::IntRect(i * 40, 0, 40, 58));
+        _t_player.push_back(texture);
     }
+    _player.setPlayerSprites(_t_player);
     _s_wall.setTexture(_t_wall);
 }
 

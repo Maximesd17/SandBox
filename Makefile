@@ -8,7 +8,7 @@
 SRC_DIR 	= 	src
 GAME_DIR 	= 	src/Game
 SCENES_DIR 	= 	src/Scenes
-COMPONENTS_DIR 	= 	src/Components
+COMPONENTS_DIR 	= 	src/Component
 
 SRC			=	${SRC_DIR}/main.cpp
 SRC			+=	${SRC_DIR}/SandBox.cpp
@@ -25,7 +25,7 @@ SRC			+=	${COMPONENTS_DIR}/Button.cpp
 INCLUDES	=	-iquote ./include
 INCLUDES	+=	-iquote ./include/Game
 INCLUDES	+=	-iquote ./include/Scenes
-INCLUDES	+=	-iquote ./include/Components
+INCLUDES	+=	-iquote ./include/Component
 
 CXX 		= 	g++
 
