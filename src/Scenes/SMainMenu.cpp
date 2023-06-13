@@ -28,7 +28,6 @@ void MySandBox::Scenes::SMainMenu::update()
 
     if (_play_button.check(window)) {
         _state.setScene(MySandBox::Scenes::GAME);
-        _game.setMapPath(_map_path);
         _game.reset();
     }
     if (_settings_button.check(window))

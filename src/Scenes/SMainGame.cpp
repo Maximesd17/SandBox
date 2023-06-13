@@ -18,7 +18,6 @@ MySandBox::Scenes::SMainGame::~SMainGame()
 
 void MySandBox::Scenes::SMainGame::update()
 {
-    
 }
 
 void MySandBox::Scenes::SMainGame::display()

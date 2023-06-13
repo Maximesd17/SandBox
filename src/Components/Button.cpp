@@ -14,7 +14,7 @@ MySandBox::Components::Button::Button(std::string text, sf::Vector2i pos, sf::Ve
 {
     _rect.setPosition(pos.x, pos.y);
     _rect.setSize(size);
-    _font.loadFromFile("ressouces/fonts/button.ttf");
+    _font.loadFromFile("ressources/fonts/button.ttf");
     _text.setFont(_font);
     _text.setString(text);
     _text.setCharacterSize(size.y / 2);
