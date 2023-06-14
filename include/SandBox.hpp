@@ -18,9 +18,12 @@ namespace MySandBox {
             SandBox();
             ~SandBox();
             int loop();
+            bool checkElapsedTime();
         protected:
         private:
+            int _framerate;
             sf::RenderWindow _window;
+            sf::Clock _deltaTime;
             std::map<MySandBox::Scenes::Type, std::shared_ptr<MySandBox::Scenes::IScene> > _scenes;
             MySandBox::Game _game;
             MySandBox::State _state;

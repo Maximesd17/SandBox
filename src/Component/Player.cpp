@@ -6,6 +6,7 @@
 */
 
 #include "Player.hpp"
+#include <math.h>
 
 MySandBox::Component::Player::Player()
 {
@@ -21,12 +22,14 @@ MySandBox::Component::Player::~Player()
 {
 }
 
-void MySandBox::Component::Player::setPlayerSprites(std::vector<sf::Texture> textures)
+void MySandBox::Component::Player::setPlayerSprites(std::vector<sf::Texture> &textures)
 {
-    for (auto &texture : textures) {
-        sf::Sprite sprite;
-        sprite.setTexture(texture);
-        _sprites.push_back(sprite);
+    _sprites.clear();
+
+    for (size_t i = 0; i < textures.size(); i++)
+    {
+        _sprites.push_back(sf::Sprite());
+        _sprites[i].setTexture(textures[i]);
     }
 }
 
@@ -34,6 +37,16 @@ void MySandBox::Component::Player::update()
 {
 }
 
-void MySandBox::Component::Player::display()
+void MySandBox::Component::Player::display(sf::RenderWindow &window)
 {
+    size_t computed_index = floor(_sprite_index / 25);
+
+    if (computed_index >= _sprites.size()) {
+        _sprite_index = 0;
+        computed_index = 0;
+    }
+    _sprites[computed_index].setPosition(100, 100);
+    _sprites[computed_index].setScale(3, 3);
+    window.draw(_sprites[computed_index]);
+    _sprite_index++;
 }

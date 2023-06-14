@@ -16,6 +16,7 @@ namespace MySandBox {
             public:
                 SGame(MySandBox::State &state, MySandBox::Game &game);
                 ~SGame();
+                bool events() override;
                 void update();
                 void display();
             protected:

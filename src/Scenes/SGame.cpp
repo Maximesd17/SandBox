@@ -21,6 +21,21 @@ MySandBox::Scenes::SGame::~SGame()
 {
 }
 
+
+bool MySandBox::Scenes::SGame::events()
+{
+    sf::Event Event;
+    sf::RenderWindow &window = _game.getWindow();
+
+    while (window.pollEvent(Event)) {
+        if (Event.type == sf::Event::Closed) {
+            window.close();
+            return true;
+        }
+    }
+    return false;
+}
+
 void MySandBox::Scenes::SGame::update()
 {
     _scenes[_state.getSubScene()]->update();
@@ -29,5 +44,6 @@ void MySandBox::Scenes::SGame::update()
 void MySandBox::Scenes::SGame::display()
 {
     _game.displayMap();
+    _game.displayPlayer();
     _scenes[_state.getSubScene()]->display();
 }

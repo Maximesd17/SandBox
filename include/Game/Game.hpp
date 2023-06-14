@@ -26,6 +26,7 @@ namespace MySandBox {
             void init();
             void reset();
             void displayMap();
+            void displayPlayer();
             sf::RenderWindow &getWindow() const;
             sf::Vector2u getWindowOriginSize() const;
         protected:
@@ -35,8 +36,6 @@ namespace MySandBox {
             sf::Texture _t_wall;
             std::vector<sf::Texture> _t_player;
             sf::Sprite _s_wall;
-            std::vector<sf::Sprite> _s_player;
-            std::vector<sf::Sprite> _sprites;
             MySandBox::Component::Player _player;
 
     };

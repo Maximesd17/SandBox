@@ -21,6 +21,7 @@ SRC			+=	${SCENES_DIR}/SMainMenu.cpp
 SRC			+=	${SCENES_DIR}/SSettingsMenu.cpp
 SRC			+=	${SCENES_DIR}/SMainGame.cpp
 SRC			+=	${COMPONENTS_DIR}/Button.cpp
+SRC			+=	${COMPONENTS_DIR}/Player.cpp
 
 INCLUDES	=	-iquote ./include
 INCLUDES	+=	-iquote ./include/Game
@@ -29,7 +30,7 @@ INCLUDES	+=	-iquote ./include/Component
 
 CXX 		= 	g++
 
-CXXFLAGS 	= 	${INCLUDES} -W -Wall -Wextra
+CXXFLAGS 	= 	${INCLUDES} -W -Wall -Wextra -std=c++11
 
 LDLIBS 		+=	-lsfml-graphics -lsfml-audio -lsfml-system -lsfml-window
 

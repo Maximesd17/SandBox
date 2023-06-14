@@ -11,6 +11,7 @@
 #include <SFML/Graphics.hpp>
 
 
+
 namespace MySandBox {
     namespace Component {
             enum PlayerState {
@@ -29,15 +30,15 @@ namespace MySandBox {
             public:
                 Player();
                 ~Player();
-                void setPlayerSprites(std::vector<sf::Texture>);
+                void setPlayerSprites(std::vector<sf::Texture>&);
                 void update();
-                void display();
+                void display(sf::RenderWindow&);
             protected:
             private:
                 int _speed;
-                int _gravity;
+                double _gravity;
                 int _jump_height;
-                int _sprite_index;
+                size_t _sprite_index;
                 std::vector<sf::Sprite> _sprites;
                 PlayerState _state;
                 PlayerDirection _direction;
