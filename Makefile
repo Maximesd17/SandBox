@@ -10,20 +10,23 @@ GAME_DIR 	= 	src/Game
 SCENES_DIR 	= 	src/Scenes
 COMPONENTS_DIR 	= 	src/Components
 
-SRC			=	${SRC_DIR}/main.cpp
-SRC			+=	${SRC_DIR}/SandBox.cpp
-SRC			+=	${SRC_DIR}/State.cpp
-SRC			+=	${GAME_DIR}/Game.cpp
-SRC			+=	${GAME_DIR}/Player/KeyboardMoves.cpp
-SRC			+=	${GAME_DIR}/Player/ControllerMoves.cpp
-SRC			+=	${SCENES_DIR}/AScene.cpp
-SRC			+=	${SCENES_DIR}/SGame.cpp
-SRC			+=	${SCENES_DIR}/SMenu.cpp
-SRC			+=	${SCENES_DIR}/SMainMenu.cpp
-SRC			+=	${SCENES_DIR}/SSettingsMenu.cpp
-SRC			+=	${SCENES_DIR}/SMainGame.cpp
-SRC			+=	${COMPONENTS_DIR}/Button.cpp
-SRC			+=	${COMPONENTS_DIR}/Player.cpp
+MAIN		=	${SRC_DIR}/main.cpp	\
+
+SRC			=	${SRC_DIR}/SandBox.cpp	\
+				${SRC_DIR}/State.cpp	\
+				${GAME_DIR}/Game.cpp	\
+				${GAME_DIR}/MapGenerator.cpp	\
+				${SCENES_DIR}/AScene.cpp	\
+				${SCENES_DIR}/SGame.cpp	\
+				${SCENES_DIR}/SMenu.cpp	\
+				${SCENES_DIR}/SMainMenu.cpp	\
+				${SCENES_DIR}/SSettingsMenu.cpp	\
+				${SCENES_DIR}/SMainGame.cpp	\
+				${COMPONENTS_DIR}/Button.cpp	\
+				${COMPONENTS_DIR}/Player.cpp	\
+
+TESTS_DIR	=	tests
+TESTS_SRC	=	${TESTS_DIR}/Game/tests_MapGenerator.cpp
 
 INCLUDES	=	-iquote ./include
 INCLUDES	+=	-iquote ./include/Game
@@ -39,14 +42,15 @@ LDLIBS 		+=	-lsfml-graphics -lsfml-audio -lsfml-system -lsfml-window
 
 NAME 		=	MySandBox
 
+MAIN_OBJ	=	${MAIN:.cpp=.o}
 OBJ			=	${SRC:.cpp=.o}
 
 all: ${NAME}
 
 core:	${NAME}
 
-${NAME}: ${OBJ}
-	${CXX} -o ${NAME} ${OBJ} ${LDFLAGS} ${LDLIBS}
+${NAME}: ${MAIN_OBJ} ${OBJ}
+	${CXX} -o ${NAME} ${MAIN_OBJ} ${OBJ} ${LDFLAGS} ${LDLIBS}
 
 debug: 	CXXFLAGS += -g3
 debug:	re
@@ -58,5 +62,12 @@ fclean: clean
 	$(RM) $(NAME)
 
 re: fclean all
+
+#Can add "--coverage" if we want them in future for gcovr :)
+run_tests: ${OBJ}
+	${CXX} ${OBJ} ${TESTS_SRC} ${LDFLAGS} ${LDLIBS} ${INCLUDES} -lcriterion -o unit_tests
+	-./unit_tests --verbose=0
+	${RM} *.gcno
+	${RM} *.gcda
 
 .PHONY: all debug clean fclean re
