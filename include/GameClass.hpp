@@ -12,7 +12,7 @@
 #include "State.hpp"
 #include "Types.hpp"
 
-namespace SandBox {
+namespace MySandBox {
     class GameClass {
     public:
         GameClass();

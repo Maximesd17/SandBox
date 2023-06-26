@@ -7,7 +7,7 @@
 
 #include "SMainMenu.hpp"
 
-MySandBox::Scenes::SMainMenu::SMainMenu(MySandBox::State &state, MySandBox::Game &game):
+MySandBox::Scenes::SMainMenu::SMainMenu(MySandBox::State &state, MySandBox::Game::Game &game):
     MySandBox::Scenes::AScene(state, game),
     _play_button("Play", sf::Vector2i(800, 450), sf::Vector2f(300, 100),
     _game.getWindowOriginSize()),

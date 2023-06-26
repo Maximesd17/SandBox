@@ -9,7 +9,7 @@
 #include "SMainMenu.hpp"
 #include "SSettingsMenu.hpp"
 
-MySandBox::Scenes::SMenu::SMenu(MySandBox::State &state, MySandBox::Game &game):
+MySandBox::Scenes::SMenu::SMenu(MySandBox::State &state, MySandBox::Game::Game &game):
     MySandBox::Scenes::AScene(state, game)
 {
     _scenes[MySandBox::Scenes::MAIN] = std::make_shared<MySandBox::Scenes::SMainMenu>(_state, _game);

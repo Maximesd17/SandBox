@@ -13,22 +13,28 @@ COMPONENTS_DIR 	= 	src/Components
 SRC			=	${SRC_DIR}/main.cpp
 SRC			+=	${SRC_DIR}/SandBox.cpp
 SRC			+=	${SRC_DIR}/State.cpp
+
 SRC			+=	${GAME_DIR}/Game.cpp
-SRC			+=	${GAME_DIR}/Player/KeyboardMoves.cpp
-SRC			+=	${GAME_DIR}/Player/ControllerMoves.cpp
+SRC			+=	${GAME_DIR}/Player/Player.cpp
+SRC			+=	${GAME_DIR}/Player/Moves/KeyboardMoves.cpp
+SRC			+=	${GAME_DIR}/Player/Moves/ControllerMoves.cpp
+
 SRC			+=	${SCENES_DIR}/AScene.cpp
 SRC			+=	${SCENES_DIR}/SGame.cpp
 SRC			+=	${SCENES_DIR}/SMenu.cpp
 SRC			+=	${SCENES_DIR}/SMainMenu.cpp
 SRC			+=	${SCENES_DIR}/SSettingsMenu.cpp
-SRC			+=	${SCENES_DIR}/SMainGame.cpp
+SRC			+=	${SCENES_DIR}/SubScenes/ASubScene.cpp
+SRC			+=	${SCENES_DIR}/SubScenes/SSMainGame.cpp
+
 SRC			+=	${COMPONENTS_DIR}/Button.cpp
-SRC			+=	${COMPONENTS_DIR}/Player.cpp
 
 INCLUDES	=	-iquote ./include
 INCLUDES	+=	-iquote ./include/Game
 INCLUDES	+=	-iquote ./include/Game/Player
+INCLUDES	+=	-iquote ./include/Game/Player/Moves
 INCLUDES	+=	-iquote ./include/Scenes
+INCLUDES	+=	-iquote ./include/Scenes/SubScenes
 INCLUDES	+=	-iquote ./include/Components
 
 CXX 		= 	g++

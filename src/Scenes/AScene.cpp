@@ -7,7 +7,7 @@
 
 #include "AScene.hpp"
 
-MySandBox::Scenes::AScene::AScene(State &state, Game &game): _state(state), _game(game)
+MySandBox::Scenes::AScene::AScene(State &state, Game::Game &game): _state(state), _game(game)
 {
 }
 

@@ -7,7 +7,7 @@
 
 #include "SSettingsMenu.hpp"
 
-MySandBox::Scenes::SSettingsMenu::SSettingsMenu(MySandBox::State &state, MySandBox::Game &game):
+MySandBox::Scenes::SSettingsMenu::SSettingsMenu(MySandBox::State &state, MySandBox::Game::Game &game):
     MySandBox::Scenes::AScene(state, game),
     _return_button("Return", sf::Vector2i(800, 450), sf::Vector2f(300, 100),
     _game.getWindowOriginSize())

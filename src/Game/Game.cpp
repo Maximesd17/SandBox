@@ -10,20 +10,20 @@
 #include <iostream>
 #include <memory>
 
-MySandBox::Game::Game(sf::RenderWindow& window) : _window(window)
+MySandBox::Game::Game::Game(sf::RenderWindow& window) : _window(window)
 {
 }
 
-MySandBox::Game::~Game()
+MySandBox::Game::Game::~Game()
 {
 }
 
-void MySandBox::Game::init()
+void MySandBox::Game::Game::init()
 {
     _window_origin_size = _window.getSize();
 }
 
-void MySandBox::Game::reset()
+void MySandBox::Game::Game::reset()
 {
     std::string line;
 
@@ -37,7 +37,7 @@ void MySandBox::Game::reset()
     _s_wall.setScale(2, 2);
 }
 
-void MySandBox::Game::displayMap()
+void MySandBox::Game::Game::displayMap()
 {
     sf::Vector2u size = _window.getSize();
     sf::Vector2u pos = sf::Vector2u(0, size.y - 64 * 2);
@@ -49,17 +49,33 @@ void MySandBox::Game::displayMap()
     }
 }
 
-void MySandBox::Game::displayPlayer()
+void MySandBox::Game::Game::displayPlayer()
 {
     _player.display(_window);
 }
 
-sf::RenderWindow& MySandBox::Game::getWindow() const
+void MySandBox::Game::Game::events(sf::Event &event)
+{
+    _player.events(event);
+}
+
+void MySandBox::Game::Game::update()
+{
+    _player.update();
+}
+
+void MySandBox::Game::Game::display()
+{
+    displayMap();
+    displayPlayer();
+}
+
+sf::RenderWindow& MySandBox::Game::Game::getWindow() const
 {
     return _window;
 }
 
-sf::Vector2u MySandBox::Game::getWindowOriginSize() const
+sf::Vector2u MySandBox::Game::Game::getWindowOriginSize() const
 {
     return _window_origin_size;
 }

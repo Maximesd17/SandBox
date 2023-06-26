@@ -8,12 +8,12 @@
 #include "SGame.hpp"
 #include "State.hpp"
 #include "Game.hpp"
-#include "SMainGame.hpp"
+#include "SSMainGame.hpp"
 
-MySandBox::Scenes::SGame::SGame(MySandBox::State &state, MySandBox::Game &game):
+MySandBox::Scenes::SGame::SGame(MySandBox::State &state, MySandBox::Game::Game &game):
     MySandBox::Scenes::AScene(state, game)
 {
-    _scenes[MySandBox::Scenes::MAIN] = std::make_shared<MySandBox::Scenes::SMainGame>(_state, _game);
+    _scenes[MySandBox::Scenes::MAIN] = std::make_shared<MySandBox::Scenes::SubScenes::SSMainGame>(_state, _game);
     // _scenes[MySandBox::Scenes::SETTINGS] = std::make_shared<MySandBox::Scenes::SSettingsMenu>(_state, _game);
 }
 
@@ -33,6 +33,7 @@ bool MySandBox::Scenes::SGame::events()
             return true;
         }
     }
+    _scenes[_state.getSubScene()]->events(Event);
     return false;
 }
 
@@ -43,7 +44,5 @@ void MySandBox::Scenes::SGame::update()
 
 void MySandBox::Scenes::SGame::display()
 {
-    _game.displayMap();
-    _game.displayPlayer();
     _scenes[_state.getSubScene()]->display();
 }
