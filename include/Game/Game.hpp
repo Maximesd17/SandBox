@@ -13,10 +13,10 @@
 
 namespace MySandBox {
     enum Sprite {
-        NONE,
+        EMPTY,
         WALL,
         SPIKE,
-        PLAYER,
+        SPAWN,
         END
     };
     class Game {

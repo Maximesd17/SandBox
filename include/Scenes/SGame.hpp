@@ -17,8 +17,8 @@ namespace MySandBox {
                 SGame(MySandBox::State &state, MySandBox::Game &game);
                 ~SGame();
                 bool events() override;
-                void update();
-                void display();
+                void update() override;
+                void display() override;
             protected:
             private:
                 std::map<MySandBox::Scenes::Type, std::shared_ptr<MySandBox::Scenes::IScene> > _scenes;
