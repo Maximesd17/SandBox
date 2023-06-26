@@ -44,64 +44,65 @@ void MySandBox::Game::Player::Player::events(sf::Event& event)
     _moves->events(event);
 }
 
+void MySandBox::Game::Player::Player::ApplyGravity()
+{
+    if (_position.y < 780) {
+        _position.y += _gravity;
+    }
+    else {
+        _state = PLAYER_IDLE;
+    }
+}
+
+void MySandBox::Game::Player::Player::ApplyJump()
+{
+    if (_jump_frame < _jump_speed * 60) {
+        _position.y -= _jump_height / (_jump_speed * 60);
+        _jump_frame++;
+    } else {
+        _state = FALLING;
+    }
+}
+
+void MySandBox::Game::Player::Player::computeYMoves(float directionY)
+{
+    if (directionY < 0 && _state != JUMPING && _state != FALLING) {
+        _state = JUMPING;
+        _jump_frame = 0;
+    }
+    switch (_state) {
+        case JUMPING:
+            ApplyJump();
+            break;
+        case FALLING:
+            ApplyGravity();
+            break;
+        default:
+            break;
+    }
+}
+
+void MySandBox::Game::Player::Player::computeXMoves(float directionX)
+{
+    _position.x += directionX * _speed;
+    if (directionX < 0) {
+        _direction = PlayerDirection::LEFT;
+        if (_state != JUMPING && _state != FALLING)
+            _state = WALKING;
+    } else if (directionX > 0) {
+        _direction = PlayerDirection::RIGHT;
+        if (_state != JUMPING && _state != FALLING)
+            _state = WALKING;
+    } else if (_state != JUMPING && _state != FALLING)
+        _state = PLAYER_IDLE;
+}
+
 void MySandBox::Game::Player::Player::update()
 {
     sf::Vector2f direction = _moves->getLastMove();
 
-    if (direction.y < 0 && _state != JUMPING && _state != FALLING) {
-        _state = JUMPING;
-        _jump_frame = 0;
-    }
-    if (_state == JUMPING) {
-        _position.y -= _jump_height / (_jump_speed * 60);
-        _jump_frame++;
-        if (_jump_frame >= _jump_speed * 60)
-            _state = FALLING;
-    }
-    if (_position.y < 780 && _state == FALLING) {
-        _position.y += _gravity;
-    }
-    if (_position.y >= 780) {
-        if (direction.y == 0 && direction.x == 0)
-            _state = PLAYER_IDLE;
-        _position.y = 780;
-    }
-
-
-    _position.x += direction.x * _speed;
-    if (direction.x < 0)
-        _direction = PlayerDirection::LEFT;
-    else if (direction.x > 0)
-        _direction = PlayerDirection::RIGHT;
-    if (direction.x != 0 && _state != JUMPING && (_state != FALLING || _position.y >= 780))
-        _state = WALKING;
-    else if (direction.x == 0 && _state == PLAYER_IDLE)
-        _state = PLAYER_IDLE;
-
-
-
-    switch (_state) {
-    case PLAYER_IDLE:
-        std::cout << "idle" << std::endl;
-        break;
-    case WALKING:
-        std::cout << "walking" << std::endl;
-        break;
-    case JUMPING:
-        std::cout << "jumping" << std::endl;
-        break;
-    case FALLING:
-        std::cout << "falling" << std::endl;
-        break;
-    case ATTACKING:
-        std::cout << "attacking" << std::endl;
-        break;
-    case DEAD:
-        std::cout << "dead" << std::endl;
-        break;
-    default:
-        break;
-    }
+    computeYMoves(direction.y);
+    computeXMoves(direction.x);
 }
 
 void MySandBox::Game::Player::Player::display(sf::RenderWindow& window)

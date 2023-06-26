@@ -35,6 +35,10 @@ namespace MySandBox {
                 void update();
                 void events(sf::Event&);
                 void display(sf::RenderWindow&);
+                void computeYMoves(float directionY);
+                void computeXMoves(float directionX);
+                void ApplyGravity();
+                void ApplyJump();
             protected:
             private:
                 int _speed;
