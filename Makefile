@@ -8,12 +8,14 @@
 SRC_DIR 	= 	src
 GAME_DIR 	= 	src/Game
 SCENES_DIR 	= 	src/Scenes
-COMPONENTS_DIR 	= 	src/Component
+COMPONENTS_DIR 	= 	src/Components
 
 SRC			=	${SRC_DIR}/main.cpp
 SRC			+=	${SRC_DIR}/SandBox.cpp
 SRC			+=	${SRC_DIR}/State.cpp
 SRC			+=	${GAME_DIR}/Game.cpp
+SRC			+=	${GAME_DIR}/Player/KeyboardMoves.cpp
+SRC			+=	${GAME_DIR}/Player/ControllerMoves.cpp
 SRC			+=	${SCENES_DIR}/AScene.cpp
 SRC			+=	${SCENES_DIR}/SGame.cpp
 SRC			+=	${SCENES_DIR}/SMenu.cpp
@@ -25,8 +27,9 @@ SRC			+=	${COMPONENTS_DIR}/Player.cpp
 
 INCLUDES	=	-iquote ./include
 INCLUDES	+=	-iquote ./include/Game
+INCLUDES	+=	-iquote ./include/Game/Player
 INCLUDES	+=	-iquote ./include/Scenes
-INCLUDES	+=	-iquote ./include/Component
+INCLUDES	+=	-iquote ./include/Components
 
 CXX 		= 	g++
 
