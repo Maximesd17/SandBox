@@ -16,7 +16,7 @@ MySandBox::Game::Player::Moves::ControllerMoves::~ControllerMoves()
 {
 }
 
-void MySandBox::Game::Player::Moves::ControllerMoves::computeDirection(sf::Event &event)
+void MySandBox::Game::Player::Moves::ControllerMoves::computeDirection()
 {
     // TODO @lasamo: implementer les directions avec la manette reage le fichier keyboardMoves
 

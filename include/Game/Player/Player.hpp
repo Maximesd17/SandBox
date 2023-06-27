@@ -23,15 +23,15 @@ namespace MySandBox {
             DEAD
         };
         enum PlayerDirection {
+            RIGHT,
             LEFT,
-            RIGHT
         };
         namespace Player {
             class Player {
             public:
                 Player();
                 ~Player();
-                void setPlayerSprites(std::vector<sf::Texture>&);
+                void setPlayerSprites(sf::Texture&);
                 void update();
                 void events(sf::Event&);
                 void display(sf::RenderWindow&);
@@ -41,16 +41,25 @@ namespace MySandBox {
                 void ApplyJump();
             protected:
             private:
+                void setIdleFrame();
+                void setWalkingFrame();
+                void setJumpingFrame();
+                void setFallingFrame();
+                void setAttackingFrame();
+                void setDeadFrame();
+
                 int _speed;
                 double _gravity;
                 int _jump_height;
                 size_t _jump_frame;
                 double _jump_speed;
+                size_t _idle_frame;
+                double _idle_speed;
 
                 std::shared_ptr<MySandBox::Game::Player::Moves::IMoves> _moves;
                 sf::Vector2f _position;
                 size_t _sprite_index;
-                std::vector<sf::Sprite> _sprites;
+                sf::Sprite _player;
                 PlayerState _state;
                 PlayerDirection _direction;
             };

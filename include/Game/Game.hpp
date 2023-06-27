@@ -38,7 +38,7 @@ namespace MySandBox {
             sf::RenderWindow& _window;
             sf::Vector2u _window_origin_size;
             sf::Texture _t_wall;
-            std::vector<sf::Texture> _t_player;
+            sf::Texture _sprite_shit;
             sf::Sprite _s_wall;
             MySandBox::Game::Player::Player _player;
 

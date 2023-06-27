@@ -8,16 +8,18 @@
 #include "Player.hpp"
 #include <math.h>
 #include <iostream>
+#include <cmath>
 
 MySandBox::Game::Player::Player::Player()
 {
     _speed = 10;
     _gravity = 9.81;
     _jump_height = 150;
-    _sprite_index = 0;
-    _position = sf::Vector2f(0, 780);
+    _position = sf::Vector2f(0, 835);
+    _idle_frame = 0;
+    _idle_speed = 1 * 60; // 60 = default frame rate
     _jump_frame = 0;
-    _jump_speed = 0.1;
+    _jump_speed = 0.1 * 60; // 60 = default frame rate
 
     _state = PLAYER_IDLE;
     _direction = PlayerDirection::RIGHT;
@@ -29,14 +31,9 @@ MySandBox::Game::Player::Player::~Player()
 {
 }
 
-void MySandBox::Game::Player::Player::setPlayerSprites(std::vector<sf::Texture>& textures)
+void MySandBox::Game::Player::Player::setPlayerSprites(sf::Texture& sprite_shit)
 {
-    _sprites.clear();
-
-    for (size_t i = 0; i < textures.size(); i++) {
-        _sprites.push_back(sf::Sprite());
-        _sprites[i].setTexture(textures[i]);
-    }
+    _player.setTexture(sprite_shit);
 }
 
 void MySandBox::Game::Player::Player::events(sf::Event& event)
@@ -46,7 +43,7 @@ void MySandBox::Game::Player::Player::events(sf::Event& event)
 
 void MySandBox::Game::Player::Player::ApplyGravity()
 {
-    if (_position.y < 780) {
+    if (_position.y < 835) {
         _position.y += _gravity;
     }
     else {
@@ -56,10 +53,11 @@ void MySandBox::Game::Player::Player::ApplyGravity()
 
 void MySandBox::Game::Player::Player::ApplyJump()
 {
-    if (_jump_frame < _jump_speed * 60) {
-        _position.y -= _jump_height / (_jump_speed * 60);
+    if (_jump_frame < _jump_speed) {
+        _position.y -= _jump_height / _jump_speed;
         _jump_frame++;
-    } else {
+    }
+    else {
         _state = FALLING;
     }
 }
@@ -71,14 +69,14 @@ void MySandBox::Game::Player::Player::computeYMoves(float directionY)
         _jump_frame = 0;
     }
     switch (_state) {
-        case JUMPING:
-            ApplyJump();
-            break;
-        case FALLING:
-            ApplyGravity();
-            break;
-        default:
-            break;
+    case JUMPING:
+        ApplyJump();
+        break;
+    case FALLING:
+        ApplyGravity();
+        break;
+    default:
+        break;
     }
 }
 
@@ -105,16 +103,69 @@ void MySandBox::Game::Player::Player::update()
     computeXMoves(direction.x);
 }
 
+void MySandBox::Game::Player::Player::setIdleFrame()
+{
+    if (_idle_frame >= _idle_speed) _idle_frame = 0;
+
+    const int frame_to_display = floor(4 / _idle_speed * _idle_frame);
+
+    _player.setTextureRect({ 40 * frame_to_display, 0 + 58 * (int)_direction, 40, 58 });
+    _idle_frame++;
+}
+
+void MySandBox::Game::Player::Player::setWalkingFrame()
+{
+    _player.setTextureRect({ 0, 0 + 58 * (int)_direction, 40, 58 });
+}
+
+void MySandBox::Game::Player::Player::setJumpingFrame()
+{
+    const int frame_to_display = floor(4 / _jump_speed * _jump_frame);
+
+    _player.setTextureRect({ 40 * frame_to_display, 116 + 58 * (int)_direction, 40, 58 });
+}
+
+void MySandBox::Game::Player::Player::setFallingFrame()
+{
+    _player.setTextureRect({ 120, 116 + 58 * (int)_direction, 40, 58 });
+}
+
+void MySandBox::Game::Player::Player::setAttackingFrame()
+{
+    std::cout << "setAttackingFrame" << std::endl;
+}
+
+void MySandBox::Game::Player::Player::setDeadFrame()
+{
+    std::cout << "setDeadFrame" << std::endl;
+}
+
 void MySandBox::Game::Player::Player::display(sf::RenderWindow& window)
 {
-    size_t computed_index = floor(_sprite_index / 25);
-
-    if (computed_index >= _sprites.size()) {
-        _sprite_index = 0;
-        computed_index = 0;
-    }
-    _sprites[computed_index].setPosition(_position);
-    _sprites[computed_index].setScale(3, 3);
-    window.draw(_sprites[computed_index]);
     _sprite_index++;
+    switch (_state) {
+    case PLAYER_IDLE:
+        setIdleFrame();
+        break;
+    case WALKING:
+        setWalkingFrame();
+        break;
+    case JUMPING:
+        setJumpingFrame();
+        break;
+    case FALLING:
+        setFallingFrame();
+        break;
+    case ATTACKING:
+        setAttackingFrame();
+        break;
+    case DEAD:
+        setDeadFrame();
+        break;
+    default:
+        break;
+    }
+    _player.setPosition(_position);
+    _player.setScale(5, 5);
+    window.draw(_player);
 }
