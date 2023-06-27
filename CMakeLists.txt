@@ -10,7 +10,14 @@ add_executable(SandBox)
 set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-target_include_directories(SandBox PRIVATE ./include/)
+set(BUILD_SHARED_LIBS OFF)
+include(FetchContent)
+FetchContent_Declare(
+    SFML
+    GIT_REPOSITORY https://github.com/SFML/SFML.git
+    GIT_TAG 2.5.1
+)
+FetchContent_MakeAvailable(SFML)
 
 set(SB_SRC_FOLDER ./src CACHE PATH "root folder for sources")
 set(SB_SRC_GAME_FOLDER ${SB_SRC_FOLDER}/Game CACHE INTERNAL "sources subfolder \"Game\"")
@@ -31,11 +38,11 @@ set(SB_SOURCES PRIVATE ${SB_SRC_FOLDER}/main.cpp
     PRIVATE ${SB_SRC_COMPONENTS_FOLDER}/Button.cpp
     PRIVATE ${SB_SRC_COMPONENTS_FOLDER}/Player.cpp)
 
-add_library(SBLib INTERFACE)
-
 set(SB_HEADERS_FOLDER ./include)
 INCLUDE_DIRECTORIES(${SB_HEADERS_FOLDER}/
     ${SB_HEADERS_FOLDER}/Components
     ${SB_HEADERS_FOLDER}/Game
     ${SB_HEADERS_FOLDER}/Scenes)
+
+target_link_libraries(SandBox sfml-graphics sfml-audio sfml-system sfml-window)
 target_sources(SandBox ${SB_SOURCES})
