@@ -17,11 +17,11 @@ namespace MySandBox {
                 public:
                     ControllerMoves();
                     ~ControllerMoves();
-                    void events(sf::Event& event);
-                    sf::Vector2f getLastMove();
+                    void events(sf::Event& event) override;
+                    sf::Vector2f getLastMove() override;
                 protected:
+                    void computeDirection() override;
                 private:
-                    void computeDirection(sf::Event& event);
                     sf::Vector2f _lastMove;
                 };
             }

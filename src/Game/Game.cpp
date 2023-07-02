@@ -40,11 +40,9 @@ void MySandBox::Game::Game::reset()
     std::string line;
 
     _t_wall.loadFromFile("resources/textures.png", sf::IntRect(0, 0, 64, 64));
-    for (size_t i = 0; i < 4; ++i) {
-        _t_player.push_back(sf::Texture());
-        _t_player[i].loadFromFile("resources/player.png", sf::IntRect(40 * i, 0, 40, 58));
-    }
-    _player.setPlayerSprites(_t_player);
+    _sprite_shit.loadFromFile("resources/player.png");
+
+    _player.setPlayerSprites(_sprite_shit);
     _s_wall.setTexture(_t_wall);
     _s_wall.setScale(2, 2);
 }
