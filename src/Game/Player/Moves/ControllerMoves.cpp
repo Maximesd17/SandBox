@@ -8,10 +8,17 @@
 #include "ControllerMoves.hpp"
 #include <SFML/Window/Joystick.hpp>
 
+
+/*********Constructor*********/
+/* This build the object     */
+/*********Constructor*********/
 MySandBox::Game::Player::Moves::ControllerMoves::ControllerMoves()
 {
 }
 
+/*********Destructor*********/
+/* This destroy the sandbox */
+/*********Destructor*********/ 
 MySandBox::Game::Player::Moves::ControllerMoves::~ControllerMoves()
 {
 }

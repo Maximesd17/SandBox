@@ -8,9 +8,12 @@
 #include "Button.hpp"
 #include <SFML/Window/Mouse.hpp>
 
+/*********Constructor*********/
+/* This build the object     */
+/*********Constructor*********/
 MySandBox::Component::Button::Button(std::string text, sf::Vector2i pos, sf::Vector2f size,
-    sf::Vector2u window_origin_size):
-    _state(MySandBox::Component::IDLE), _window_origin_size(window_origin_size)
+    sf::Vector2u window_origin_size)
+    : _state(MySandBox::Component::IDLE), _window_origin_size(window_origin_size)
 {
     _rect.setPosition(pos.x, pos.y);
     _rect.setSize(size);
@@ -26,10 +29,16 @@ MySandBox::Component::Button::Button(std::string text, sf::Vector2i pos, sf::Vec
     _colors[CLICKED] = sf::Color::Red;
 }
 
+/*********Destructor*********/
+/* This destroy the sandbox */
+/*********Destructor*********/
 MySandBox::Component::Button::~Button()
 {
-};
+}
 
+/*********isHovered*****************************/
+/* Check if the button is hovered by the mouse */
+/*********isHovered*****************************/
 bool MySandBox::Component::Button::isHovered(sf::Vector2i mouse_pos, sf::Vector2u window_size)
 {
     sf::Vector2f pos = _rect.getPosition();
@@ -44,7 +53,10 @@ bool MySandBox::Component::Button::isHovered(sf::Vector2i mouse_pos, sf::Vector2
     return false;
 }
 
-bool MySandBox::Component::Button::check(sf::RenderWindow &window)
+/*********check************************************************************/
+/* Check if the button is clicked or hovered, and update the button state */
+/*********check************************************************************/
+bool MySandBox::Component::Button::check(sf::RenderWindow& window)
 {
     sf::Vector2i mouse_pos = sf::Mouse::getPosition(window);
 
@@ -54,16 +66,21 @@ bool MySandBox::Component::Button::check(sf::RenderWindow &window)
         else
             _state = IDLE;
         return true;
-    } else if (isHovered(mouse_pos, window.getSize())) {
+    }
+    else if (isHovered(mouse_pos, window.getSize())) {
         _state = HOVER;
         if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
             _state = CLICKED;
-    } else
+    }
+    else
         _state = IDLE;
     return false;
 }
 
-void MySandBox::Component::Button::display(sf::RenderWindow &window)
+/*********display********************/
+/* Display the button on the window */
+/*********display********************/
+void MySandBox::Component::Button::display(sf::RenderWindow& window)
 {
     _rect.setFillColor(_colors[_state]);
     window.draw(_rect);

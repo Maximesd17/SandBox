@@ -7,25 +7,40 @@
 
 #include "SSMainGame.hpp"
 
-MySandBox::Scenes::SubScenes::SSMainGame::SSMainGame(MySandBox::State &state, MySandBox::Game::Game &game):
-    MySandBox::Scenes::SubScenes::ASubScene(state, game)
+/*********Constructor*********/
+/* This build the object     */
+/*********Constructor*********/
+MySandBox::Scenes::SubScenes::SSMainGame::SSMainGame(MySandBox::State& state, MySandBox::Game::Game& game)
+    : MySandBox::Scenes::SubScenes::ASubScene(state, game)
 {
 }
 
+/*********Destructor*********/
+/* This destroy the sandbox */
+/*********Destructor*********/ 
 MySandBox::Scenes::SubScenes::SSMainGame::~SSMainGame()
 {
 }
 
-void MySandBox::Scenes::SubScenes::SSMainGame::events(sf::Event &Event)
+/*********events************/
+/* Event handling function */
+/*********events************/ 
+void MySandBox::Scenes::SubScenes::SSMainGame::events(sf::Event& Event)
 {
     _game.events(Event);
 }
 
+/*********update*********/
+/* Update function */
+/*********update*********/ 
 void MySandBox::Scenes::SubScenes::SSMainGame::update()
 {
     _game.update();
 }
 
+/*********display*********/
+/* Display function */
+/*********display*********/ 
 void MySandBox::Scenes::SubScenes::SSMainGame::display()
 {
     _game.display();

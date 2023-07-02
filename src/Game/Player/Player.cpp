@@ -9,6 +9,9 @@
 #include <math.h>
 #include <iostream>
 
+/*********Constructor*********/
+/* This build the object     */
+/*********Constructor*********/
 MySandBox::Game::Player::Player::Player()
 {
     _speed = 10;
@@ -25,10 +28,16 @@ MySandBox::Game::Player::Player::Player()
     _moves = std::make_shared<Moves::KeyboardMoves>();
 }
 
+/*********Destructor*********/
+/* This destroy the sandbox */
+/*********Destructor*********/ 
 MySandBox::Game::Player::Player::~Player()
 {
 }
 
+/*********setPlayerSprites*********/
+/* Set player sprites function    */
+/*********setPlayerSprites*********/
 void MySandBox::Game::Player::Player::setPlayerSprites(std::vector<sf::Texture>& textures)
 {
     _sprites.clear();
@@ -39,11 +48,17 @@ void MySandBox::Game::Player::Player::setPlayerSprites(std::vector<sf::Texture>&
     }
 }
 
+/*********events************/
+/* Event handling function */
+/*********events************/
 void MySandBox::Game::Player::Player::events(sf::Event& event)
 {
     _moves->events(event);
 }
 
+/*********ApplyGravity*********/
+/* Apply gravity function     */
+/*********ApplyGravity*********/
 void MySandBox::Game::Player::Player::ApplyGravity()
 {
     if (_position.y < 780) {
@@ -54,6 +69,9 @@ void MySandBox::Game::Player::Player::ApplyGravity()
     }
 }
 
+/*********ApplyJump*********/
+/* Apply jump function     */
+/*********ApplyJump*********/
 void MySandBox::Game::Player::Player::ApplyJump()
 {
     if (_jump_frame < _jump_speed * 60) {
@@ -64,6 +82,9 @@ void MySandBox::Game::Player::Player::ApplyJump()
     }
 }
 
+/*********computeYMoves***********/
+/* Compute Y-axis moves function */
+/*********computeYMoves***********/
 void MySandBox::Game::Player::Player::computeYMoves(float directionY)
 {
     if (directionY < 0 && _state != JUMPING && _state != FALLING) {
@@ -82,6 +103,9 @@ void MySandBox::Game::Player::Player::computeYMoves(float directionY)
     }
 }
 
+/*********computeXMoves***********/
+/* Compute X-axis moves function */
+/*********computeXMoves***********/
 void MySandBox::Game::Player::Player::computeXMoves(float directionX)
 {
     _position.x += directionX * _speed;
@@ -97,6 +121,9 @@ void MySandBox::Game::Player::Player::computeXMoves(float directionX)
         _state = PLAYER_IDLE;
 }
 
+/*********update*********/
+/* Update function      */
+/*********update*********/
 void MySandBox::Game::Player::Player::update()
 {
     sf::Vector2f direction = _moves->getLastMove();
@@ -105,6 +132,9 @@ void MySandBox::Game::Player::Player::update()
     computeXMoves(direction.x);
 }
 
+/*********display*********/
+/* Display function      */
+/*********display*********/
 void MySandBox::Game::Player::Player::display(sf::RenderWindow& window)
 {
     size_t computed_index = floor(_sprite_index / 25);

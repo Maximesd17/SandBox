@@ -10,19 +10,31 @@
 #include <iostream>
 #include <memory>
 
+/*********Constructor*********/
+/* This build the object     */
+/*********Constructor*********/
 MySandBox::Game::Game::Game(sf::RenderWindow& window) : _window(window)
 {
 }
 
+/*********Destructor*********/
+/* This destroy the sandbox */
+/*********Destructor*********/ 
 MySandBox::Game::Game::~Game()
 {
 }
 
+/*********init**************/
+/* Initialization function */
+/*********init**************/
 void MySandBox::Game::Game::init()
 {
     _window_origin_size = _window.getSize();
 }
 
+/*********reset*********/
+/* Reset function      */
+/*********reset*********/
 void MySandBox::Game::Game::reset()
 {
     std::string line;
@@ -37,6 +49,9 @@ void MySandBox::Game::Game::reset()
     _s_wall.setScale(2, 2);
 }
 
+/*********displayMap*********/
+/* Display map function     */
+/*********displayMap*********/
 void MySandBox::Game::Game::displayMap()
 {
     sf::Vector2u size = _window.getSize();
@@ -49,32 +64,50 @@ void MySandBox::Game::Game::displayMap()
     }
 }
 
+/*********displayPlayer*********/
+/* Display player function     */
+/*********displayPlayer*********/
 void MySandBox::Game::Game::displayPlayer()
 {
     _player.display(_window);
 }
 
-void MySandBox::Game::Game::events(sf::Event &event)
+/*********events************/
+/* Event handling function */
+/*********events************/
+void MySandBox::Game::Game::events(sf::Event& event)
 {
     _player.events(event);
 }
 
+/*********update*********/
+/* Update function      */
+/*********update*********/
 void MySandBox::Game::Game::update()
 {
     _player.update();
 }
 
+/*********display*********/
+/* Display function      */
+/*********display*********/
 void MySandBox::Game::Game::display()
 {
     displayMap();
     displayPlayer();
 }
 
+/*********getWindow**********/
+/* Get the window reference */
+/*********getWindow**********/
 sf::RenderWindow& MySandBox::Game::Game::getWindow() const
 {
     return _window;
 }
 
+/*********getWindowOriginSize*********/
+/* Get the original window size      */
+/*********getWindowOriginSize*********/
 sf::Vector2u MySandBox::Game::Game::getWindowOriginSize() const
 {
     return _window_origin_size;

@@ -8,6 +8,7 @@
 #pragma once
 
 #include <vector>
+#include <memory>
 #include <SFML/Graphics.hpp>
 #include "KeyboardMoves.hpp"
 #include "ControllerMoves.hpp"

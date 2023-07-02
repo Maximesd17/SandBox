@@ -7,7 +7,10 @@
 
 #include "SMainMenu.hpp"
 
-MySandBox::Scenes::SMainMenu::SMainMenu(MySandBox::State &state, MySandBox::Game::Game &game):
+/*********Constructor*********/
+/* This build the object     */
+/*********Constructor*********/ 
+MySandBox::Scenes::SMainMenu::SMainMenu(MySandBox::State &state, MySandBox::Game::Game &game) :
     MySandBox::Scenes::AScene(state, game),
     _play_button("Play", sf::Vector2i(800, 450), sf::Vector2f(300, 100),
     _game.getWindowOriginSize()),
@@ -18,10 +21,16 @@ MySandBox::Scenes::SMainMenu::SMainMenu(MySandBox::State &state, MySandBox::Game
 {
 }
 
+/*********Destructor*********/
+/* This destroy the sandbox */
+/*********Destructor*********/ 
 MySandBox::Scenes::SMainMenu::~SMainMenu()
 {
 }
 
+/*********update*********/
+/* Update function */
+/*********update*********/ 
 void MySandBox::Scenes::SMainMenu::update()
 {
     sf::RenderWindow &window = _game.getWindow();
@@ -36,6 +45,9 @@ void MySandBox::Scenes::SMainMenu::update()
         _game.getWindow().close();
 }
 
+/*********display*********/
+/* Display function */
+/*********display*********/ 
 void MySandBox::Scenes::SMainMenu::display()
 {
     sf::RenderWindow &window = _game.getWindow();
