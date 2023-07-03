@@ -10,34 +10,47 @@
 #include <iostream>
 #include <memory>
 
-MySandBox::Game::Game(sf::RenderWindow& window) : _window(window)
+/*********Constructor*********/
+/* This build the object     */
+/*********Constructor*********/
+MySandBox::Game::Game::Game(sf::RenderWindow& window) : _window(window)
 {
 }
 
-MySandBox::Game::~Game()
+/*********Destructor*********/
+/* This destroy the sandbox */
+/*********Destructor*********/ 
+MySandBox::Game::Game::~Game()
 {
 }
 
-void MySandBox::Game::init()
+/*********init**************/
+/* Initialization function */
+/*********init**************/
+void MySandBox::Game::Game::init()
 {
     _window_origin_size = _window.getSize();
 }
 
-void MySandBox::Game::reset()
+/*********reset*********/
+/* Reset function      */
+/*********reset*********/
+void MySandBox::Game::Game::reset()
 {
     std::string line;
 
     _t_wall.loadFromFile("resources/textures.png", sf::IntRect(0, 0, 64, 64));
-    for (size_t i = 0; i < 4; ++i) {
-        _t_player.push_back(sf::Texture());
-        _t_player[i].loadFromFile("resources/player.png", sf::IntRect(40 * i, 0, 40, 58));
-    }
-    _player.setPlayerSprites(_t_player);
+    _sprite_shit.loadFromFile("resources/player.png");
+
+    _player.setPlayerSprites(_sprite_shit);
     _s_wall.setTexture(_t_wall);
     _s_wall.setScale(2, 2);
 }
 
-void MySandBox::Game::displayMap()
+/*********displayMap*********/
+/* Display map function     */
+/*********displayMap*********/
+void MySandBox::Game::Game::displayMap()
 {
     sf::Vector2u size = _window.getSize();
     sf::Vector2u pos = sf::Vector2u(0, size.y - 64 * 2);
@@ -49,17 +62,51 @@ void MySandBox::Game::displayMap()
     }
 }
 
-void MySandBox::Game::displayPlayer()
+/*********displayPlayer*********/
+/* Display player function     */
+/*********displayPlayer*********/
+void MySandBox::Game::Game::displayPlayer()
 {
     _player.display(_window);
 }
 
-sf::RenderWindow& MySandBox::Game::getWindow() const
+/*********events************/
+/* Event handling function */
+/*********events************/
+void MySandBox::Game::Game::events(sf::Event& event)
+{
+    _player.events(event);
+}
+
+/*********update*********/
+/* Update function      */
+/*********update*********/
+void MySandBox::Game::Game::update()
+{
+    _player.update();
+}
+
+/*********display*********/
+/* Display function      */
+/*********display*********/
+void MySandBox::Game::Game::display()
+{
+    displayMap();
+    displayPlayer();
+}
+
+/*********getWindow**********/
+/* Get the window reference */
+/*********getWindow**********/
+sf::RenderWindow& MySandBox::Game::Game::getWindow() const
 {
     return _window;
 }
 
-sf::Vector2u MySandBox::Game::getWindowOriginSize() const
+/*********getWindowOriginSize*********/
+/* Get the original window size      */
+/*********getWindowOriginSize*********/
+sf::Vector2u MySandBox::Game::Game::getWindowOriginSize() const
 {
     return _window_origin_size;
 }

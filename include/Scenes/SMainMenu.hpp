@@ -14,7 +14,7 @@ namespace MySandBox {
     namespace Scenes {
         class SMainMenu: public MySandBox::Scenes::AScene {
             public:
-                SMainMenu(MySandBox::State &state, MySandBox::Game &game);
+                SMainMenu(MySandBox::State &state, MySandBox::Game::Game &game);
                 ~SMainMenu();
                 void update();
                 void display();

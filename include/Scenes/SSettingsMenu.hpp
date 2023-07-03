@@ -13,7 +13,7 @@ namespace MySandBox {
     namespace Scenes {
         class SSettingsMenu: public MySandBox::Scenes::AScene {
             public:
-                SSettingsMenu(MySandBox::State &state, MySandBox::Game &game);
+                SSettingsMenu(MySandBox::State &state, MySandBox::Game::Game &game);
                 ~SSettingsMenu();
                 void update();
                 void display();

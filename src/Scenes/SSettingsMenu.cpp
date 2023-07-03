@@ -7,17 +7,26 @@
 
 #include "SSettingsMenu.hpp"
 
-MySandBox::Scenes::SSettingsMenu::SSettingsMenu(MySandBox::State &state, MySandBox::Game &game):
+/*********Constructor*********/
+/* This build the object     */
+/*********Constructor*********/
+MySandBox::Scenes::SSettingsMenu::SSettingsMenu(MySandBox::State &state, MySandBox::Game::Game &game) :
     MySandBox::Scenes::AScene(state, game),
     _return_button("Return", sf::Vector2i(800, 450), sf::Vector2f(300, 100),
     _game.getWindowOriginSize())
 {
 }
 
+/*********Destructor*********/
+/* This destroy the sandbox */
+/*********Destructor*********/ 
 MySandBox::Scenes::SSettingsMenu::~SSettingsMenu()
 {
 }
 
+/*********update*********/
+/* Update function      */
+/*********update*********/ 
 void MySandBox::Scenes::SSettingsMenu::update()
 {
     sf::RenderWindow &window = _game.getWindow();
@@ -26,6 +35,9 @@ void MySandBox::Scenes::SSettingsMenu::update()
         _state.setSubScene(MySandBox::Scenes::MAIN);
 }
 
+/*********display*********/
+/* Display function      */
+/*********display*********/ 
 void MySandBox::Scenes::SSettingsMenu::display()
 {
     sf::RenderWindow &window = _game.getWindow();

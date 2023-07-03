@@ -12,31 +12,36 @@
 #include "Player.hpp"
 
 namespace MySandBox {
-    enum Sprite {
-        EMPTY,
-        WALL,
-        SPIKE,
-        SPAWN,
-        END
-    };
-    class Game {
+    namespace Game {
+        enum Sprite {
+            EMPTY,
+            WALL,
+            SPIKE,
+            SPAWN,
+            END
+        };
+        class Game {
         public:
-            Game(sf::RenderWindow &window);
+            Game(sf::RenderWindow& window);
             ~Game();
             void init();
             void reset();
-            void displayMap();
-            void displayPlayer();
-            sf::RenderWindow &getWindow() const;
+            void events(sf::Event &event);
+            void update();
+            void display();
+            sf::RenderWindow& getWindow() const;
             sf::Vector2u getWindowOriginSize() const;
         protected:
         private:
-            sf::RenderWindow &_window;
+            void displayMap();
+            void displayPlayer();
+            sf::RenderWindow& _window;
             sf::Vector2u _window_origin_size;
             sf::Texture _t_wall;
-            std::vector<sf::Texture> _t_player;
+            sf::Texture _sprite_shit;
             sf::Sprite _s_wall;
-            MySandBox::Component::Player _player;
+            MySandBox::Game::Player::Player _player;
 
-    };
+        };
+    }
 };
