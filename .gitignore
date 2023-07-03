@@ -2,3 +2,7 @@
 MySandBox
 *.o
 *.a
+unit_tests/
+*.gcno
+*.gcda
+build/
