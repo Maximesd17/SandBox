@@ -68,7 +68,11 @@ bool MySandBox::Component::Range::isHovered(sf::Vector2i mouse_pos, sf::Vector2u
 bool MySandBox::Component::Range::check(sf::RenderWindow& window)
 {
     sf::Vector2i mouse_pos = sf::Mouse::getPosition(window);
+    bool is_hovered = isHovered(mouse_pos, window.getSize());
 
+    if (is_hovered && sf::Mouse::isButtonPressed(sf::Mouse::Left) && _state == IDLE) {
+        return false;
+    }
     if (_state == CLICKED && sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
         sf::Vector2f pos = _cursor.getPosition();
         float size = _cursor.getRadius();
@@ -81,12 +85,12 @@ bool MySandBox::Component::Range::check(sf::RenderWindow& window)
         _cursor.setPosition(pos);
         return true;
     } else if (_state == CLICKED && !sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
-        if (isHovered(mouse_pos, window.getSize()))
+        if (is_hovered)
             _state = HOVER;
         else
             _state = IDLE;
         return true;
-    } else if (isHovered(mouse_pos, window.getSize())) {
+    } else if (is_hovered) {
         _state = HOVER;
         if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
             _state = CLICKED;
