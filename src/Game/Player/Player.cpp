@@ -198,6 +198,6 @@ void MySandBox::Game::Player::Player::display(sf::RenderWindow& window)
         break;
     }
     _player.setPosition(_position);
-    _player.setScale(5, 5);
+    _player.setScale(2, 2);
     window.draw(_player);
 }
