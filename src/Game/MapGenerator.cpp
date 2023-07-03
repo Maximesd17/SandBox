@@ -210,3 +210,18 @@ sf::Vector2i SandBox::MapGenerator::getSpawnPoint() {
 sf::Vector2i SandBox::MapGenerator::getEndPoint() {
     return _endPoint;
 }
+
+SandBox::MapGenerator SandBox::MapGenerator::operator=(const SandBox::MapGenerator &other) {
+    if (this == &other)
+        return *this;
+    this->_map_file = other._map_file;
+    this->_map = other._map;
+    this->_spawnPoint = other._spawnPoint;
+    this->_endPoint = other._endPoint;
+    this->_hasAir = other._hasAir;
+    this->_hasGround = other._hasGround;
+    this->_hasSpawn = other._hasSpawn;
+    this->_hasEnd = other._hasEnd;
+    this->_valid = other._valid;
+    return *this;
+}

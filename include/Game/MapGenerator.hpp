@@ -41,6 +41,7 @@ namespace SandBox {
             bool validateMap(std::vector<std::string> &map);
             bool isValid();
             void displayMap(sf::RenderWindow &_window);
+            MapGenerator operator=(const MapGenerator &other);
             ~MapGenerator();
     };
 }; // namespace SandBox
