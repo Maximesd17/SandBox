@@ -8,24 +8,24 @@
 #include "State.hpp"
 
 /*********Constructor*********/
-/* init state of the game    */ 
+/* init state of the game    */
 /*********Constructor*********/
 MySandBox::State::State()
 {
     _current_scene = MySandBox::Scenes::MENU;
-    _current_sub_scene = MySandBox::Scenes::MAIN;
+    _current_sub_scene = MySandBox::Scenes::SETTINGS;
 }
 
 /*********Destructor*********/
 /* This destroy the object  */
-/*********Destructor*********/ 
+/*********Destructor*********/
 MySandBox::State::~State()
 {
 }
 
 /*********getScene*********/
 /* Getter for the current */
-/*********getScene*********/ 
+/*********getScene*********/
 MySandBox::Scenes::Type MySandBox::State::getScene() const
 {
     return _current_scene;

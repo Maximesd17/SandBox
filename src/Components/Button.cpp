@@ -15,6 +15,7 @@ MySandBox::Component::Button::Button(std::string text, sf::Vector2i pos, sf::Vec
     sf::Vector2u window_origin_size)
     : _state(MySandBox::Component::IDLE), _window_origin_size(window_origin_size)
 {
+    _is_clicked = false;
     _rect.setPosition(pos.x, pos.y);
     _rect.setSize(size);
     _font.loadFromFile("resources/fonts/button.ttf");
@@ -59,21 +60,18 @@ bool MySandBox::Component::Button::isHovered(sf::Vector2i mouse_pos, sf::Vector2
 bool MySandBox::Component::Button::check(sf::RenderWindow& window)
 {
     sf::Vector2i mouse_pos = sf::Mouse::getPosition(window);
+    bool is_hovered = isHovered(mouse_pos, window.getSize());
 
-    if (_state == CLICKED && !sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
-        if (isHovered(mouse_pos, window.getSize()))
-            _state = HOVER;
-        else
-            _state = IDLE;
-        return true;
+    if (is_hovered && sf::Mouse::isButtonPressed(sf::Mouse::Left) && _state == IDLE) {
+        return false;
     }
-    else if (isHovered(mouse_pos, window.getSize())) {
-        _state = HOVER;
-        if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
-            _state = CLICKED;
-    }
-    else
-        _state = IDLE;
+    if ((is_hovered || _state == CLICKED) && sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
+        _state = CLICKED;
+    } else if (_state == CLICKED && !sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
+        if (is_hovered) return true;
+        else _state = IDLE;
+    } else if (is_hovered) _state = HOVER;
+    else _state = IDLE;
     return false;
 }
 
