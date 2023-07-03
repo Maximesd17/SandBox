@@ -16,7 +16,7 @@ NAME        =   MySandBox
 COMPILER    =   g++
 
 RM          =   rm -f
-ECHO        =   /bin/echo -e
+ECHO        =   echo
 
 LOGDIR      =   errors/
 
