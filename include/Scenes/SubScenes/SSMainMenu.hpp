@@ -2,7 +2,7 @@
 ** EPITECH PROJECT, 2022
 ** MySandBox
 ** File description:
-** SMainMenu
+** SSMainMenu
 */
 
 #pragma once
@@ -12,10 +12,10 @@
 
 namespace MySandBox {
     namespace Scenes {
-        class SMainMenu: public MySandBox::Scenes::AScene {
+        class SSMainMenu: public MySandBox::Scenes::AScene {
             public:
-                SMainMenu(MySandBox::State &state, MySandBox::Game::Game &game);
-                ~SMainMenu();
+                SSMainMenu(MySandBox::State &state, MySandBox::Game::Game &game);
+                ~SSMainMenu();
                 void update();
                 void display();
             protected:

@@ -17,7 +17,7 @@ MySandBox::Scenes::SGame::SGame(MySandBox::State &state, MySandBox::Game::Game &
   MySandBox::Scenes::AScene(state, game)
 {
   _scenes[MySandBox::Scenes::MAIN] = std::make_shared<MySandBox::Scenes::SubScenes::SSMainGame>(_state, _game);
-  // _scenes[MySandBox::Scenes::SETTINGS] = std::make_shared<MySandBox::Scenes::SSettingsMenu>(_state, _game);
+  // _scenes[MySandBox::Scenes::SETTINGS] = std::make_shared<MySandBox::Scenes::SSSettingsMenu>(_state, _game);
 }
 
 /*********Destructor*********/

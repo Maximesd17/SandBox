@@ -2,15 +2,15 @@
 ** EPITECH PROJECT, 2022
 ** MySandBox
 ** File description:
-** SMainMenu
+** SSMainMenu
 */
 
-#include "SMainMenu.hpp"
+#include "SSMainMenu.hpp"
 
 /*********Constructor*********/
 /* This build the object     */
 /*********Constructor*********/ 
-MySandBox::Scenes::SMainMenu::SMainMenu(MySandBox::State &state, MySandBox::Game::Game &game) :
+MySandBox::Scenes::SSMainMenu::SSMainMenu(MySandBox::State &state, MySandBox::Game::Game &game) :
     MySandBox::Scenes::AScene(state, game),
     _play_button("Play", sf::Vector2i(800, 450), sf::Vector2f(300, 100),
     _game.getWindowOriginSize()),
@@ -24,14 +24,14 @@ MySandBox::Scenes::SMainMenu::SMainMenu(MySandBox::State &state, MySandBox::Game
 /*********Destructor*********/
 /* This destroy the sandbox */
 /*********Destructor*********/ 
-MySandBox::Scenes::SMainMenu::~SMainMenu()
+MySandBox::Scenes::SSMainMenu::~SSMainMenu()
 {
 }
 
 /*********update*********/
 /* Update function */
 /*********update*********/ 
-void MySandBox::Scenes::SMainMenu::update()
+void MySandBox::Scenes::SSMainMenu::update()
 {
     sf::RenderWindow &window = _game.getWindow();
 
@@ -48,7 +48,7 @@ void MySandBox::Scenes::SMainMenu::update()
 /*********display*********/
 /* Display function */
 /*********display*********/ 
-void MySandBox::Scenes::SMainMenu::display()
+void MySandBox::Scenes::SSMainMenu::display()
 {
     sf::RenderWindow &window = _game.getWindow();
 

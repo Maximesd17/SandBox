@@ -6,29 +6,29 @@
 */
 
 #include "SMenu.hpp"
-#include "SMainMenu.hpp"
-#include "SSettingsMenu.hpp"
+#include "SSMainMenu.hpp"
+#include "SSSettingsMenu.hpp"
 
 /*********Constructor*********/
 /* This build the object     */
 /*********Constructor*********/
-MySandBox::Scenes::SMenu::SMenu(MySandBox::State &state, MySandBox::Game::Game &game) :
+MySandBox::Scenes::SMenu::SMenu(MySandBox::State& state, MySandBox::Game::Game& game) :
     MySandBox::Scenes::AScene(state, game)
 {
-    _scenes[MySandBox::Scenes::MAIN] = std::make_shared<MySandBox::Scenes::SMainMenu>(_state, _game);
-    _scenes[MySandBox::Scenes::SETTINGS] = std::make_shared<MySandBox::Scenes::SSettingsMenu>(_state, _game);
+    _scenes[MySandBox::Scenes::MAIN] = std::make_shared<MySandBox::Scenes::SSMainMenu>(_state, _game);
+    _scenes[MySandBox::Scenes::SETTINGS] = std::make_shared<MySandBox::Scenes::SSSettingsMenu>(_state, _game);
 }
 
 /*********Destructor*********/
 /* This destroy the sandbox */
-/*********Destructor*********/ 
+/*********Destructor*********/
 MySandBox::Scenes::SMenu::~SMenu()
 {
 }
 
 /*********update*********/
 /* Update function      */
-/*********update*********/ 
+/*********update*********/
 void MySandBox::Scenes::SMenu::update()
 {
     _scenes[_state.getSubScene()]->update();
@@ -36,7 +36,7 @@ void MySandBox::Scenes::SMenu::update()
 
 /*********display*********/
 /* Display function      */
-/*********display*********/ 
+/*********display*********/
 void MySandBox::Scenes::SMenu::display()
 {
     _scenes[_state.getSubScene()]->display();
