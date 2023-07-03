@@ -17,10 +17,10 @@ namespace MySandBox {
                 public:
                     KeyboardMoves();
                     ~KeyboardMoves();
-                    void events(sf::Event& event) override;
-                    sf::Vector2f getLastMove() override;
+                    void events(sf::Event& event);
+                    sf::Vector2f getLastMove();
                 protected:
-                    void computeDirection() override;
+                    void computeDirection();
                 private:
                     sf::Vector2f _lastMove;
                 };

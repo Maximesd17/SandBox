@@ -25,7 +25,7 @@ namespace MySandBox {
         int _framerate;
         sf::RenderWindow _window;
         sf::Clock _deltaTime;
-        std::map<MySandBox::Scenes::Type, std::shared_ptr<MySandBox::Scenes::IScene>> _scenes;
+        std::map<MySandBox::Scenes::Type, std::shared_ptr<MySandBox::Scenes::IScene> > _scenes;
         MySandBox::Game::Game _game;
         MySandBox::State _state;
     };

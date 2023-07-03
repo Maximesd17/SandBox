@@ -17,7 +17,7 @@ MySandBox::Game::Player::Moves::KeyboardMoves::KeyboardMoves()
 
 /*********Destructor*********/
 /* This destroy the sandbox */
-/*********Destructor*********/ 
+/*********Destructor*********/
 MySandBox::Game::Player::Moves::KeyboardMoves::~KeyboardMoves()
 {
 }
@@ -27,7 +27,7 @@ MySandBox::Game::Player::Moves::KeyboardMoves::~KeyboardMoves()
 /*********computeDirection*********/
 void MySandBox::Game::Player::Moves::KeyboardMoves::computeDirection()
 {
-    sf::Vector2f direction = {0, 0};
+    sf::Vector2f direction = sf::Vector2f(0, 0);
 
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
         direction.y -= 1;

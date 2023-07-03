@@ -25,14 +25,14 @@ MySandBox::Game::Player::Player::Player()
     _jump_speed = 0.1 * 60; // 60 = default frame rate
 
     _state = PLAYER_IDLE;
-    _direction = PlayerDirection::RIGHT;
+    _direction = RIGHT;
 
     _moves = std::make_shared<Moves::KeyboardMoves>();
 }
 
 /*********Destructor*********/
 /* This destroy the sandbox */
-/*********Destructor*********/ 
+/*********Destructor*********/
 MySandBox::Game::Player::Player::~Player()
 {
 }
@@ -108,14 +108,16 @@ void MySandBox::Game::Player::Player::computeXMoves(float directionX)
 {
     _position.x += directionX * _speed;
     if (directionX < 0) {
-        _direction = PlayerDirection::LEFT;
+        _direction = LEFT;
         if (_state != JUMPING && _state != FALLING)
             _state = WALKING;
-    } else if (directionX > 0) {
-        _direction = PlayerDirection::RIGHT;
+    }
+    else if (directionX > 0) {
+        _direction = RIGHT;
         if (_state != JUMPING && _state != FALLING)
             _state = WALKING;
-    } else if (_state != JUMPING && _state != FALLING)
+    }
+    else if (_state != JUMPING && _state != FALLING)
         _state = PLAYER_IDLE;
 }
 
@@ -139,25 +141,25 @@ void MySandBox::Game::Player::Player::setIdleFrame()
 
     const int frame_to_display = floor(4 / _idle_speed * _idle_frame);
 
-    _player.setTextureRect({ 40 * frame_to_display, 0 + 58 * (int)_direction, 40, 58 });
+    _player.setTextureRect(sf::IntRect(40 * frame_to_display, 0 + 58 * (int)_direction, 40, 58));
     _idle_frame++;
 }
 
 void MySandBox::Game::Player::Player::setWalkingFrame()
 {
-    _player.setTextureRect({ 0, 0 + 58 * (int)_direction, 40, 58 });
+    _player.setTextureRect(sf::IntRect( 0, 0 + 58 * (int)_direction, 40, 58 ));
 }
 
 void MySandBox::Game::Player::Player::setJumpingFrame()
 {
     const int frame_to_display = floor(4 / _jump_speed * _jump_frame);
 
-    _player.setTextureRect({ 40 * frame_to_display, 116 + 58 * (int)_direction, 40, 58 });
+    _player.setTextureRect(sf::IntRect(40 * frame_to_display, 116 + 58 * (int)_direction, 40, 58 ));
 }
 
 void MySandBox::Game::Player::Player::setFallingFrame()
 {
-    _player.setTextureRect({ 120, 116 + 58 * (int)_direction, 40, 58 });
+    _player.setTextureRect(sf::IntRect( 120, 116 + 58 * (int)_direction, 40, 58));
 }
 
 void MySandBox::Game::Player::Player::setAttackingFrame()

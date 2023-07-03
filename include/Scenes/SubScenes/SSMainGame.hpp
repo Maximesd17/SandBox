@@ -17,9 +17,9 @@ namespace MySandBox {
             public:
                 SSMainGame(MySandBox::State& state, Game::Game& game);
                 ~SSMainGame();
-                void events(sf::Event &event) override;
-                void update() override;
-                void display() override;
+                void events(sf::Event &event);
+                void update();
+                void display();
             protected:
             private:
             };
