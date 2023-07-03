@@ -70,6 +70,8 @@ bool MySandBox::Component::Range::check(sf::RenderWindow& window)
     sf::Vector2i mouse_pos = sf::Mouse::getPosition(window);
     bool is_hovered = isHovered(mouse_pos, window.getSize());
 
+    // TODO : @hollitizz CLEAN THIS CODE
+
     if (is_hovered && sf::Mouse::isButtonPressed(sf::Mouse::Left) && _state == IDLE) {
         return false;
     }
