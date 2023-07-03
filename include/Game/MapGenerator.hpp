@@ -23,6 +23,8 @@ namespace SandBox {
             std::string const _identifiers = "0GPWBSE";
             std::string _map_file;
             std::vector<std::string> _map;
+            sf::Vector2i _spawnPoint;
+            sf::Vector2i _endPoint;
             bool _hasAir = false;
             bool _hasGround = false;
             bool _hasSpawn = false;
@@ -34,6 +36,8 @@ namespace SandBox {
             MapGenerator(std::string &filepath);
             std::string getMapFile();
             std::vector<std::string> getMap();
+            sf::Vector2i getSpawnPoint();
+            sf::Vector2i getEndPoint();
             bool validateMap(std::vector<std::string> &map);
             bool isValid();
             void displayMap(sf::RenderWindow &_window);

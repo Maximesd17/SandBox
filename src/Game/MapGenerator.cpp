@@ -84,7 +84,7 @@ bool SandBox::MapGenerator::checkIdentifiers(std::string &line) {
     return res;
 }
 
-/* 
+/*
 ** Checks if there is some Air and Ground.
 ** If not one of them, it's considered as not playable.
 ** Checks for 'S' identifier for spawn and 'E' identifier for end points.
@@ -124,7 +124,7 @@ void SandBox::MapGenerator::keyPoints(std::string &line) {
 SandBox::MapGenerator::~MapGenerator() {
 }
 
-void SandBox::MapGenerator::displayMap(sf::RenderWindow &_window){
+void SandBox::MapGenerator::displayMap(sf::RenderWindow &_window) {
 
     std::vector<sf::Sprite> tiles;
 
@@ -149,7 +149,10 @@ void SandBox::MapGenerator::displayMap(sf::RenderWindow &_window){
     sf::Texture endTexture;
     endTexture.loadFromFile("resources/map_textures/end.png");
 
-       for (size_t y = 0; y < _map.size(); ++y) {
+    sf::Vector2i spawnPoint;
+    sf::Vector2i endPoint;
+
+    for (size_t y = 0; y < _map.size(); ++y) {
         const std::string& line = _map[y];
         for (size_t x = 0; x < line.size(); ++x) {
             char ch = line[x];
@@ -174,9 +177,11 @@ void SandBox::MapGenerator::displayMap(sf::RenderWindow &_window){
                     break;
                 case 'S':
                     tileSprite.setTexture(spawnTexture);
+                    spawnPoint = sf::Vector2i(x, y); // Récupérer les coordonnées du point de départ
                     break;
                 case 'E':
                     tileSprite.setTexture(endTexture);
+                    endPoint = sf::Vector2i(x, y); // Récupérer les coordonnées du point de fin
                     break;
 
                 default:
@@ -191,7 +196,17 @@ void SandBox::MapGenerator::displayMap(sf::RenderWindow &_window){
 
         }
     }
+    _spawnPoint = spawnPoint;
+    _endPoint = endPoint;
     for (const sf::Sprite& tile : tiles) {
-    _window.draw(tile);
+        _window.draw(tile);
     }
+}
+
+sf::Vector2i SandBox::MapGenerator::getSpawnPoint() {
+    return _spawnPoint;
+}
+
+sf::Vector2i SandBox::MapGenerator::getEndPoint() {
+    return _endPoint;
 }
