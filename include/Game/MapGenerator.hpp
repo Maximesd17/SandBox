@@ -4,6 +4,7 @@
 #include <fstream>
 #include <iostream>
 #include <vector>
+#include <SFML/Graphics.hpp>
 
 /*
 ** _identifiers:
@@ -35,6 +36,7 @@ namespace SandBox {
             std::vector<std::string> getMap();
             bool validateMap(std::vector<std::string> &map);
             bool isValid();
+            void displayMap(sf::RenderWindow &_window);
             ~MapGenerator();
     };
 }; // namespace SandBox

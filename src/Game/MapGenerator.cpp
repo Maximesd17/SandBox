@@ -5,11 +5,15 @@
 
 #include "MapGenerator.hpp"
 #include "unistd.h"
+#include <fstream>
+#include <iostream>
+#include <memory>
+#include <vector>
 
 SandBox::MapGenerator::MapGenerator(std::string &filepath) {
     std::ifstream fs;
     std::string buf;
-
+    sf::RenderWindow _window;
     _map_file = filepath;
     fs.open(_map_file, std::ios::in);
     if (!fs.is_open()) {
@@ -118,4 +122,76 @@ void SandBox::MapGenerator::keyPoints(std::string &line) {
 }
 
 SandBox::MapGenerator::~MapGenerator() {
+}
+
+void SandBox::MapGenerator::displayMap(sf::RenderWindow &_window){
+
+    std::vector<sf::Sprite> tiles;
+
+    sf::Texture airTexture;
+    airTexture.loadFromFile("resources/map_textures/air.png");
+
+    sf::Texture groundTexture;
+    groundTexture.loadFromFile("resources/map_textures/ground.png");
+
+    sf::Texture plateformTexture;
+    plateformTexture.loadFromFile("resources/map_textures/plateform.png");
+
+    sf::Texture wallTexture;
+    wallTexture.loadFromFile("resources/map_textures/wall.png");
+
+    sf::Texture boxTexture;
+    boxTexture.loadFromFile("resources/map_textures/box.png");
+
+    sf::Texture spawnTexture;
+    spawnTexture.loadFromFile("resources/map_textures/start.png");
+
+    sf::Texture endTexture;
+    endTexture.loadFromFile("resources/map_textures/end.png");
+
+       for (size_t y = 0; y < _map.size(); ++y) {
+        const std::string& line = _map[y];
+        for (size_t x = 0; x < line.size(); ++x) {
+            char ch = line[x];
+
+            sf::Sprite tileSprite;
+
+            switch (ch) {
+                case '0':
+                    tileSprite.setTexture(airTexture);
+                    break;
+                case 'G':
+                    tileSprite.setTexture(groundTexture);
+                    break;
+                case 'P':
+                    tileSprite.setTexture(plateformTexture);
+                    break;
+                case 'W':
+                    tileSprite.setTexture(wallTexture);
+                    break;
+                case 'B':
+                    tileSprite.setTexture(boxTexture);
+                    break;
+                case 'S':
+                    tileSprite.setTexture(spawnTexture);
+                    break;
+                case 'E':
+                    tileSprite.setTexture(endTexture);
+                    break;
+
+                default:
+                    continue;
+            }
+
+            //tileSprite.setScale(2, 2);
+
+            tileSprite.setPosition(x * 40, y * 40);
+
+            tiles.push_back(tileSprite);
+
+        }
+    }
+    for (const sf::Sprite& tile : tiles) {
+    _window.draw(tile);
+    }
 }

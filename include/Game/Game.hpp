@@ -8,7 +8,7 @@
 #pragma once
 #include <SFML/Graphics.hpp>
 #include <memory>
-
+#include "MapGenerator.hpp"
 #include "Player.hpp"
 
 namespace MySandBox {
