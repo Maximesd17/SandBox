@@ -7,6 +7,7 @@
 
 #pragma once
 
+#include "Range.hpp"
 #include "SMenu.hpp"
 
 namespace MySandBox {
@@ -19,6 +20,7 @@ namespace MySandBox {
             void display();
         protected:
         private:
+            MySandBox::Component::Range _volume_range;
             MySandBox::Component::Button _return_button;
         };
     };

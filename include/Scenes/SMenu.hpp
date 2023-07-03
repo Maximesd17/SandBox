@@ -8,7 +8,6 @@
 #pragma once
 
 #include "AScene.hpp"
-#include "Button.hpp"
 #include <memory>
 
 namespace MySandBox {
