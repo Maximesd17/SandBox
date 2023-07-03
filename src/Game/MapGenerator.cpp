@@ -10,6 +10,8 @@
 #include <memory>
 #include <vector>
 
+SandBox::MapGenerator::MapGenerator() {}
+
 SandBox::MapGenerator::MapGenerator(std::string &filepath) {
     std::ifstream fs;
     std::string buf;

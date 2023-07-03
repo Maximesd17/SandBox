@@ -33,6 +33,7 @@ namespace SandBox {
             bool checkIdentifiers(std::string &line);
             void keyPoints(std::string &line);
         public:
+            MapGenerator();
             MapGenerator(std::string &filepath);
             std::string getMapFile();
             std::vector<std::string> getMap();
