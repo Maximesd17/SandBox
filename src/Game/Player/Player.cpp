@@ -201,3 +201,46 @@ void MySandBox::Game::Player::Player::display(sf::RenderWindow& window)
     _player.setScale(2, 2);
     window.draw(_player);
 }
+
+
+/*********getPosition*********/
+/*     _position getter      */
+/*********getPosition*********/
+sf::Vector2f MySandBox::Game::Player::Player::getPosition() {
+    return _position;
+}
+
+/*********getState*********/
+/*     _state getter      */
+/*********getState*********/
+MySandBox::Game::PlayerState MySandBox::Game::Player::Player::getState() {
+    return _state;
+}
+
+/*********getDirection*********/
+/*     _direction getter      */
+/*********getDirection*********/
+MySandBox::Game::PlayerDirection MySandBox::Game::Player::Player::getDirection() {
+    return _direction;
+}
+
+/*********setPosition*********/
+/*     _position setter      */
+/*********setPosition*********/
+void MySandBox::Game::Player::Player::setPosition(sf::Vector2f position) {
+    _position = position;
+}
+
+/*********setState*********/
+/*     _state setter      */
+/*********setState*********/
+void MySandBox::Game::Player::Player::setState(MySandBox::Game::PlayerState playerState) {
+    _state = playerState;
+}
+
+/*********setDirection*********/
+/*     _direction setter      */
+/*********setDirection*********/
+void MySandBox::Game::Player::Player::setDirection(MySandBox::Game::PlayerDirection playerDirection) {
+    _direction = playerDirection;
+}
