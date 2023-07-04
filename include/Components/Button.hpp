@@ -12,7 +12,7 @@
 #include <SFML/Graphics/RenderWindow.hpp>
 
 namespace MySandBox {
-    namespace Component {
+    namespace Components {
         enum ButtonState {
             IDLE,
             HOVER,
@@ -31,8 +31,8 @@ namespace MySandBox {
             sf::RectangleShape _rect;
             sf::Text _text;
             sf::Font _font;
-            MySandBox::Component::ButtonState _state;
-            std::map<MySandBox::Component::ButtonState, sf::Color> _colors;
+            MySandBox::Components::ButtonState _state;
+            std::map<MySandBox::Components::ButtonState, sf::Color> _colors;
             sf::Vector2u _window_origin_size;
         };
     }

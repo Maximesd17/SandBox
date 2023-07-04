@@ -11,15 +11,18 @@
 /*********Constructor*********/
 /* This build the object     */
 /*********Constructor*********/
-MySandBox::Component::Range::Range(std::string text, sf::Vector2i pos, sf::Vector2f size,
-    sf::Vector2u window_origin_size, int min, int max, int value)
-    : _state(MySandBox::Component::IDLE), _window_origin_size(window_origin_size)
+MySandBox::Components::Range::Range(std::string text, sf::Vector2i pos, sf::Vector2f size,
+    sf::Vector2u window_origin_size, int min, int max, int value, bool show_value)
+    : _state(MySandBox::Components::IDLE), _window_origin_size(window_origin_size)
 {
     _min_value = min;
     _max_value = max;
+    _show_value = show_value;
+
     _bar.setPosition(pos.x, pos.y);
     _bar.setSize(sf::Vector2f(size.x, size.y / 4));
     _bar.setFillColor(sf::Color::Blue);
+
     _cursor.setRadius(size.y / 2);
     _cursor.setFillColor(sf::Color::White);
     _cursor.setPosition(
@@ -27,13 +30,22 @@ MySandBox::Component::Range::Range(std::string text, sf::Vector2i pos, sf::Vecto
         pos.y + size.y / 8 - size.y / 2
     );
     _cursor.setPointCount(100);
-    // _font.loadFromFile("resources/fonts/button.ttf");
-    // _text.setFont(_font);
-    // _text.setString(text);
-    // _text.setCharacterSize(size.y / 2);
-    // _text.setFillColor(sf::Color::Black);
+
+    _font.loadFromFile("resources/fonts/button.ttf");
+
+    _text.setFont(_font);
+    _text.setString(text);
+    _text.setCharacterSize(60);
+    _text.setFillColor(sf::Color::White);
     sf::Vector2f text_size = sf::Vector2f(_text.getLocalBounds().width, _text.getLocalBounds().height);
-    // _text.setPosition(pos.x + size.x / 2 - text_size.x / 2, pos.y + size.y / 2 - text_size.y / 2);
+    _text.setPosition(pos.x + size.x / 2 - text_size.x / 2, pos.y - size.y * 2);
+
+    _value.setFont(_font);
+    _value.setString(std::to_string(value) + "%");
+    _value.setCharacterSize(60);
+    _value.setFillColor(sf::Color::White);
+    _value.setPosition(pos.x + size.x + size.y, _cursor.getPosition().y - size.y / 4);
+
     _colors[IDLE] = sf::Color::Blue;
     _colors[HOVER] = sf::Color::Green;
     _colors[CLICKED] = sf::Color::Red;
@@ -42,14 +54,14 @@ MySandBox::Component::Range::Range(std::string text, sf::Vector2i pos, sf::Vecto
 /*********Destructor*********/
 /* This destroy the sandbox */
 /*********Destructor*********/
-MySandBox::Component::Range::~Range()
+MySandBox::Components::Range::~Range()
 {
 }
 
-/*********isHovered*****************************/
-/* Check if the button is hovered by the mouse */
-/*********isHovered*****************************/
-bool MySandBox::Component::Range::isHovered(sf::Vector2i mouse_pos, sf::Vector2u window_size)
+/*********isCursorHovered*****************************/
+/* Check if the cursor is hovered by the mouse */
+/*********isCursorHovered*****************************/
+bool MySandBox::Components::Range::isCursorHovered(sf::Vector2i mouse_pos, sf::Vector2u window_size)
 {
     sf::Vector2f pos = _cursor.getPosition();
     float size = _cursor.getRadius();
@@ -62,13 +74,30 @@ bool MySandBox::Component::Range::isHovered(sf::Vector2i mouse_pos, sf::Vector2u
     return false;
 }
 
+/*********isBarHovered*****************************/
+/* Check if the bar is hovered by the mouse */
+/*********isBarHovered*****************************/
+bool MySandBox::Components::Range::isBarHovered(sf::Vector2i mouse_pos, sf::Vector2u window_size)
+{
+    sf::Vector2f pos = _bar.getPosition();
+    sf::Vector2f size = _bar.getSize();
+
+    pos.x = pos.x * window_size.x / _window_origin_size.x;
+    pos.y = pos.y * window_size.y / _window_origin_size.y;
+    size.x = size.x * window_size.x / _window_origin_size.x;
+    size.y = size.y * window_size.y / _window_origin_size.y;
+    if (mouse_pos.x >= pos.x && mouse_pos.x <= pos.x + size.x && mouse_pos.y >= pos.y && mouse_pos.y <= pos.y + size.y)
+        return true;
+    return false;
+}
+
 /*********check************************************************************/
 /* Check if the cursor is clicked or hovered, and update his state and his pos */
 /*********check************************************************************/
-bool MySandBox::Component::Range::check(sf::RenderWindow& window)
+bool MySandBox::Components::Range::check(sf::RenderWindow& window)
 {
     sf::Vector2i mouse_pos = sf::Mouse::getPosition(window);
-    bool is_hovered = isHovered(mouse_pos, window.getSize());
+    bool is_hovered = isCursorHovered(mouse_pos, window.getSize());
 
     // TODO : @hollitizz CLEAN THIS CODE
 
@@ -98,13 +127,26 @@ bool MySandBox::Component::Range::check(sf::RenderWindow& window)
             _state = CLICKED;
     } else
         _state = IDLE;
+    if (sf::Mouse::isButtonPressed(sf::Mouse::Left) && isBarHovered(mouse_pos, window.getSize())) {
+        sf::Vector2f pos = _cursor.getPosition();
+        float size = _cursor.getRadius();
+
+        _state = CLICKED;
+        pos.x = mouse_pos.x - size;
+        if (pos.x < _bar.getPosition().x - size)
+            pos.x = _bar.getPosition().x - size;
+        else if (pos.x > _bar.getPosition().x + _bar.getSize().x - size)
+            pos.x = _bar.getPosition().x + _bar.getSize().x - size;
+        _cursor.setPosition(pos);
+        return true;
+    }
     return false;
 }
 
 /*********getValue*******************/
 /* Return the value of the range   */
 /*********getValue*******************/
-int MySandBox::Component::Range::getValue()
+int MySandBox::Components::Range::getValue()
 {
     sf::Vector2f pos = _cursor.getPosition();
     float size = _cursor.getRadius();
@@ -121,9 +163,20 @@ int MySandBox::Component::Range::getValue()
 /*********display********************/
 /* Display the button on the window */
 /*********display********************/
-void MySandBox::Component::Range::display(sf::RenderWindow& window)
+void MySandBox::Components::Range::display(sf::RenderWindow& window)
 {
+    if (_show_value) {
+        std::string value = std::to_string(getValue());
+        if (value.length() != 3) {
+            int nb_spaces = 3 - value.length();
+            for (int i = 0; i < nb_spaces; i++)
+                value = " " + value;
+        }
+        _value.setString(value + "%");
+        window.draw(_value);
+    }
     _cursor.setFillColor(_colors[_state]);
+    window.draw(_text);
     window.draw(_bar);
     window.draw(_cursor);
 }

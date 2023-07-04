@@ -10,6 +10,7 @@
 #include "Range.hpp"
 #include "Game.hpp"
 #include "ASubScene.hpp"
+#include "SettingsEditor.hpp"
 
 namespace MySandBox {
     namespace Scenes {
@@ -22,8 +23,10 @@ namespace MySandBox {
                 void display();
             protected:
             private:
-                MySandBox::Component::Range _volume_range;
-                MySandBox::Component::Button _return_button;
+                sf::Text _title;
+                sf::Font _font;
+                MySandBox::Components::SettingsEditor _settings_editor;
+                MySandBox::Components::Button _return_button;
             };
         }
     };

@@ -11,7 +11,7 @@
 #include <SFML/Graphics/CircleShape.hpp>
 
 namespace MySandBox {
-    namespace Component {
+    namespace Components {
         class  Range {
             public:
                 Range(
@@ -21,7 +21,8 @@ namespace MySandBox {
                     sf::Vector2u window_origin_size,
                     int min,
                     int max,
-                    int value
+                    int value,
+                    bool show_value = true
                 );
                 ~Range();
                 bool check(sf::RenderWindow &window);
@@ -29,15 +30,18 @@ namespace MySandBox {
                 void display(sf::RenderWindow &window);
             protected:
             private:
-                bool isHovered(sf::Vector2i mousePos, sf::Vector2u window_size);
+                bool isCursorHovered(sf::Vector2i mousePos, sf::Vector2u window_size);
+                bool isBarHovered(sf::Vector2i mousePos, sf::Vector2u window_size);
+                bool _show_value;
                 int _min_value;
                 int _max_value;
                 sf::RectangleShape _bar;
                 sf::CircleShape _cursor;
                 sf::Text _text;
+                sf::Text _value;
                 sf::Font _font;
-                MySandBox::Component::ButtonState _state;
-                std::map<MySandBox::Component::ButtonState, sf::Color> _colors;
+                MySandBox::Components::ButtonState _state;
+                std::map<MySandBox::Components::ButtonState, sf::Color> _colors;
                 sf::Vector2u _window_origin_size;
         };
     }

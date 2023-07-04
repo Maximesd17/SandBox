@@ -11,9 +11,9 @@
 /*********Constructor*********/
 /* This build the object     */
 /*********Constructor*********/
-MySandBox::Component::Button::Button(std::string text, sf::Vector2i pos, sf::Vector2f size,
+MySandBox::Components::Button::Button(std::string text, sf::Vector2i pos, sf::Vector2f size,
     sf::Vector2u window_origin_size)
-    : _state(MySandBox::Component::IDLE), _window_origin_size(window_origin_size)
+    : _state(MySandBox::Components::IDLE), _window_origin_size(window_origin_size)
 {
     _is_clicked = false;
     _rect.setPosition(pos.x, pos.y);
@@ -33,14 +33,14 @@ MySandBox::Component::Button::Button(std::string text, sf::Vector2i pos, sf::Vec
 /*********Destructor*********/
 /* This destroy the sandbox */
 /*********Destructor*********/
-MySandBox::Component::Button::~Button()
+MySandBox::Components::Button::~Button()
 {
 }
 
 /*********isHovered*****************************/
 /* Check if the button is hovered by the mouse */
 /*********isHovered*****************************/
-bool MySandBox::Component::Button::isHovered(sf::Vector2i mouse_pos, sf::Vector2u window_size)
+bool MySandBox::Components::Button::isHovered(sf::Vector2i mouse_pos, sf::Vector2u window_size)
 {
     sf::Vector2f pos = _rect.getPosition();
     sf::Vector2f size = _rect.getSize();
@@ -57,7 +57,7 @@ bool MySandBox::Component::Button::isHovered(sf::Vector2i mouse_pos, sf::Vector2
 /*********check************************************************************/
 /* Check if the button is clicked or hovered, and update the button state */
 /*********check************************************************************/
-bool MySandBox::Component::Button::check(sf::RenderWindow& window)
+bool MySandBox::Components::Button::check(sf::RenderWindow& window)
 {
     sf::Vector2i mouse_pos = sf::Mouse::getPosition(window);
     bool is_hovered = isHovered(mouse_pos, window.getSize());
@@ -78,7 +78,7 @@ bool MySandBox::Component::Button::check(sf::RenderWindow& window)
 /*********display********************/
 /* Display the button on the window */
 /*********display********************/
-void MySandBox::Component::Button::display(sf::RenderWindow& window)
+void MySandBox::Components::Button::display(sf::RenderWindow& window)
 {
     _rect.setFillColor(_colors[_state]);
     window.draw(_rect);

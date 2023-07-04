@@ -19,7 +19,7 @@ MySandBox::Game::Game::Game(sf::RenderWindow& window) : _window(window)
 
 /*********Destructor*********/
 /* This destroy the sandbox */
-/*********Destructor*********/ 
+/*********Destructor*********/
 MySandBox::Game::Game::~Game()
 {
 }
