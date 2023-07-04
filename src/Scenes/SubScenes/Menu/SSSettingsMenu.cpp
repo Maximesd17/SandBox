@@ -11,7 +11,7 @@
 /*********Constructor*********/
 /* This build the object     */
 /*********Constructor*********/
-MySandBox::Scenes::SSSettingsMenu::SSSettingsMenu(MySandBox::State& state, MySandBox::Game::Game& game) :
+MySandBox::Scenes::SubScenes::SSSettingsMenu::SSSettingsMenu(MySandBox::State& state, MySandBox::Game::Game& game) :
     MySandBox::Scenes::SubScenes::ASubScene(state, game),
     _volume_range("Volume", sf::Vector2i(800, 200), sf::Vector2f(300, 50),
         _game.getWindowOriginSize(), 0, 100, 50),

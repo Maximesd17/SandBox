@@ -8,6 +8,7 @@
 #pragma once
 
 #include "AScene.hpp"
+#include "ASubScene.hpp"
 #include <memory>
 
 namespace MySandBox {
@@ -20,7 +21,7 @@ namespace MySandBox {
                 void display();
             protected:
             private:
-                std::map<MySandBox::Scenes::Type, std::shared_ptr<MySandBox::Scenes::IScene> > _scenes;
+                std::map<MySandBox::Scenes::Type, std::shared_ptr<MySandBox::Scenes::SubScenes::ISubScene> > _scenes;
         };
     }
 };
