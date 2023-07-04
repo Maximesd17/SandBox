@@ -5,6 +5,9 @@
 ** IScene
 */
 
+#ifndef ______ISUBSCENE_HPP___
+#define ______ISUBSCENE_HPP___
+
 #pragma once
 
 #include <SFML/Graphics/RenderWindow.hpp>
@@ -24,3 +27,4 @@ namespace MySandBox {
         }
     };
 };
+#endif //______ISUBSCENE_HPP___

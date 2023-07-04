@@ -5,6 +5,10 @@
 ** SandBox
 */
 
+#ifndef ______GAMECLASS_HPP___
+#define ______GAMECLASS_HPP___
+
+
 #pragma once
 #include <memory>
 #include "IScene.hpp"
@@ -26,3 +30,5 @@ namespace MySandBox {
         SandBox::State _state;
     };
 };
+
+#endif //______GAMECLASS_HPP___

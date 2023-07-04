@@ -4,6 +4,9 @@
 ** File description:
 ** Game
 */
+#ifndef ______GAME_HPP___
+#define ______GAME_HPP___
+
 
 #pragma once
 #include <SFML/Graphics.hpp>
@@ -57,3 +60,5 @@ namespace MySandBox {
         };
     }
 };
+
+#endif //______GAME_HPP___

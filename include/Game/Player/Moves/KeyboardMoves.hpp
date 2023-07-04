@@ -5,6 +5,9 @@
 ** KeyboardMoves
 */
 
+#ifndef ______KEYBOARDMOVES_HPP___
+#define ______KEYBOARDMOVES_HPP___
+
 #pragma once
 
 #include "IMoves.hpp"
@@ -28,3 +31,4 @@ namespace MySandBox {
         }
     }
 }
+#endif //______KEYBOARDMOVES_HPP___

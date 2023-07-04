@@ -5,6 +5,10 @@
 ** State
 */
 
+#ifndef ______STATE_HPP___
+#define ______STATE_HPP___
+
+
 #pragma once
 
 #include "Types.hpp"
@@ -24,3 +28,5 @@ namespace MySandBox {
         MySandBox::Scenes::Type _current_sub_scene;
     };
 };
+
+#endif //______STATE_HPP___

@@ -4,6 +4,8 @@
 ** File description:
 ** IPlayerMovements
 */
+#ifndef ______IPLAYERMOVEMENTS_HPP___
+#define ______IPLAYERMOVEMENTS_HPP___
 
 #pragma once
 
@@ -26,3 +28,5 @@ namespace MySandBox {
         }
     }
 }
+
+#endif //______IPLAYERMOVEMENTS_HPP___

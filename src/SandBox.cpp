@@ -17,12 +17,14 @@
 /*********Constructor*********/ 
 MySandBox::SandBox::SandBox() : _game(_window)
 {
-    _window.create(sf::VideoMode(1920, 1080), "MySandBox");
+    _window_size = getStevensMode;
+    _window.create(sf::VideoMode(_window_size.width, _window_size.height), "MySandBox");
     _framerate = 60;
     _window.setFramerateLimit(_framerate);
     _game.init();
     _scenes[MySandBox::Scenes::MENU] = std::make_shared<MySandBox::Scenes::SMenu>(_state, _game);
     _scenes[MySandBox::Scenes::GAME] = std::make_shared<MySandBox::Scenes::SGame>(_state, _game);
+
 }
 
 
