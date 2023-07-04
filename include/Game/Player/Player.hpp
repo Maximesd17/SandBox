@@ -49,7 +49,7 @@ namespace MySandBox {
                 double _jump_speed;
                 bool _is_moves_manual_changed;
 
-                std::map<PlayerControlledBy, std::shared_ptr<MySandBox::Game::Player::Moves::IMoves>> _moves;
+                std::map<PlayerControlledBy, std::shared_ptr<MySandBox::Game::Player::Moves::IMoves> > _moves;
                 sf::Vector2f _position;
                 size_t _sprite_index;
                 std::vector<sf::Sprite> _sprites;

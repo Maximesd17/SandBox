@@ -19,7 +19,7 @@ MySandBox::Game::Player::Moves::ControllerMoves::~ControllerMoves()
 
 void MySandBox::Game::Player::Moves::ControllerMoves::computeDirection()
 {
-    sf::Vector2f direction = {0, 0};
+    sf::Vector2f direction = sf::Vector2f(0, 0);
     sf::Joystick gamepad;
 
     if (gamepad.getAxisPosition(0, gamepad.PovX) != 0) // Left - Right
