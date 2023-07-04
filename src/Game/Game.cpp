@@ -61,9 +61,9 @@ void MySandBox::Game::Game::displayMap()
         _window.draw(_s_wall);
         pos.x += 64;
     }*/
-    std::string mapFile("maps/medium.txt");
-    SandBox::MapGenerator map(mapFile);
-    map.displayMap(_window);
+    std::string mapFile("maps/fullscreen.txt");
+    _mapGenerator = SandBox::MapGenerator(mapFile);
+    _mapGenerator.displayMap(_window);
 
 }
 
@@ -81,6 +81,7 @@ void MySandBox::Game::Game::displayPlayer()
 void MySandBox::Game::Game::events(sf::Event& event)
 {
     _player.events(event);
+    winningCondition();
 }
 
 /*********update*********/
@@ -114,4 +115,39 @@ sf::RenderWindow& MySandBox::Game::Game::getWindow() const
 sf::Vector2u MySandBox::Game::Game::getWindowOriginSize() const
 {
     return _window_origin_size;
+}
+
+/************winningCondition************/
+/* Check for winning condition.         */
+/* If player position reaches end point */
+/* it return True. Otherwise, false     */
+/************winningCondition************/
+void MySandBox::Game::Game::winningCondition()
+{
+    sf::Vector2f pos = _player.getPosition();
+
+    /*Temporary values before having access to real values*/
+    sf::Vector2i endPoint = _mapGenerator.getEndPoint();
+    int textures_size = 40;
+    /*---------------------*/
+
+    // std::cout << "[PLAYER] X: " << pos.x << " | " << "Y: " << pos.y << std::endl;
+    // std::cout << "[END] X: " << endPoint.x * textures_size << " | " << "Y: " << endPoint.y * textures_size << std::endl;
+    if ((size_t)pos.x >= endPoint.x * textures_size &&
+        (size_t)pos.x <= endPoint.x * textures_size + textures_size &&
+        (size_t)pos.y >= endPoint.y * textures_size &&
+        (size_t)pos.y <= endPoint.y * textures_size - textures_size) {
+        // std::cout << "WIN" << std::endl;
+        _game_state = WIN;
+    }
+}
+
+MySandBox::Game::State MySandBox::Game::Game::getGameState() const
+{
+    return _game_state;
+}
+
+void MySandBox::Game::Game::setGameState(MySandBox::Game::State &game_state)
+{
+    _game_state = game_state;
 }

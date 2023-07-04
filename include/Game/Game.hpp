@@ -20,6 +20,14 @@ namespace MySandBox {
             SPAWN,
             END
         };
+        enum State {
+            PENDING,
+            START,
+            PLAY,
+            PAUSE,
+            LOST,
+            WIN,
+        };
         class Game {
         public:
             Game(sf::RenderWindow& window);
@@ -31,8 +39,11 @@ namespace MySandBox {
             void display();
             sf::RenderWindow& getWindow() const;
             sf::Vector2u getWindowOriginSize() const;
+            State getGameState() const;
+            void setGameState(State &game_state);
         protected:
         private:
+            void winningCondition();
             void displayMap();
             void displayPlayer();
             sf::RenderWindow& _window;
@@ -41,7 +52,8 @@ namespace MySandBox {
             sf::Texture _sprite_shit;
             sf::Sprite _s_wall;
             MySandBox::Game::Player::Player _player;
-
+            SandBox::MapGenerator _mapGenerator;
+            State _game_state = PENDING;
         };
     }
 };
