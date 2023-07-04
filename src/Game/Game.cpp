@@ -131,13 +131,10 @@ void MySandBox::Game::Game::winningCondition()
     int textures_size = 40;
     /*---------------------*/
 
-    // std::cout << "[PLAYER] X: " << pos.x << " | " << "Y: " << pos.y << std::endl;
-    // std::cout << "[END] X: " << endPoint.x * textures_size << " | " << "Y: " << endPoint.y * textures_size << std::endl;
     if ((size_t)pos.x >= endPoint.x * textures_size &&
         (size_t)pos.x <= endPoint.x * textures_size + textures_size &&
-        (size_t)pos.y >= endPoint.y * textures_size &&
-        (size_t)pos.y <= endPoint.y * textures_size - textures_size) {
-        // std::cout << "WIN" << std::endl;
+        (size_t)pos.y >= endPoint.y * textures_size - textures_size &&
+        (size_t)pos.y <= endPoint.y * textures_size) {
         _game_state = WIN;
     }
 }
