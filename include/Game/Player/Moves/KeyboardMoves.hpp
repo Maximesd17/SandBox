@@ -20,8 +20,8 @@ namespace MySandBox {
                     void events(sf::Event& event);
                     sf::Vector2f getLastMove();
                 protected:
-                    void computeDirection();
                 private:
+                    void computeDirection();
                     sf::Vector2f _lastMove;
                 };
             }

@@ -8,196 +8,124 @@
 #include "Player.hpp"
 #include <math.h>
 #include <iostream>
-#include <cmath>
+#include <SFML/Window/Joystick.hpp>
+#include "SandBox.hpp"
 
-/*********Constructor*********/
-/* This build the object     */
-/*********Constructor*********/
 MySandBox::Game::Player::Player::Player()
 {
     _speed = 10;
     _gravity = 9.81;
     _jump_height = 150;
-    _position = sf::Vector2f(0, 835);
-    _idle_frame = 0;
-    _idle_speed = 1 * 60; // 60 = default frame rate
+    _sprite_index = 0;
+    _position = sf::Vector2f(0, 780);
     _jump_frame = 0;
-    _jump_speed = 0.1 * 60; // 60 = default frame rate
+    _jump_speed = 0.1;
 
     _state = PLAYER_IDLE;
-    _direction = RIGHT;
-
-    _moves = std::make_shared<Moves::KeyboardMoves>();
+    _direction = PlayerDirection::RIGHT;
+    
+    _controlled_by = KEYBOARD;
+    _is_moves_manual_changed = false;
+    _moves[JOYSTICK] = std::make_shared<Moves::ControllerMoves>();
+    _moves[KEYBOARD] = std::make_shared<Moves::KeyboardMoves>();
 }
 
-/*********Destructor*********/
-/* This destroy the sandbox */
-/*********Destructor*********/
 MySandBox::Game::Player::Player::~Player()
 {
 }
 
-/*********setPlayerSprites*********/
-/* Set player sprites function    */
-/*********setPlayerSprites*********/
-void MySandBox::Game::Player::Player::setPlayerSprites(sf::Texture& sprite_shit)
+void MySandBox::Game::Player::Player::setPlayerSprites(std::vector<sf::Texture>& textures)
 {
-    _player.setTexture(sprite_shit);
+    _sprites.clear();
+
+    for (size_t i = 0; i < textures.size(); i++) {
+        _sprites.push_back(sf::Sprite());
+        _sprites[i].setTexture(textures[i]);
+    }
 }
 
-/*********events************/
-/* Event handling function */
-/*********events************/
 void MySandBox::Game::Player::Player::events(sf::Event& event)
 {
-    _moves->events(event);
+    if (sf::Joystick::isConnected(0) && !_is_moves_manual_changed) {
+        std::cout << "GAMEPAD CONNECTED" << std::endl;
+        _controlled_by = JOYSTICK;
+    } else {
+        std::cout << "GAMEPAD DISCONNECTED" << std::endl;
+        _controlled_by = KEYBOARD;
+    }
+    _moves[_controlled_by]->events(event);
 }
 
-/*********ApplyGravity*********/
-/* Apply gravity function     */
-/*********ApplyGravity*********/
-void MySandBox::Game::Player::Player::ApplyGravity()
+void MySandBox::Game::Player::Player::update()
 {
-    if (_position.y < 835) {
-        _position.y += _gravity;
-    }
-    else {
-        _state = PLAYER_IDLE;
-    }
-}
+    sf::Vector2f direction = _moves[_controlled_by]->getLastMove();
 
-/*********ApplyJump*********/
-/* Apply jump function     */
-/*********ApplyJump*********/
-void MySandBox::Game::Player::Player::ApplyJump()
-{
-    if (_jump_frame < _jump_speed) {
-        _position.y -= _jump_height / _jump_speed;
-        _jump_frame++;
-    }
-    else {
-        _state = FALLING;
-    }
-}
-
-/*********computeYMoves***********/
-/* Compute Y-axis moves function */
-/*********computeYMoves***********/
-void MySandBox::Game::Player::Player::computeYMoves(float directionY)
-{
-    if (directionY < 0 && _state != JUMPING && _state != FALLING) {
+    if (direction.y < 0 && _state != JUMPING && _state != FALLING) {
         _state = JUMPING;
         _jump_frame = 0;
     }
+    if (_state == JUMPING) {
+        _position.y -= _jump_height / (_jump_speed * 60);
+        _jump_frame++;
+        if (_jump_frame >= _jump_speed * 60)
+            _state = FALLING;
+    }
+    if (_position.y < 780 && _state == FALLING) {
+        _position.y += _gravity;
+    }
+    if (_position.y >= 780) {
+        if (direction.y == 0 && direction.x == 0)
+            _state = PLAYER_IDLE;
+        _position.y = 780;
+    }
+
+
+    _position.x += direction.x * _speed;
+    if (direction.x < 0)
+        _direction = PlayerDirection::LEFT;
+    else if (direction.x > 0)
+        _direction = PlayerDirection::RIGHT;
+    if (direction.x != 0 && _state != JUMPING && (_state != FALLING || _position.y >= 780))
+        _state = WALKING;
+    else if (direction.x == 0 && _state == PLAYER_IDLE)
+        _state = PLAYER_IDLE;
+
+
+
     switch (_state) {
+    case PLAYER_IDLE:
+        std::cout << "idle" << std::endl;
+        break;
+    case WALKING:
+        std::cout << "walking" << std::endl;
+        break;
     case JUMPING:
-        ApplyJump();
+        std::cout << "jumping" << std::endl;
         break;
     case FALLING:
-        ApplyGravity();
+        std::cout << "falling" << std::endl;
+        break;
+    case ATTACKING:
+        std::cout << "attacking" << std::endl;
+        break;
+    case DEAD:
+        std::cout << "dead" << std::endl;
         break;
     default:
         break;
     }
-}
-
-/*********computeXMoves***********/
-/* Compute X-axis moves function */
-/*********computeXMoves***********/
-void MySandBox::Game::Player::Player::computeXMoves(float directionX)
-{
-    _position.x += directionX * _speed;
-    if (directionX < 0) {
-        _direction = LEFT;
-        if (_state != JUMPING && _state != FALLING)
-            _state = WALKING;
-    }
-    else if (directionX > 0) {
-        _direction = RIGHT;
-        if (_state != JUMPING && _state != FALLING)
-            _state = WALKING;
-    }
-    else if (_state != JUMPING && _state != FALLING)
-        _state = PLAYER_IDLE;
-}
-
-/*********update*********/
-/* Update function      */
-/*********update*********/
-void MySandBox::Game::Player::Player::update()
-{
-    sf::Vector2f direction = _moves->getLastMove();
-
-    computeYMoves(direction.y);
-    computeXMoves(direction.x);
-}
-
-/*********display*********/
-/* Display function      */
-/*********display*********/
-void MySandBox::Game::Player::Player::setIdleFrame()
-{
-    if (_idle_frame >= _idle_speed) _idle_frame = 0;
-
-    const int frame_to_display = floor(4 / _idle_speed * _idle_frame);
-
-    _player.setTextureRect(sf::IntRect(40 * frame_to_display, 0 + 58 * (int)_direction, 40, 58));
-    _idle_frame++;
-}
-
-void MySandBox::Game::Player::Player::setWalkingFrame()
-{
-    _player.setTextureRect(sf::IntRect( 0, 0 + 58 * (int)_direction, 40, 58 ));
-}
-
-void MySandBox::Game::Player::Player::setJumpingFrame()
-{
-    const int frame_to_display = floor(4 / _jump_speed * _jump_frame);
-
-    _player.setTextureRect(sf::IntRect(40 * frame_to_display, 116 + 58 * (int)_direction, 40, 58 ));
-}
-
-void MySandBox::Game::Player::Player::setFallingFrame()
-{
-    _player.setTextureRect(sf::IntRect( 120, 116 + 58 * (int)_direction, 40, 58));
-}
-
-void MySandBox::Game::Player::Player::setAttackingFrame()
-{
-    std::cout << "setAttackingFrame" << std::endl;
-}
-
-void MySandBox::Game::Player::Player::setDeadFrame()
-{
-    std::cout << "setDeadFrame" << std::endl;
 }
 
 void MySandBox::Game::Player::Player::display(sf::RenderWindow& window)
 {
-    _sprite_index++;
-    switch (_state) {
-    case PLAYER_IDLE:
-        setIdleFrame();
-        break;
-    case WALKING:
-        setWalkingFrame();
-        break;
-    case JUMPING:
-        setJumpingFrame();
-        break;
-    case FALLING:
-        setFallingFrame();
-        break;
-    case ATTACKING:
-        setAttackingFrame();
-        break;
-    case DEAD:
-        setDeadFrame();
-        break;
-    default:
-        break;
+    size_t computed_index = floor(_sprite_index / 25);
+
+    if (computed_index >= _sprites.size()) {
+        _sprite_index = 0;
+        computed_index = 0;
     }
-    _player.setPosition(_position);
-    _player.setScale(2, 2);
-    window.draw(_player);
+    _sprites[computed_index].setPosition(_position);
+    _sprites[computed_index].setScale(3, 3);
+    window.draw(_sprites[computed_index]);
+    _sprite_index++;
 }
