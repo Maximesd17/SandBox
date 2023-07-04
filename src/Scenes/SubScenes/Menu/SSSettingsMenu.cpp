@@ -1,5 +1,5 @@
 /*
-** EPITECH PROJECT, 2022
+** EPITECH PROJECT, 2023
 ** MySandBox
 ** File description:
 ** SSSettingsMenu
@@ -12,7 +12,7 @@
 /* This build the object     */
 /*********Constructor*********/
 MySandBox::Scenes::SSSettingsMenu::SSSettingsMenu(MySandBox::State& state, MySandBox::Game::Game& game) :
-    MySandBox::Scenes::AScene(state, game),
+    MySandBox::Scenes::SubScenes::ASubScene(state, game),
     _volume_range("Volume", sf::Vector2i(800, 200), sf::Vector2f(300, 50),
         _game.getWindowOriginSize(), 0, 100, 50),
     _return_button("Return", sf::Vector2i(800, 450), sf::Vector2f(300, 100),
@@ -23,14 +23,14 @@ MySandBox::Scenes::SSSettingsMenu::SSSettingsMenu(MySandBox::State& state, MySan
 /*********Destructor*********/
 /* This destroy the sandbox */
 /*********Destructor*********/
-MySandBox::Scenes::SSSettingsMenu::~SSSettingsMenu()
+MySandBox::Scenes::SubScenes::SSSettingsMenu::~SSSettingsMenu()
 {
 }
 
 /*********update*********/
 /* Update function      */
 /*********update*********/
-void MySandBox::Scenes::SSSettingsMenu::update()
+void MySandBox::Scenes::SubScenes::SSSettingsMenu::update()
 {
     sf::RenderWindow& window = _game.getWindow();
 
@@ -42,7 +42,7 @@ void MySandBox::Scenes::SSSettingsMenu::update()
 /*********display*********/
 /* Display function      */
 /*********display*********/
-void MySandBox::Scenes::SSSettingsMenu::display()
+void MySandBox::Scenes::SubScenes::SSSettingsMenu::display()
 {
     sf::RenderWindow& window = _game.getWindow();
 
