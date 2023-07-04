@@ -5,6 +5,9 @@
 ** ASubScene
 */
 
+#ifndef ______ASUBSCENE_HPP___
+#define ______ASUBSCENE_HPP___
+
 #pragma once
 
 #include "ISubScene.hpp"
@@ -28,3 +31,5 @@ namespace MySandBox {
         }
     };
 };
+
+#endif //______ASUBSCENE_HPP___

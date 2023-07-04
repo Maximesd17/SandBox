@@ -5,6 +5,10 @@
 ** AScene
 */
 
+#ifndef ______ASCENE_HPP___
+#define ______ASCENE_HPP___
+
+
 #pragma once
 
 #include "IScene.hpp"
@@ -26,3 +30,5 @@ namespace MySandBox {
         };
     };
 };
+
+#endif //______ASCENE_HPP___

@@ -5,6 +5,9 @@
 ** Player
 */
 
+#ifndef ______PLAYER_HPP___
+#define ______PLAYER_HPP___
+
 #pragma once
 
 #include <vector>
@@ -12,6 +15,7 @@
 #include <SFML/Graphics.hpp>
 #include "KeyboardMoves.hpp"
 #include "ControllerMoves.hpp"
+#include "LogManager.hpp"
 
 namespace MySandBox {
     namespace Game {
@@ -69,7 +73,10 @@ namespace MySandBox {
                 sf::Sprite _player;
                 PlayerState _state;
                 PlayerDirection _direction;
+                LogManager _log_manager;
             };
         }
     }
 }
+
+#endif //______PLAYER_HPP___

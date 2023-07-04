@@ -5,6 +5,9 @@
 ** SMainGame
 */
 
+#ifndef ______SMAINGAME_HPP___
+#define ______SMAINGAME_HPP___
+
 #pragma once
 
 #include "Game.hpp"
@@ -26,3 +29,5 @@ namespace MySandBox {
         };
     };
 };
+
+#endif //______SMAINGAME_HPP___

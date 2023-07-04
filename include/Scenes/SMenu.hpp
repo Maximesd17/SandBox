@@ -4,7 +4,8 @@
 ** File description:
 ** SMenu
 */
-
+#ifndef ______SMENU_HPP___
+#define ______SMENU_HPP___
 #pragma once
 
 #include "AScene.hpp"
@@ -25,3 +26,4 @@ namespace MySandBox {
         };
     }
 };
+#endif //______SMENU_HPP___

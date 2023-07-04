@@ -4,6 +4,8 @@
 ** File description:
 ** ControllerMoves
 */
+#ifndef ______CONTROLLERMOVES_HPP___
+#define ______CONTROLLERMOVES_HPP___
 
 #pragma once
 
@@ -28,3 +30,5 @@ namespace MySandBox {
         }
     }
 }
+
+#endif //______CONTROLLERMOVES_HPP___
