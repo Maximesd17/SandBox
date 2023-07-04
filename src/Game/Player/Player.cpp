@@ -27,6 +27,7 @@ MySandBox::Game::Player::Player::Player()
     _state = PLAYER_IDLE;
     _direction = RIGHT;
 
+
     _moves = std::make_shared<Moves::KeyboardMoves>();
 }
 
@@ -59,6 +60,7 @@ void MySandBox::Game::Player::Player::events(sf::Event& event)
 void MySandBox::Game::Player::Player::ApplyGravity()
 {
     if (_position.y < 835) {
+        //_log_manager.addLog("Player", "OK", "gravity fall");
         _position.y += _gravity;
     }
     else {
@@ -72,6 +74,8 @@ void MySandBox::Game::Player::Player::ApplyGravity()
 void MySandBox::Game::Player::Player::ApplyJump()
 {
     if (_jump_frame < _jump_speed) {
+
+        //_log_manager.addLog("Player", "OK", "jump");
         _position.y -= _jump_height / _jump_speed;
         _jump_frame++;
     }
@@ -85,6 +89,7 @@ void MySandBox::Game::Player::Player::ApplyJump()
 /*********computeYMoves***********/
 void MySandBox::Game::Player::Player::computeYMoves(float directionY)
 {
+    //_log_manager.printLogs();
     if (directionY < 0 && _state != JUMPING && _state != FALLING) {
         _state = JUMPING;
         _jump_frame = 0;

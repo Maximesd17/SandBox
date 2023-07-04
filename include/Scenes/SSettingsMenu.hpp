@@ -4,7 +4,8 @@
 ** File description:
 ** SMainMenu
 */
-
+#ifndef ______SSETTINGSMENU_HPP___
+#define ______SSETTINGSMENU_HPP___
 #pragma once
 
 #include "SMenu.hpp"
@@ -23,3 +24,5 @@ namespace MySandBox {
         };
     };
 };
+
+#endif //______SSETTINGSMENU_HPP___

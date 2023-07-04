@@ -4,6 +4,8 @@
 ** File description:
 ** Button
 */
+#ifndef ______BUTTON_HPP___
+#define ______BUTTON_HPP___
 
 #pragma once
 
@@ -36,3 +38,5 @@ namespace MySandBox {
         };
     }
 };
+
+#endif //______BUTTON_HPP___

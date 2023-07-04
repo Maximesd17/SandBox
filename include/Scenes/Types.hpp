@@ -4,7 +4,8 @@
 ** File description:
 ** Types
 */
-
+#ifndef ______TYPES_HPP___
+#define ______TYPES_HPP___
 #pragma once
 
 namespace MySandBox {
@@ -20,3 +21,4 @@ namespace MySandBox {
         };
     };
 };
+#endif //______TYPES_HPP___

@@ -5,6 +5,8 @@
 ** SMainMenu
 */
 
+#ifndef ______SMAINMENU_HPP___
+#define ______SMAINMENU_HPP___
 #pragma once
 
 #include "AScene.hpp"
@@ -27,3 +29,5 @@ namespace MySandBox {
         };
     };
 };
+
+#endif //______SMAINMENU_HPP___

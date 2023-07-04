@@ -5,6 +5,10 @@
 ** SGame
 */
 
+#ifndef ______SGAME_HPP___
+#define ______SGAME_HPP___
+
+
 #pragma once
 
 #include "ASubScene.hpp"
@@ -26,3 +30,5 @@ namespace MySandBox {
         };
     }
 };
+
+#endif //______SGAME_HPP___
