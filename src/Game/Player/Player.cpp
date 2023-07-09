@@ -211,28 +211,42 @@ void MySandBox::Game::Player::Player::display(sf::RenderWindow& window)
 /*********getPosition*********/
 /*     _position getter      */
 /*********getPosition*********/
-sf::Vector2f MySandBox::Game::Player::Player::getPosition() {
+sf::Vector2f MySandBox::Game::Player::Player::getPosition() const
+{
     return _position;
 }
 
 /*********getState*********/
 /*     _state getter      */
 /*********getState*********/
-MySandBox::Game::PlayerState MySandBox::Game::Player::Player::getState() {
+MySandBox::Game::PlayerState MySandBox::Game::Player::Player::getState() const
+{
     return _state;
 }
 
 /*********getDirection*********/
 /*     _direction getter      */
 /*********getDirection*********/
-MySandBox::Game::PlayerDirection MySandBox::Game::Player::Player::getDirection() {
+MySandBox::Game::PlayerDirection MySandBox::Game::Player::Player::getDirection() const
+{
     return _direction;
+}
+
+double MySandBox::Game::Player::Player::getGravity() const
+{
+    return _gravity;
+}
+
+int MySandBox::Game::Player::Player::getJumpHeight() const
+{
+    return _jump_height;
 }
 
 /*********setPosition*********/
 /*     _position setter      */
 /*********setPosition*********/
-void MySandBox::Game::Player::Player::setPosition(sf::Vector2f position) {
+void MySandBox::Game::Player::Player::setPosition(sf::Vector2f position)
+{
     _position = position;
 }
 
@@ -248,4 +262,14 @@ void MySandBox::Game::Player::Player::setState(MySandBox::Game::PlayerState play
 /*********setDirection*********/
 void MySandBox::Game::Player::Player::setDirection(MySandBox::Game::PlayerDirection playerDirection) {
     _direction = playerDirection;
+}
+
+void MySandBox::Game::Player::Player::setGravity(double gravity)
+{
+    _gravity = gravity;
+}
+
+void MySandBox::Game::Player::Player::setJumpHeight(int height)
+{
+    _jump_height = height;
 }

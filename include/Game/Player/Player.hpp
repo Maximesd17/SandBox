@@ -44,12 +44,16 @@ namespace MySandBox {
                 void computeXMoves(float directionX);
                 void ApplyGravity();
                 void ApplyJump();
-                sf::Vector2f getPosition();
-                PlayerState getState();
-                PlayerDirection getDirection();
+                sf::Vector2f getPosition() const;
+                PlayerState getState() const;
+                PlayerDirection getDirection() const;
+                double getGravity() const;
+                int getJumpHeight() const;
                 void setPosition(sf::Vector2f position);
                 void setState(MySandBox::Game::PlayerState playerState);
                 void setDirection(MySandBox::Game::PlayerDirection playerDirection);
+                void setGravity(double gravity);
+                void setJumpHeight(int height);
             protected:
             private:
                 void setIdleFrame();
