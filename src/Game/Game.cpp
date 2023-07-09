@@ -125,12 +125,16 @@ sf::Vector2u MySandBox::Game::Game::getWindowOriginSize() const
 void MySandBox::Game::Game::winningCondition()
 {
     sf::Vector2f pos = _player.getPosition();
+    sf::Vector2i endPoint = _mapGenerator.getEndPoint();
 
     /*Temporary values before having access to real values*/
-    sf::Vector2i endPoint = _mapGenerator.getEndPoint();
     int textures_size = 40;
     /*---------------------*/
 
+    /*
+    ** Requires player size to check all boundaries.
+    ** ATM, checking only player's origin 0;0 position
+    */
     if ((size_t)pos.x >= endPoint.x * textures_size &&
         (size_t)pos.x <= endPoint.x * textures_size + textures_size &&
         (size_t)pos.y >= endPoint.y * textures_size - textures_size &&
@@ -139,11 +143,17 @@ void MySandBox::Game::Game::winningCondition()
     }
 }
 
+/*********getGameState*********/
+/* Get game state function    */
+/*********setGameState*********/
 MySandBox::Game::State MySandBox::Game::Game::getGameState() const
 {
     return _game_state;
 }
 
+/*********setGameState*********/
+/* Set game state function    */
+/*********setGameState*********/
 void MySandBox::Game::Game::setGameState(MySandBox::Game::State &game_state)
 {
     _game_state = game_state;
