@@ -6,3 +6,4 @@ unit_tests/
 *.gcno
 *.gcda
 build/
+errors/
