@@ -273,3 +273,18 @@ void MySandBox::Game::Player::Player::setJumpHeight(int height)
 {
     _jump_height = height;
 }
+
+bool MySandBox::Game::Player::Player::checkWallCollision(const std::vector<sf::Vector2f>& collisionPositions) const
+{
+    sf::FloatRect playerBounds = _player.getGlobalBounds();
+
+    for (const sf::Vector2f& wallPosition : collisionPositions) {
+        sf::FloatRect wallBounds(wallPosition.x, wallPosition.y,40, 40);
+
+        if (playerBounds.intersects(wallBounds)) {
+            return true;
+        }
+    }
+
+    return false;
+}

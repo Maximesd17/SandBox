@@ -54,6 +54,7 @@ namespace MySandBox {
                 void setDirection(MySandBox::Game::PlayerDirection playerDirection);
                 void setGravity(double gravity);
                 void setJumpHeight(int height);
+                bool checkWallCollision(const std::vector<sf::Vector2f>& wallPositions) const;
             protected:
             private:
                 void setIdleFrame();
@@ -78,6 +79,7 @@ namespace MySandBox {
                 PlayerState _state;
                 PlayerDirection _direction;
                 LogManager _log_manager;
+
             };
         }
     }

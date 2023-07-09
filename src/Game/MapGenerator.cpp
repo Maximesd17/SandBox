@@ -167,23 +167,26 @@ void SandBox::MapGenerator::displayMap(sf::RenderWindow &_window) {
                     break;
                 case 'G':
                     tileSprite.setTexture(groundTexture);
+                    _collisionPositions.push_back(sf::Vector2f(x * 40, y * 40));
                     break;
                 case 'P':
                     tileSprite.setTexture(plateformTexture);
                     break;
                 case 'W':
                     tileSprite.setTexture(wallTexture);
+                     _collisionPositions.push_back(sf::Vector2f(x * 40, y * 40));
                     break;
                 case 'B':
                     tileSprite.setTexture(boxTexture);
+                    _collisionPositions.push_back(sf::Vector2f(x * 40, y * 40));
                     break;
                 case 'S':
                     tileSprite.setTexture(spawnTexture);
-                    spawnPoint = sf::Vector2i(x, y); // Récupérer les coordonnées du point de départ
+                    spawnPoint = sf::Vector2i(x, y);
                     break;
                 case 'E':
                     tileSprite.setTexture(endTexture);
-                    endPoint = sf::Vector2i(x, y); // Récupérer les coordonnées du point de fin
+                    endPoint = sf::Vector2i(x, y);
                     break;
 
                 default:
@@ -211,6 +214,10 @@ sf::Vector2i SandBox::MapGenerator::getSpawnPoint() {
 
 sf::Vector2i SandBox::MapGenerator::getEndPoint() {
     return _endPoint;
+}
+
+std::vector<sf::Vector2f> SandBox::MapGenerator::getCollisionPositions(){
+    return _collisionPositions;
 }
 
 SandBox::MapGenerator SandBox::MapGenerator::operator=(const SandBox::MapGenerator &other) {
