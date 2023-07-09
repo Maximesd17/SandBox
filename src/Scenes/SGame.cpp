@@ -9,6 +9,7 @@
 #include "State.hpp"
 #include "Game.hpp"
 #include "SSMainGame.hpp"
+#include "SSWinGame.hpp"
 
 /*********Constructor*********/
 /* This build the object     */
@@ -17,6 +18,7 @@ MySandBox::Scenes::SGame::SGame(MySandBox::State &state, MySandBox::Game::Game &
   MySandBox::Scenes::AScene(state, game)
 {
   _scenes[MySandBox::Scenes::MAIN] = std::make_shared<MySandBox::Scenes::SubScenes::SSMainGame>(_state, _game);
+  _scenes[MySandBox::Scenes::WIN] = std::make_shared<MySandBox::Scenes::SubScenes::SSWinGame>(_state, _game);
   // _scenes[MySandBox::Scenes::SETTINGS] = std::make_shared<MySandBox::Scenes::SSettingsMenu>(_state, _game);
 }
 

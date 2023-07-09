@@ -38,7 +38,6 @@ void MySandBox::Scenes::SubScenes::SSMainGame::update()
     _game.update();
     if (_game.getGameState() == MySandBox::Game::State::WIN) {
         _state.setSubScene(MySandBox::Scenes::WIN);
-        _game.reset();
     }
 }
 
