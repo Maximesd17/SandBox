@@ -25,6 +25,7 @@ namespace SandBox {
             std::vector<std::string> _map;
             sf::Vector2i _spawnPoint;
             sf::Vector2i _endPoint;
+            std::vector<sf::Vector2f> _collisionPositions;
             bool _hasAir = false;
             bool _hasGround = false;
             bool _hasSpawn = false;
@@ -39,6 +40,7 @@ namespace SandBox {
             std::vector<std::string> getMap();
             sf::Vector2i getSpawnPoint();
             sf::Vector2i getEndPoint();
+            std::vector<sf::Vector2f> getCollisionPositions();
             bool validateMap(std::vector<std::string> &map);
             bool isValid();
             void displayMap(sf::RenderWindow &_window);

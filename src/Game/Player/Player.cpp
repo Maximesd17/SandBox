@@ -59,7 +59,7 @@ void MySandBox::Game::Player::Player::events(sf::Event& event)
 /*********ApplyGravity*********/
 void MySandBox::Game::Player::Player::ApplyGravity()
 {
-    if (_position.y < 835) {
+    if (_position.y < 790) {
         //_log_manager.addLog("Player", "OK", "gravity fall");
         _position.y += _gravity;
     }
@@ -272,4 +272,76 @@ void MySandBox::Game::Player::Player::setGravity(double gravity)
 void MySandBox::Game::Player::Player::setJumpHeight(int height)
 {
     _jump_height = height;
+}
+
+bool MySandBox::Game::Player::Player::checkWallCollision(const std::vector<sf::Vector2f>& collisionPositions) const
+{
+    sf::FloatRect playerBounds = _player.getGlobalBounds();
+
+    for (const sf::Vector2f& wallPosition : collisionPositions) {
+        sf::FloatRect wallBounds(wallPosition.x, wallPosition.y,40, 40);
+
+        if (playerBounds.intersects(wallBounds)) {
+            return true;
+        }
+    }
+
+    return false;
+}
+
+bool MySandBox::Game::Player::Player::checkWallCollisionX(const std::vector<sf::Vector2f>& collisionPositions)
+{
+    sf::FloatRect playerBounds = _player.getGlobalBounds();
+
+    for (const sf::Vector2f& wallPosition : collisionPositions) {
+        sf::FloatRect wallBounds(wallPosition.x, wallPosition.y, 40, 40);
+
+
+        if (playerBounds.intersects(wallBounds)) {
+            if (playerBounds.left + playerBounds.width >= wallBounds.left && playerBounds.left <= wallBounds.left + wallBounds.width) {
+                return true;
+            }
+        }
+    }
+
+    return false;
+}
+
+bool MySandBox::Game::Player::Player::checkWallCollisionY(const std::vector<sf::Vector2f>& collisionPositions)
+{
+    sf::FloatRect playerBounds = _player.getGlobalBounds();
+
+    for (const sf::Vector2f& wallPosition : collisionPositions) {
+        sf::FloatRect wallBounds(wallPosition.x, wallPosition.y, 40, 40);
+
+        if (playerBounds.intersects(wallBounds)) {
+            if (playerBounds.top + playerBounds.height >= wallBounds.top && playerBounds.top <= wallBounds.top + wallBounds.height) {
+                _state=PLAYER_IDLE;
+                return true;
+            }else{
+                _state=FALLING;
+            }
+        }
+    }
+    return false;
+}
+
+void MySandBox::Game::Player::Player::cancelXMove()
+{
+    if (_moves->getLastMove().x < 0) {
+        _position.x += _speed;
+    }
+    else if (_moves->getLastMove().x > 0) {
+        _position.x -= _speed;
+    }
+}
+
+void MySandBox::Game::Player::Player::cancelYMove()
+{
+    if (_moves->getLastMove().y < 0) {
+        _position.y += _gravity;
+    }
+    else if (_moves->getLastMove().y > 0) {
+        _position.y -= _gravity;
+    }
 }
