@@ -89,13 +89,17 @@ void MySandBox::Game::Game::events(sf::Event& event)
 /*********update*********/
 void MySandBox::Game::Game::update()
 {
-    _player.update();
-
+        _player.update();
     std::vector<sf::Vector2f> wallPositions = _mapGenerator.getCollisionPositions();
-    bool isCollidingWithWall = _player.checkWallCollision(wallPositions);
+    bool isCollidingWithWallX = _player.checkWallCollisionX(wallPositions);
+    bool isCollidingWithWallY = _player.checkWallCollisionY(wallPositions);
 
-    if (isCollidingWithWall) {
-        std::cout << "Collision !" << std::endl;
+    if (isCollidingWithWallY) {
+        _player.cancelYMove();
+    }
+    if (isCollidingWithWallX)
+    {
+        _player.cancelXMove();
     }
 
 }

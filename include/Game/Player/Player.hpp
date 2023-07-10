@@ -55,6 +55,10 @@ namespace MySandBox {
                 void setGravity(double gravity);
                 void setJumpHeight(int height);
                 bool checkWallCollision(const std::vector<sf::Vector2f>& wallPositions) const;
+                bool checkWallCollisionX(const std::vector<sf::Vector2f>& collisionPositions);
+                bool checkWallCollisionY(const std::vector<sf::Vector2f>& collisionPositions);
+                void cancelXMove();
+                void cancelYMove();
             protected:
             private:
                 void setIdleFrame();
