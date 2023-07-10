@@ -326,6 +326,17 @@ bool MySandBox::Game::Player::Player::checkWallCollisionY(const std::vector<sf::
     return false;
 }
 
+bool MySandBox::Game::Player::Player::checkEndPointCollision(const sf::Vector2f& endPosition)
+{
+    sf::FloatRect playerBounds = _player.getGlobalBounds();
+    sf::FloatRect endBounds(endPosition.x,endPosition.y, 40, 40);
+    if (playerBounds.intersects(endBounds))
+    {
+        return true;
+    }
+    return false;
+}
+
 void MySandBox::Game::Player::Player::cancelXMove()
 {
     if (_moves->getLastMove().x < 0) {

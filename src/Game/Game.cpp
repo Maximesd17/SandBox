@@ -91,6 +91,13 @@ void MySandBox::Game::Game::update()
 {
         _player.update();
     std::vector<sf::Vector2f> wallPositions = _mapGenerator.getCollisionPositions();
+    sf::Vector2f endPosition = _mapGenerator.getEndPoint();
+
+    bool hasWin = _player.checkEndPointCollision(endPosition);
+    if (hasWin)
+    {
+        _game_state = WIN;
+    }
     bool isCollidingWithWallX = _player.checkWallCollisionX(wallPositions);
     bool isCollidingWithWallY = _player.checkWallCollisionY(wallPositions);
 
@@ -137,16 +144,16 @@ sf::Vector2u MySandBox::Game::Game::getWindowOriginSize() const
 void MySandBox::Game::Game::winningCondition()
 {
     sf::Vector2f pos = _player.getPosition();
-    sf::Vector2i endPoint = _mapGenerator.getEndPoint();
+    sf::Vector2f endPoint = _mapGenerator.getEndPoint();
     // sf::FloatRect playerBound = _player.get
 
     /*Temporary values before having access to real values*/
     int textures_size = 40;
-    endPoint = sf::Vector2i(endPoint.x * textures_size, endPoint.y * textures_size);
+    endPoint = sf::Vector2f(endPoint.x * textures_size, endPoint.y * textures_size);
     /*---------------------*/
 
-    std::cout << "Player: " << pos.x << ";" << pos.y << std::endl;
-    std::cout << "Endpoint: " << endPoint.x << ";" << endPoint.y << std::endl;
+    //std::cout << "Player: " << pos.x << ";" << pos.y << std::endl;
+    //std::cout << "Endpoint: " << endPoint.x << ";" << endPoint.y << std::endl;
     /*
     ** Requires player size to check all boundaries.
     ** ATM, checking only player's origin 0;0 position

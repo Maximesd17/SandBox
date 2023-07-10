@@ -57,6 +57,7 @@ namespace MySandBox {
                 bool checkWallCollision(const std::vector<sf::Vector2f>& wallPositions) const;
                 bool checkWallCollisionX(const std::vector<sf::Vector2f>& collisionPositions);
                 bool checkWallCollisionY(const std::vector<sf::Vector2f>& collisionPositions);
+                bool checkEndPointCollision(const sf::Vector2f& endPosition);
                 void cancelXMove();
                 void cancelYMove();
             protected:
