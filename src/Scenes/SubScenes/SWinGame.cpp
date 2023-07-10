@@ -16,6 +16,7 @@ MySandBox::Scenes::SubScenes::SSWinGame::~SSWinGame() {}
 /*********events************/
 void MySandBox::Scenes::SubScenes::SSWinGame::events(sf::Event &e)
 {
+    std::cout << "WIN STATE" << std::endl;
     _game.events(e);
 }
 

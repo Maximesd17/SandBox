@@ -126,21 +126,27 @@ void MySandBox::Game::Game::winningCondition()
 {
     sf::Vector2f pos = _player.getPosition();
     sf::Vector2i endPoint = _mapGenerator.getEndPoint();
+    // sf::FloatRect playerBound = _player.get
 
     /*Temporary values before having access to real values*/
     int textures_size = 40;
+    endPoint = sf::Vector2i(endPoint.x * textures_size, endPoint.y * textures_size);
     /*---------------------*/
 
+    std::cout << "Player: " << pos.x << ";" << pos.y << std::endl;
+    std::cout << "Endpoint: " << endPoint.x << ";" << endPoint.y << std::endl;
     /*
     ** Requires player size to check all boundaries.
     ** ATM, checking only player's origin 0;0 position
     */
-    if ((size_t)pos.x >= endPoint.x * textures_size &&
-        (size_t)pos.x <= endPoint.x * textures_size + textures_size &&
-        (size_t)pos.y >= endPoint.y * textures_size - textures_size &&
-        (size_t)pos.y <= endPoint.y * textures_size) {
+
+   /*
+    if ((size_t)pos.x >= endPoint.x &&
+        (size_t)pos.x <= endPoint.x + textures_size &&
+        (size_t)pos.y >= endPoint.y - textures_size &&
+        (size_t)pos.y <= endPoint.y) {
         _game_state = WIN;
-    }
+    } */
 }
 
 /*********getGameState*********/
