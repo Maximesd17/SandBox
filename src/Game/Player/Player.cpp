@@ -9,6 +9,7 @@
 #include <math.h>
 #include <iostream>
 #include <cmath>
+#include <SFML/Window/Joystick.hpp>
 
 /*********Constructor*********/
 /* This build the object     */
@@ -25,10 +26,12 @@ MySandBox::Game::Player::Player::Player()
     _jump_speed = 0.1 * 60; // 60 = default frame rate
 
     _state = PLAYER_IDLE;
-    _direction = RIGHT;
-
-
-    _moves = std::make_shared<Moves::KeyboardMoves>();
+    _direction = PlayerDirection::RIGHT;
+    
+    _controlled_by = KEYBOARD;
+    _is_moves_manual_changed = false;
+    _moves[JOYSTICK] = std::make_shared<Moves::ControllerMoves>();
+    _moves[KEYBOARD] = std::make_shared<Moves::KeyboardMoves>();
 }
 
 /*********Destructor*********/
@@ -49,9 +52,17 @@ void MySandBox::Game::Player::Player::setPlayerSprites(sf::Texture& sprite_shit)
 /*********events************/
 /* Event handling function */
 /*********events************/
+
 void MySandBox::Game::Player::Player::events(sf::Event& event)
 {
-    _moves->events(event);
+    if (sf::Joystick::isConnected(0) && !_is_moves_manual_changed) {
+        std::cout << "GAMEPAD CONNECTED" << std::endl;
+        _controlled_by = JOYSTICK;
+    } else {
+        std::cout << "GAMEPAD DISCONNECTED" << std::endl;
+        _controlled_by = KEYBOARD;
+    }
+    _moves[_controlled_by]->events(event);
 }
 
 /*********ApplyGravity*********/
@@ -126,15 +137,39 @@ void MySandBox::Game::Player::Player::computeXMoves(float directionX)
         _state = PLAYER_IDLE;
 }
 
-/*********update*********/
-/* Update function      */
-/*********update*********/
+/*********update**********/
+/**** Update function ****/
+/*********update**********/
+
 void MySandBox::Game::Player::Player::update()
 {
     sf::Vector2f direction = _moves->getLastMove();
 
     computeYMoves(direction.y);
     computeXMoves(direction.x);
+
+    switch (_state) {
+        case PLAYER_IDLE:
+            std::cout << "idle" << std::endl;
+            break;
+        case WALKING:
+            std::cout << "walking" << std::endl;
+            break;
+        case JUMPING:
+            std::cout << "jumping" << std::endl;
+            break;
+        case FALLING:
+            std::cout << "falling" << std::endl;
+            break;
+        case ATTACKING:
+            std::cout << "attacking" << std::endl;
+            break;
+        case DEAD:
+            std::cout << "dead" << std::endl;
+            break;
+        default:
+            break;
+    }
 }
 
 /*********display*********/
