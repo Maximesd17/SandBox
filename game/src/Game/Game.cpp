@@ -90,6 +90,25 @@ void MySandBox::Game::Game::events(sf::Event& event)
 void MySandBox::Game::Game::update()
 {
     _player.update();
+    std::vector<sf::Vector2f> wallPositions = _mapGenerator.getCollisionPositions();
+    sf::Vector2f endPosition = _mapGenerator.getEndPoint();
+
+    bool hasWin = _player.checkEndPointCollision(endPosition);
+    if (hasWin)
+    {
+        _game_state = WIN;
+    }
+    bool isCollidingWithWallX = _player.checkWallCollisionX(wallPositions);
+    bool isCollidingWithWallY = _player.checkWallCollisionY(wallPositions);
+
+    if (isCollidingWithWallY) {
+        _player.cancelYMove();
+    }
+    if (isCollidingWithWallX)
+    {
+        _player.cancelXMove();
+    }
+
 }
 
 /*********display*********/
@@ -125,28 +144,41 @@ sf::Vector2u MySandBox::Game::Game::getWindowOriginSize() const
 void MySandBox::Game::Game::winningCondition()
 {
     sf::Vector2f pos = _player.getPosition();
+    sf::Vector2f endPoint = _mapGenerator.getEndPoint();
+    // sf::FloatRect playerBound = _player.get
 
     /*Temporary values before having access to real values*/
-    sf::Vector2i endPoint = _mapGenerator.getEndPoint();
     int textures_size = 40;
+    endPoint = sf::Vector2f(endPoint.x * textures_size, endPoint.y * textures_size);
     /*---------------------*/
 
-    // std::cout << "[PLAYER] X: " << pos.x << " | " << "Y: " << pos.y << std::endl;
-    // std::cout << "[END] X: " << endPoint.x * textures_size << " | " << "Y: " << endPoint.y * textures_size << std::endl;
-    if ((size_t)pos.x >= endPoint.x * textures_size &&
-        (size_t)pos.x <= endPoint.x * textures_size + textures_size &&
-        (size_t)pos.y >= endPoint.y * textures_size &&
-        (size_t)pos.y <= endPoint.y * textures_size - textures_size) {
-        // std::cout << "WIN" << std::endl;
+    //std::cout << "Player: " << pos.x << ";" << pos.y << std::endl;
+    //std::cout << "Endpoint: " << endPoint.x << ";" << endPoint.y << std::endl;
+    /*
+    ** Requires player size to check all boundaries.
+    ** ATM, checking only player's origin 0;0 position
+    */
+
+   /*
+    if ((size_t)pos.x >= endPoint.x &&
+        (size_t)pos.x <= endPoint.x + textures_size &&
+        (size_t)pos.y >= endPoint.y - textures_size &&
+        (size_t)pos.y <= endPoint.y) {
         _game_state = WIN;
-    }
+    } */
 }
 
+/*********getGameState*********/
+/* Get game state function    */
+/*********setGameState*********/
 MySandBox::Game::State MySandBox::Game::Game::getGameState() const
 {
     return _game_state;
 }
 
+/*********setGameState*********/
+/* Set game state function    */
+/*********setGameState*********/
 void MySandBox::Game::Game::setGameState(MySandBox::Game::State &game_state)
 {
     _game_state = game_state;

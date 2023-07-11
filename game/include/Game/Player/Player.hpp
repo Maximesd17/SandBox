@@ -44,12 +44,22 @@ namespace MySandBox {
                 void computeXMoves(float directionX);
                 void ApplyGravity();
                 void ApplyJump();
-                sf::Vector2f getPosition();
-                PlayerState getState();
-                PlayerDirection getDirection();
+                sf::Vector2f getPosition() const;
+                PlayerState getState() const;
+                PlayerDirection getDirection() const;
+                double getGravity() const;
+                int getJumpHeight() const;
                 void setPosition(sf::Vector2f position);
                 void setState(MySandBox::Game::PlayerState playerState);
                 void setDirection(MySandBox::Game::PlayerDirection playerDirection);
+                void setGravity(double gravity);
+                void setJumpHeight(int height);
+                bool checkWallCollision(const std::vector<sf::Vector2f>& wallPositions) const;
+                bool checkWallCollisionX(const std::vector<sf::Vector2f>& collisionPositions);
+                bool checkWallCollisionY(const std::vector<sf::Vector2f>& collisionPositions);
+                bool checkEndPointCollision(const sf::Vector2f& endPosition);
+                void cancelXMove();
+                void cancelYMove();
             protected:
             private:
                 void setIdleFrame();
@@ -74,6 +84,7 @@ namespace MySandBox {
                 PlayerState _state;
                 PlayerDirection _direction;
                 LogManager _log_manager;
+
             };
         }
     }

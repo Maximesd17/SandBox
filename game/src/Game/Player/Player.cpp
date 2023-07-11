@@ -59,11 +59,12 @@ void MySandBox::Game::Player::Player::events(sf::Event& event)
 /*********ApplyGravity*********/
 void MySandBox::Game::Player::Player::ApplyGravity()
 {
-    if (_position.y < 835) {
+    if (_position.y < 790) {
         //_log_manager.addLog("Player", "OK", "gravity fall");
         _position.y += _gravity;
     }
     else {
+        _position.y = 790;
         _state = PLAYER_IDLE;
     }
 }
@@ -211,28 +212,42 @@ void MySandBox::Game::Player::Player::display(sf::RenderWindow& window)
 /*********getPosition*********/
 /*     _position getter      */
 /*********getPosition*********/
-sf::Vector2f MySandBox::Game::Player::Player::getPosition() {
+sf::Vector2f MySandBox::Game::Player::Player::getPosition() const
+{
     return _position;
 }
 
 /*********getState*********/
 /*     _state getter      */
 /*********getState*********/
-MySandBox::Game::PlayerState MySandBox::Game::Player::Player::getState() {
+MySandBox::Game::PlayerState MySandBox::Game::Player::Player::getState() const
+{
     return _state;
 }
 
 /*********getDirection*********/
 /*     _direction getter      */
 /*********getDirection*********/
-MySandBox::Game::PlayerDirection MySandBox::Game::Player::Player::getDirection() {
+MySandBox::Game::PlayerDirection MySandBox::Game::Player::Player::getDirection() const
+{
     return _direction;
+}
+
+double MySandBox::Game::Player::Player::getGravity() const
+{
+    return _gravity;
+}
+
+int MySandBox::Game::Player::Player::getJumpHeight() const
+{
+    return _jump_height;
 }
 
 /*********setPosition*********/
 /*     _position setter      */
 /*********setPosition*********/
-void MySandBox::Game::Player::Player::setPosition(sf::Vector2f position) {
+void MySandBox::Game::Player::Player::setPosition(sf::Vector2f position)
+{
     _position = position;
 }
 
@@ -248,4 +263,98 @@ void MySandBox::Game::Player::Player::setState(MySandBox::Game::PlayerState play
 /*********setDirection*********/
 void MySandBox::Game::Player::Player::setDirection(MySandBox::Game::PlayerDirection playerDirection) {
     _direction = playerDirection;
+}
+
+void MySandBox::Game::Player::Player::setGravity(double gravity)
+{
+    _gravity = gravity;
+}
+
+void MySandBox::Game::Player::Player::setJumpHeight(int height)
+{
+    _jump_height = height;
+}
+
+bool MySandBox::Game::Player::Player::checkWallCollision(const std::vector<sf::Vector2f>& collisionPositions) const
+{
+    sf::FloatRect playerBounds = _player.getGlobalBounds();
+
+    for (const sf::Vector2f& wallPosition : collisionPositions) {
+        sf::FloatRect wallBounds(wallPosition.x, wallPosition.y, 40, 40);
+
+        if (playerBounds.intersects(wallBounds)) {
+            return true;
+        }
+    }
+
+    return false;
+}
+
+bool MySandBox::Game::Player::Player::checkWallCollisionX(const std::vector<sf::Vector2f>& collisionPositions)
+{
+    sf::FloatRect playerBounds = _player.getGlobalBounds();
+
+    for (const sf::Vector2f& wallPosition : collisionPositions) {
+        sf::FloatRect wallBounds(wallPosition.x, wallPosition.y, 40, 40);
+
+
+        if (playerBounds.intersects(wallBounds)) {
+            if (playerBounds.left + playerBounds.width >= wallBounds.left && playerBounds.left <= wallBounds.left + wallBounds.width) {
+                return true;
+            }
+        }
+    }
+
+    return false;
+}
+
+bool MySandBox::Game::Player::Player::checkWallCollisionY(const std::vector<sf::Vector2f>& collisionPositions)
+{
+    sf::FloatRect playerBounds = _player.getGlobalBounds();
+
+    for (const sf::Vector2f& wallPosition : collisionPositions) {
+        sf::FloatRect wallBounds(wallPosition.x, wallPosition.y, 40, 40);
+
+        if (playerBounds.intersects(wallBounds)) {
+            if (playerBounds.top + playerBounds.height >= wallBounds.top && playerBounds.top <= wallBounds.top + wallBounds.height) {
+                _state=PLAYER_IDLE;
+                return true;
+            }else{
+                _state=FALLING;
+            }
+        }
+    }
+    return false;
+}
+
+bool MySandBox::Game::Player::Player::checkEndPointCollision(const sf::Vector2f& endPosition)
+{
+    sf::FloatRect playerBounds = _player.getGlobalBounds();
+    sf::FloatRect endBounds(endPosition.x,endPosition.y, 40, 40);
+    if (playerBounds.intersects(endBounds))
+    {
+        return true;
+    }
+    return false;
+}
+
+void MySandBox::Game::Player::Player::cancelXMove()
+{
+    // _position.x += _moves->getLastMove().x;
+    if (_moves->getLastMove().x < 0) {
+        _position.x += _speed;
+    }
+    else if (_moves->getLastMove().x > 0) {
+        _position.x -= _speed;
+    }
+}
+
+void MySandBox::Game::Player::Player::cancelYMove()
+{
+    if (_moves->getLastMove().y < 0) {
+        _position.y += _gravity;
+    }
+    else if (_moves->getLastMove().y > 0) {
+        _position.y -= 10;
+    }
 }
