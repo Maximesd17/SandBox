@@ -13,11 +13,11 @@
 /*********Constructor*********/
 /* This create a windows     */
 /* using SFML lib and        */
-/* init the scenes of game   */ 
-/*********Constructor*********/ 
+/* init the scenes of game   */
+/*********Constructor*********/
 MySandBox::SandBox::SandBox() : _game(_window)
 {
-    _window.create(sf::VideoMode(1920, 1080), "MySandBox");
+    _window.create(sf::VideoMode(sf::VideoMode::getDesktopMode()), "MySandBox");
     _framerate = 60;
     _window.setFramerateLimit(_framerate);
     _game.init();
@@ -28,7 +28,7 @@ MySandBox::SandBox::SandBox() : _game(_window)
 
 /*********Destructor*********/
 /* This destroy the sandbox */
-/*********Destructor*********/ 
+/*********Destructor*********/
 MySandBox::SandBox::~SandBox()
 {
 }

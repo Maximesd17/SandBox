@@ -14,7 +14,11 @@
 MySandBox::Scenes::SubScenes::SSSettingsMenu::SSSettingsMenu(MySandBox::State& state, MySandBox::Game::Game& game) :
     MySandBox::Scenes::SubScenes::ASubScene(state, game),
     _settings_editor(_game, sf::Vector2i(0, 300), sf::Vector2f(_game.getWindowOriginSize().x, _game.getWindowOriginSize().y - 200)),
-    _return_button("Return", sf::Vector2i(800, _game.getWindowOriginSize().y - 150), sf::Vector2f(300, 100),
+    _return_button(
+        "Return",
+        sf::Vector2i(_game.getWindowOriginSize().x / 2 - 300 / 2,
+        _game.getWindowOriginSize().y - 150),
+        sf::Vector2f(300, 100),
         _game.getWindowOriginSize())
 {
     _font.loadFromFile("./resources/fonts/roboto.ttf");
