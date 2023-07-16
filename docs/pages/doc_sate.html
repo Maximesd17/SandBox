@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>MySandBox Documentation</title>
+  <link rel="stylesheet" type="text/css" href="../style.css">
+</head>
+<body>
+  <div class="container">
+    <h1>MySandBox - DOC - State</h1>
+    <div class="description">
+      <h2>Description</h2>
+      <p>
+        This class represents the state of the game and stores the current scene and sub-scene.
+      </p>
+    </div>
+
+    <div class="code">
+      <h2>Code</h2>
+      <pre>
+        /*
+        ** EPITECH PROJECT, 2022
+        ** MySandBox
+        ** File description:
+        ** State
+        */
+        
+        #include "State.hpp"
+        
+        /*********Constructor*********/
+        /* init state of the game    */ 
+        /*********Constructor*********/
+        MySandBox::State::State()
+        {
+            _current_scene = MySandBox::Scenes::MENU;
+            _current_sub_scene = MySandBox::Scenes::MAIN;
+        }
+        
+        /*********Destructor*********/
+        /* This destroy the object  */
+        /*********Destructor*********/ 
+        MySandBox::State::~State()
+        {
+        }
+        
+        /*********getScene*********/
+        /* Getter for the current */
+        /*********getScene*********/ 
+        MySandBox::Scenes::Type MySandBox::State::getScene() const
+        {
+            return _current_scene;
+        }
+        
+        /*************getSubScene************/
+        /* Getter for the current sub-scene */
+        /*************getSubScene************/
+        MySandBox::Scenes::Type MySandBox::State::getSubScene() const
+        {
+            return _current_sub_scene;
+        }
+        
+        /************setScene************/
+        /* Setter for the current scene */
+        /************setScene************/
+        void MySandBox::State::setScene(MySandBox::Scenes::Type scene)
+        {
+            _current_scene = scene;
+            _current_sub_scene = MySandBox::Scenes::MAIN;
+        }
+        
+        /*************setSubScene************/
+        /* Setter for the current sub-scene */
+        /*************setSubScene************/
+        void MySandBox::State::setSubScene(MySandBox::Scenes::Type sub_scene)
+        {
+            _current_sub_scene = sub_scene;
+        }
+        
+      </pre>
+    </div>
+
+    <div class="function">
+      <h2>Constructor</h2>
+      <p>
+        This constructor initializes the state of the game with default values.
+      </p>
+      <pre>
+        MySandBox::State::State()
+      </pre>
+    </div>
+
+    <div class="function">
+      <h2>Destructor</h2>
+      <p>
+        This destructor destroys the state object.
+      </p>
+      <pre>
+        MySandBox::State::~State()
+      </pre>
+    </div>
+
+    <div class="function">
+      <h2>getScene</h2>
+      <p>
+        This function returns the current scene.
+      </p>
+      <pre>
+        MySandBox::Scenes::Type MySandBox::State::getScene() const
+      </pre>
+    </div>
+
+    <div class="function">
+      <h2>getSubScene</h2>
+      <p>
+        This function returns the current sub-scene.
+      </p>
+      <pre>
+        MySandBox::Scenes::Type MySandBox::State::getSubScene() const
+      </pre>
+    </div>
+
+    <div class="function">
+      <h2>setScene</h2>
+      <p>
+        This function sets the current scene.
+      </p>
+      <pre>
+        void MySandBox::State::setScene(MySandBox::Scenes::Type scene)
+      </pre>
+    </div>
+
+    <div class="function">
+      <h2>setSubScene</h2>
+      <p>
+        This function sets the current sub-scene.
+      </p>
+      <pre>
+        void MySandBox::State::setSubScene(MySandBox::Scenes::Type sub_scene)
+      </pre>
+    </div>
+
+    <div class="location">
+      <h2>Location</h2>
+      <p>
+        This file source is at src/State.cpp<br>
+        This file header is at include/State.hpp
+      </p>
+    </div>
+  </div>
+</body>
+</html>

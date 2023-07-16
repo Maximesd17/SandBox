@@ -16,29 +16,6 @@
     </div>
 
 
-    <div class="function">
-      <h2>Constructor</h2>
-      <p>
-         The constructor permit to define button position color text and size. 
-      </p>
-      <pre>
-        MySandBox::Component::Button::Button(std::string text, sf::Vector2i pos, sf::Vector2f size,
-    sf::Vector2u window_origin_size)
-    : _state(MySandBox::Component::IDLE), _window_origin_size(window_origin_size)
-      </pre>
-    </div>
-
-
-
-    <div class="function">
-      <h2>isHovered</h2>
-      <p>
-         The isHovered function permit to know if a 
-      </p>
-      <pre>
-        bool MySandBox::Component::Button::isHovered(sf::Vector2i mouse_pos, sf::Vector2u window_size)
-      </pre>
-    </div>
 
     <div class="code">
       <h2>Code</h2>
@@ -137,6 +114,29 @@ void MySandBox::Component::Button::display(sf::RenderWindow& window)
 
 
 
+    <div class="function">
+      <h2>Constructor</h2>
+      <p>
+         The constructor permit to define button position color text and size. 
+      </p>
+      <pre>
+        MySandBox::Component::Button::Button(std::string text, sf::Vector2i pos, sf::Vector2f size,
+    sf::Vector2u window_origin_size)
+    : _state(MySandBox::Component::IDLE), _window_origin_size(window_origin_size)
+      </pre>
+    </div>
+
+
+
+    <div class="function">
+      <h2>isHovered</h2>
+      <p>
+         The isHovered function permit to know if a 
+      </p>
+      <pre>
+        bool MySandBox::Component::Button::isHovered(sf::Vector2i mouse_pos, sf::Vector2u window_size)
+      </pre>
+    </div>
 
 
     <div class="location">
