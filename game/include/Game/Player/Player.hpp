@@ -11,6 +11,7 @@
 #include <SFML/Graphics.hpp>
 #include "KeyboardMoves.hpp"
 #include "ControllerMoves.hpp"
+#include "Sound.hpp"
 
 namespace MySandBox {
     namespace Game {
@@ -35,6 +36,7 @@ namespace MySandBox {
             public:
                 Player();
                 ~Player();
+                void setPlayerSounds();
                 void setPlayerSprites(std::vector<sf::Texture>&);
                 void update();
                 void events(sf::Event&);
@@ -56,6 +58,8 @@ namespace MySandBox {
                 PlayerState _state;
                 PlayerDirection _direction;
                 PlayerControlledBy _controlled_by;
+                MySandBox::Game::Sound::Sound _walking_sound;
+                MySandBox::Game::Sound::Sound _jumping_sound;
             };
         }
     }

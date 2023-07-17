@@ -10,6 +10,7 @@
 #include <iostream>
 #include <SFML/Window/Joystick.hpp>
 #include "SandBox.hpp"
+#include "Sound/Sound.hpp"
 
 MySandBox::Game::Player::Player::Player()
 {
@@ -32,6 +33,14 @@ MySandBox::Game::Player::Player::Player()
 
 MySandBox::Game::Player::Player::~Player()
 {
+}
+
+
+void MySandBox::Game::Player::Player::setPlayerSounds(){
+    MySandBox::Game::Sound::Sound _walking_sound;
+    MySandBox::Game::Sound::Sound _jumping_sound;
+    _walking_sound.LoadSound("resources/sounds/footsteps.wav");
+    _jumping_sound.LoadSound("resources/sounds/jump.wav");
 }
 
 void MySandBox::Game::Player::Player::setPlayerSprites(std::vector<sf::Texture>& textures)
@@ -59,6 +68,7 @@ void MySandBox::Game::Player::Player::events(sf::Event& event)
 void MySandBox::Game::Player::Player::update()
 {
     sf::Vector2f direction = _moves[_controlled_by]->getLastMove();
+    MySandBox::Game::Sound::Sound _jump_sound;
 
     if (direction.y < 0 && _state != JUMPING && _state != FALLING) {
         _state = JUMPING;
@@ -98,9 +108,11 @@ void MySandBox::Game::Player::Player::update()
         break;
     case WALKING:
         std::cout << "walking" << std::endl;
+        _walking_sound.PlaySound();
         break;
     case JUMPING:
         std::cout << "jumping" << std::endl;
+        _jump_sound.PlaySound();
         break;
     case FALLING:
         std::cout << "falling" << std::endl;
