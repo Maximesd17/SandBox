@@ -37,13 +37,11 @@ namespace MySandBox {
                 Player();
                 ~Player();
                 void setPlayerSprites(sf::Texture&);
-                void update();
+                void update(const std::vector<sf::Vector2f> &collisionPositions);
                 void events(sf::Event&);
                 void display(sf::RenderWindow&);
-                void computeYMoves(float directionY);
-                void computeXMoves(float directionX);
-                void ApplyGravity();
-                void ApplyJump();
+                void ApplyGravity(const std::vector<sf::Vector2f>& collisionPositions);
+                void ApplyJump(const std::vector<sf::Vector2f>& collisionPositions);
                 sf::Vector2f getPosition() const;
                 PlayerState getState() const;
                 PlayerDirection getDirection() const;
@@ -54,14 +52,14 @@ namespace MySandBox {
                 void setDirection(MySandBox::Game::PlayerDirection playerDirection);
                 void setGravity(double gravity);
                 void setJumpHeight(int height);
-                bool checkWallCollision(const std::vector<sf::Vector2f>& wallPositions) const;
-                bool checkWallCollisionX(const std::vector<sf::Vector2f>& collisionPositions);
-                bool checkWallCollisionY(const std::vector<sf::Vector2f>& collisionPositions);
                 bool checkEndPointCollision(const sf::Vector2f& endPosition);
-                void cancelXMove();
-                void cancelYMove();
             protected:
             private:
+                void computeYMoves(float directionY, const std::vector<sf::Vector2f> &collisionPositions);
+                void computeXMoves(float directionX, const std::vector<sf::Vector2f> &collisionPositions);
+                bool checkWallCollision(const std::vector<sf::Vector2f>& wallPositions) const;
+                bool checkWallCollisionX(const float future_x, const std::vector<sf::Vector2f>& collisionPositions);
+                bool checkWallCollisionY(const float future_y, const std::vector<sf::Vector2f>& collisionPositions);
                 void setIdleFrame();
                 void setWalkingFrame();
                 void setJumpingFrame();

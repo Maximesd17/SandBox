@@ -18,7 +18,7 @@ MySandBox::Game::Player::Player::Player()
     _speed = 10;
     _gravity = 9.81;
     _jump_height = 150;
-    _position = sf::Vector2f(0, 835);
+    _position = sf::Vector2f(45, 100);
     _idle_frame = 0;
     _idle_speed = 1 * 60; // 60 = default frame rate
     _jump_frame = 0;
@@ -57,30 +57,41 @@ void MySandBox::Game::Player::Player::events(sf::Event& event)
 /*********ApplyGravity*********/
 /* Apply gravity function     */
 /*********ApplyGravity*********/
-void MySandBox::Game::Player::Player::ApplyGravity()
+void MySandBox::Game::Player::Player::ApplyGravity(const std::vector<sf::Vector2f>& collisionPositions)
 {
-    if (_position.y < 790) {
-        //_log_manager.addLog("Player", "OK", "gravity fall");
-        _position.y += _gravity;
-    }
-    else {
-        _position.y = 790;
+    //_log_manager.addLog("Player", "OK", "gravity fall");
+    float future_y = _position.y + _gravity;
+    if (checkWallCollisionY(future_y, collisionPositions)) {
+        std::cerr << "PLAYER Y: " << _position.y << std::endl;
         _state = PLAYER_IDLE;
+        return;
     }
+    if (_position.y >= 1080) {
+        std::cerr << "OUT OF BOUNDS Y: " << _position.y << std::endl;
+        _position.y = 0;
+        _state = PLAYER_IDLE;
+        return;
+    }
+    _position.y = future_y;
 }
 
 /*********ApplyJump*********/
 /* Apply jump function     */
 /*********ApplyJump*********/
-void MySandBox::Game::Player::Player::ApplyJump()
+void MySandBox::Game::Player::Player::ApplyJump(const std::vector<sf::Vector2f>& collisionPositions)
 {
+    float future_y = _position.y - _jump_height / _jump_speed;
+    std::cout << "Player: " << _position.x << ";" << _position.y << std::endl;
+    std::cout << "Future Y: " << future_y << std::endl;
+    if (checkWallCollisionY(future_y, collisionPositions))
+        return;
     if (_jump_frame < _jump_speed) {
-
         //_log_manager.addLog("Player", "OK", "jump");
-        _position.y -= _jump_height / _jump_speed;
+        _position.y = future_y;
         _jump_frame++;
     }
     else {
+        std::cout << "Time to fall" << std::endl;
         _state = FALLING;
     }
 }
@@ -88,19 +99,21 @@ void MySandBox::Game::Player::Player::ApplyJump()
 /*********computeYMoves***********/
 /* Compute Y-axis moves function */
 /*********computeYMoves***********/
-void MySandBox::Game::Player::Player::computeYMoves(float directionY)
+void MySandBox::Game::Player::Player::computeYMoves(float directionY, const std::vector<sf::Vector2f> &collisionPositions)
 {
+    float future_y = _state == JUMPING ? (_position.y - _jump_height / _jump_speed) : (_position.y + _gravity);
     //_log_manager.printLogs();
+    checkWallCollisionY(future_y, collisionPositions);
     if (directionY < 0 && _state != JUMPING && _state != FALLING) {
         _state = JUMPING;
         _jump_frame = 0;
     }
     switch (_state) {
     case JUMPING:
-        ApplyJump();
+        ApplyJump(collisionPositions);
         break;
     case FALLING:
-        ApplyGravity();
+        ApplyGravity(collisionPositions);
         break;
     default:
         break;
@@ -110,9 +123,15 @@ void MySandBox::Game::Player::Player::computeYMoves(float directionY)
 /*********computeXMoves***********/
 /* Compute X-axis moves function */
 /*********computeXMoves***********/
-void MySandBox::Game::Player::Player::computeXMoves(float directionX)
+void MySandBox::Game::Player::Player::computeXMoves(float directionX, const std::vector<sf::Vector2f> &collisionPositions)
 {
-    _position.x += directionX * _speed;
+    float future_x = _position.x + directionX * _speed;
+    float future_y_falling = _position.y + _gravity;
+
+    // checkWallCollisionY(future_y_falling, collisionPositions);
+    if (checkWallCollisionX(future_x, collisionPositions))
+        return;
+    _position.x = future_x;
     if (directionX < 0) {
         _direction = LEFT;
         if (_state != JUMPING && _state != FALLING)
@@ -130,12 +149,12 @@ void MySandBox::Game::Player::Player::computeXMoves(float directionX)
 /*********update*********/
 /* Update function      */
 /*********update*********/
-void MySandBox::Game::Player::Player::update()
+void MySandBox::Game::Player::Player::update(const std::vector<sf::Vector2f> &collisionPositions)
 {
     sf::Vector2f direction = _moves->getLastMove();
 
-    computeYMoves(direction.y);
-    computeXMoves(direction.x);
+    computeXMoves(direction.x, collisionPositions);
+    computeYMoves(direction.y, collisionPositions);
 }
 
 /*********display*********/
@@ -290,13 +309,14 @@ bool MySandBox::Game::Player::Player::checkWallCollision(const std::vector<sf::V
     return false;
 }
 
-bool MySandBox::Game::Player::Player::checkWallCollisionX(const std::vector<sf::Vector2f>& collisionPositions)
+bool MySandBox::Game::Player::Player::checkWallCollisionX(float const future_x, const std::vector<sf::Vector2f>& collisionPositions)
 {
-    sf::FloatRect playerBounds = _player.getGlobalBounds();
+    sf::Sprite future_player = sf::Sprite(_player);
+    future_player.setPosition(sf::Vector2f(future_x, future_player.getPosition().y));
+    sf::FloatRect playerBounds = future_player.getGlobalBounds();
 
     for (const sf::Vector2f& wallPosition : collisionPositions) {
         sf::FloatRect wallBounds(wallPosition.x, wallPosition.y, 40, 40);
-
 
         if (playerBounds.intersects(wallBounds)) {
             if (playerBounds.left + playerBounds.width >= wallBounds.left && playerBounds.left <= wallBounds.left + wallBounds.width) {
@@ -308,22 +328,27 @@ bool MySandBox::Game::Player::Player::checkWallCollisionX(const std::vector<sf::
     return false;
 }
 
-bool MySandBox::Game::Player::Player::checkWallCollisionY(const std::vector<sf::Vector2f>& collisionPositions)
+bool MySandBox::Game::Player::Player::checkWallCollisionY(const float future_y, const std::vector<sf::Vector2f>& collisionPositions)
 {
-    sf::FloatRect playerBounds = _player.getGlobalBounds();
+    sf::Sprite future_player = sf::Sprite(_player);
+    future_player.setPosition(sf::Vector2f(future_player.getPosition().x, future_y));
+    sf::FloatRect playerBounds = future_player.getGlobalBounds();
+
 
     for (const sf::Vector2f& wallPosition : collisionPositions) {
         sf::FloatRect wallBounds(wallPosition.x, wallPosition.y, 40, 40);
 
         if (playerBounds.intersects(wallBounds)) {
-            if (playerBounds.top + playerBounds.height >= wallBounds.top && playerBounds.top <= wallBounds.top + wallBounds.height) {
-                _state=PLAYER_IDLE;
+            if (playerBounds.top + playerBounds.height > wallBounds.top && playerBounds.top < wallBounds.top + wallBounds.height) {
+                _state = PLAYER_IDLE;
                 return true;
-            }else{
-                _state=FALLING;
             }
+            
         }
+        if (_state == JUMPING)
+            return false;
     }
+    _state = FALLING;
     return false;
 }
 
@@ -336,25 +361,4 @@ bool MySandBox::Game::Player::Player::checkEndPointCollision(const sf::Vector2f&
         return true;
     }
     return false;
-}
-
-void MySandBox::Game::Player::Player::cancelXMove()
-{
-    // _position.x += _moves->getLastMove().x;
-    if (_moves->getLastMove().x < 0) {
-        _position.x += _speed;
-    }
-    else if (_moves->getLastMove().x > 0) {
-        _position.x -= _speed;
-    }
-}
-
-void MySandBox::Game::Player::Player::cancelYMove()
-{
-    if (_moves->getLastMove().y < 0) {
-        _position.y += _gravity;
-    }
-    else if (_moves->getLastMove().y > 0) {
-        _position.y -= 10;
-    }
 }

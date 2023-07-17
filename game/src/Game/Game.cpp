@@ -61,7 +61,7 @@ void MySandBox::Game::Game::displayMap()
         _window.draw(_s_wall);
         pos.x += 64;
     }*/
-    std::string mapFile("maps/fullscreen.txt");
+    std::string mapFile("maps/collisions.txt");
     _mapGenerator = SandBox::MapGenerator(mapFile);
     _mapGenerator.displayMap(_window);
 
@@ -89,8 +89,8 @@ void MySandBox::Game::Game::events(sf::Event& event)
 /*********update*********/
 void MySandBox::Game::Game::update()
 {
-    _player.update();
     std::vector<sf::Vector2f> wallPositions = _mapGenerator.getCollisionPositions();
+    _player.update(wallPositions);
     sf::Vector2f endPosition = _mapGenerator.getEndPoint();
 
     bool hasWin = _player.checkEndPointCollision(endPosition);
@@ -98,16 +98,7 @@ void MySandBox::Game::Game::update()
     {
         _game_state = WIN;
     }
-    bool isCollidingWithWallX = _player.checkWallCollisionX(wallPositions);
-    bool isCollidingWithWallY = _player.checkWallCollisionY(wallPositions);
-
-    if (isCollidingWithWallY) {
-        _player.cancelYMove();
-    }
-    if (isCollidingWithWallX)
-    {
-        _player.cancelXMove();
-    }
+    
 
 }
 
