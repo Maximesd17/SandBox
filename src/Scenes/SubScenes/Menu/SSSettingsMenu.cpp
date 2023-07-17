@@ -6,7 +6,6 @@
 */
 
 #include "SSSettingsMenu.hpp"
-#include <iostream>
 
 /*********Constructor*********/
 /* This build the object     */
@@ -22,6 +21,7 @@ MySandBox::Scenes::SubScenes::SSSettingsMenu::SSSettingsMenu(MySandBox::State& s
         _game.getWindowOriginSize())
 {
     _font.loadFromFile("./resources/fonts/roboto.ttf");
+
     _title.setString("Settings");
     _title.setFont(_font);
     _title.setCharacterSize(100);
@@ -35,6 +35,11 @@ MySandBox::Scenes::SubScenes::SSSettingsMenu::SSSettingsMenu(MySandBox::State& s
 /*********Destructor*********/
 MySandBox::Scenes::SubScenes::SSSettingsMenu::~SSSettingsMenu()
 {
+}
+
+void MySandBox::Scenes::SubScenes::SSSettingsMenu::events(sf::Event& event)
+{
+    _settings_editor.events(event);
 }
 
 /*********update*********/

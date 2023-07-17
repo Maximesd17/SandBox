@@ -18,15 +18,17 @@ namespace MySandBox {
         public:
             SettingsEditor(Game::Game &game, sf::Vector2i position, sf::Vector2f size);
             ~SettingsEditor();
-            void events();
+            // void events(sf::Event& event);
             void update();
             void display();
         protected:
         private:
             Game::Game &_game;
-            sf::RectangleShape background;
             Components::Range _music_volume;
             Components::Range _sound_volume;
+            sf::Texture bgTexture;
+            sf::Sprite background;
+
         };
     }
 }

@@ -17,14 +17,14 @@ MySandBox::Scenes::SubScenes::ASubScene::ASubScene(MySandBox::State& state, MySa
 
 /*********Destructor*********/
 /* This destroy the sandbox */
-/*********Destructor*********/ 
+/*********Destructor*********/
 MySandBox::Scenes::SubScenes::ASubScene::~ASubScene()
 {
 }
 
 /*********events************/
 /* Event handling function */
-/*********events************/ 
+/*********events************/
 void MySandBox::Scenes::SubScenes::ASubScene::events(sf::Event& event)
 {
     return;

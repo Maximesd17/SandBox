@@ -19,6 +19,7 @@ namespace MySandBox {
             public:
                 SSSettingsMenu(MySandBox::State& state, MySandBox::Game::Game& game);
                 ~SSSettingsMenu();
+                void events(sf::Event& event);
                 void update();
                 void display();
             protected:

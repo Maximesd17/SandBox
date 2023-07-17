@@ -6,12 +6,13 @@
 */
 
 #include "SettingsEditor.hpp"
+#include <iostream>
 
 /*********Constructor*********/
 /* This build the object     */
 /*********Constructor*********/
 MySandBox::Components::SettingsEditor::SettingsEditor(Game::Game& game, sf::Vector2i position, sf::Vector2f size) :
-    AScrollableView(sf::FloatRect(position.x, position.y, size.x, size.y)),
+    AScrollableView(sf::FloatRect(0, 0, size.x, size.y)),
     _game(game),
     _music_volume(
         "Music Volume",
@@ -37,11 +38,11 @@ MySandBox::Components::SettingsEditor::SettingsEditor(Game::Game& game, sf::Vect
         100,
         50,
         true
-    ),
-    background(sf::Vector2f(size.x, size.y))
+    )
 {
-    background.setFillColor(sf::Color::Green);
-    background.setPosition(0, 0);
+    bgTexture.loadFromFile("resources/bg.png");
+    background.setTexture(bgTexture);
+    background.setPosition(150, 0);
 }
 
 /*********Destructor*********/
@@ -57,10 +58,14 @@ MySandBox::Components::SettingsEditor::~SettingsEditor()
 /*********update*********/
 void MySandBox::Components::SettingsEditor::update()
 {
+    this->AScrollableView::update();
     sf::RenderWindow& window = _game.getWindow();
 
+    setView(window);
     _music_volume.check(window);
     _sound_volume.check(window);
+    window.setView(window.getDefaultView());
+
 }
 
 /*********display*********/

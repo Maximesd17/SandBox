@@ -61,7 +61,7 @@ MySandBox::Components::Range::~Range()
 /*********isCursorHovered*****************************/
 /* Check if the cursor is hovered by the mouse */
 /*********isCursorHovered*****************************/
-bool MySandBox::Components::Range::isCursorHovered(sf::Vector2i mouse_pos, sf::Vector2u window_size)
+bool MySandBox::Components::Range::isCursorHovered(sf::Vector2f mouse_pos, sf::Vector2u window_size)
 {
     sf::Vector2f pos = _cursor.getPosition();
     float size = _cursor.getRadius();
@@ -77,7 +77,7 @@ bool MySandBox::Components::Range::isCursorHovered(sf::Vector2i mouse_pos, sf::V
 /*********isBarHovered*****************************/
 /* Check if the bar is hovered by the mouse */
 /*********isBarHovered*****************************/
-bool MySandBox::Components::Range::isBarHovered(sf::Vector2i mouse_pos, sf::Vector2u window_size)
+bool MySandBox::Components::Range::isBarHovered(sf::Vector2f mouse_pos, sf::Vector2u window_size)
 {
     sf::Vector2f pos = _bar.getPosition();
     sf::Vector2f size = _bar.getSize();
@@ -97,7 +97,8 @@ bool MySandBox::Components::Range::isBarHovered(sf::Vector2i mouse_pos, sf::Vect
 bool MySandBox::Components::Range::check(sf::RenderWindow& window)
 {
     sf::Vector2i mouse_pos = sf::Mouse::getPosition(window);
-    bool is_hovered = isCursorHovered(mouse_pos, window.getSize());
+    sf::Vector2f computed_mouse_pos = window.mapPixelToCoords(mouse_pos);
+    bool is_hovered = isCursorHovered(computed_mouse_pos, window.getSize());
 
     // TODO : @hollitizz CLEAN THIS CODE
 
@@ -108,7 +109,7 @@ bool MySandBox::Components::Range::check(sf::RenderWindow& window)
         sf::Vector2f pos = _cursor.getPosition();
         float size = _cursor.getRadius();
 
-        pos.x = mouse_pos.x - size;
+        pos.x = computed_mouse_pos.x - size;
         if (pos.x < _bar.getPosition().x - size)
             pos.x = _bar.getPosition().x - size;
         else if (pos.x > _bar.getPosition().x + _bar.getSize().x - size)
@@ -127,12 +128,12 @@ bool MySandBox::Components::Range::check(sf::RenderWindow& window)
             _state = CLICKED;
     } else
         _state = IDLE;
-    if (sf::Mouse::isButtonPressed(sf::Mouse::Left) && isBarHovered(mouse_pos, window.getSize())) {
+    if (sf::Mouse::isButtonPressed(sf::Mouse::Left) && isBarHovered(computed_mouse_pos, window.getSize())) {
         sf::Vector2f pos = _cursor.getPosition();
         float size = _cursor.getRadius();
 
         _state = CLICKED;
-        pos.x = mouse_pos.x - size;
+        pos.x = computed_mouse_pos.x - size;
         if (pos.x < _bar.getPosition().x - size)
             pos.x = _bar.getPosition().x - size;
         else if (pos.x > _bar.getPosition().x + _bar.getSize().x - size)

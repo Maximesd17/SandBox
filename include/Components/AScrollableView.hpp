@@ -23,6 +23,7 @@ namespace MySandBox {
 
             sf::View _view;
             sf::FloatRect _viewPort;
+            float _height;
             sf::RectangleShape _scrollbar;
             sf::RectangleShape _scrollbar_track;
         private:

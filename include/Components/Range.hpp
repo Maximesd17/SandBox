@@ -30,8 +30,8 @@ namespace MySandBox {
                 void display(sf::RenderWindow &window);
             protected:
             private:
-                bool isCursorHovered(sf::Vector2i mousePos, sf::Vector2u window_size);
-                bool isBarHovered(sf::Vector2i mousePos, sf::Vector2u window_size);
+                bool isCursorHovered(sf::Vector2f mousePos, sf::Vector2u window_size);
+                bool isBarHovered(sf::Vector2f mousePos, sf::Vector2u window_size);
                 bool _show_value;
                 int _min_value;
                 int _max_value;

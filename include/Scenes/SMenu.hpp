@@ -17,6 +17,7 @@ namespace MySandBox {
             public:
                 SMenu(MySandBox::State &state, MySandBox::Game::Game &game);
                 ~SMenu();
+                bool events();
                 void update();
                 void display();
             protected:
