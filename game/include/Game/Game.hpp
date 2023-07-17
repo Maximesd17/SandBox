@@ -41,6 +41,7 @@ namespace MySandBox {
             std::vector<sf::Texture> _t_player;
             sf::Sprite _s_wall;
             MySandBox::Game::Player::Player _player;
+            
 
         };
     }

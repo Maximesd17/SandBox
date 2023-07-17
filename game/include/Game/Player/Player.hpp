@@ -36,7 +36,6 @@ namespace MySandBox {
             public:
                 Player();
                 ~Player();
-                void setPlayerSounds();
                 void setPlayerSprites(std::vector<sf::Texture>&);
                 void update();
                 void events(sf::Event&);
