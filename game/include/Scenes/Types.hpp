@@ -15,8 +15,6 @@ namespace MySandBox {
             SETTINGS,
             GAME,
             MAIN,
-            PAUSE,
-            OVER,
             WIN,
         };
     };

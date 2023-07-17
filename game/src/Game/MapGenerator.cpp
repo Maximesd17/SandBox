@@ -151,8 +151,8 @@ void SandBox::MapGenerator::displayMap(sf::RenderWindow &_window) {
     sf::Texture endTexture;
     endTexture.loadFromFile("resources/map_textures/end.png");
 
-    sf::Vector2i spawnPoint;
-    sf::Vector2i endPoint;
+    sf::Vector2f spawnPoint;
+    sf::Vector2f endPoint;
 
     for (size_t y = 0; y < _map.size(); ++y) {
         const std::string& line = _map[y];
@@ -167,23 +167,26 @@ void SandBox::MapGenerator::displayMap(sf::RenderWindow &_window) {
                     break;
                 case 'G':
                     tileSprite.setTexture(groundTexture);
+                    _collisionPositions.push_back(sf::Vector2f(x * 40, y * 40));
                     break;
                 case 'P':
                     tileSprite.setTexture(plateformTexture);
                     break;
                 case 'W':
                     tileSprite.setTexture(wallTexture);
+                     _collisionPositions.push_back(sf::Vector2f(x * 40, y * 40));
                     break;
                 case 'B':
                     tileSprite.setTexture(boxTexture);
+                    _collisionPositions.push_back(sf::Vector2f(x * 40, y * 40));
                     break;
                 case 'S':
                     tileSprite.setTexture(spawnTexture);
-                    spawnPoint = sf::Vector2i(x, y); // Récupérer les coordonnées du point de départ
+                    spawnPoint = sf::Vector2f(x * 40, y * 40);
                     break;
                 case 'E':
                     tileSprite.setTexture(endTexture);
-                    endPoint = sf::Vector2i(x, y); // Récupérer les coordonnées du point de fin
+                    endPoint = sf::Vector2f(x * 40, y * 40);
                     break;
 
                 default:
@@ -205,12 +208,16 @@ void SandBox::MapGenerator::displayMap(sf::RenderWindow &_window) {
     }
 }
 
-sf::Vector2i SandBox::MapGenerator::getSpawnPoint() {
+sf::Vector2f SandBox::MapGenerator::getSpawnPoint() {
     return _spawnPoint;
 }
 
-sf::Vector2i SandBox::MapGenerator::getEndPoint() {
+sf::Vector2f SandBox::MapGenerator::getEndPoint() {
     return _endPoint;
+}
+
+std::vector<sf::Vector2f> SandBox::MapGenerator::getCollisionPositions(){
+    return _collisionPositions;
 }
 
 SandBox::MapGenerator SandBox::MapGenerator::operator=(const SandBox::MapGenerator &other) {
@@ -218,8 +225,8 @@ SandBox::MapGenerator SandBox::MapGenerator::operator=(const SandBox::MapGenerat
         return *this;
     this->_map_file = std::move(other._map_file);
     this->_map = std::vector<std::string>(other._map);
-    this->_spawnPoint = sf::Vector2i(other._spawnPoint);
-    this->_endPoint = sf::Vector2i(other._endPoint);
+    this->_spawnPoint = sf::Vector2f(other._spawnPoint);
+    this->_endPoint = sf::Vector2f(other._endPoint);
     this->_hasAir = other._hasAir;
     this->_hasGround = other._hasGround;
     this->_hasSpawn = other._hasSpawn;

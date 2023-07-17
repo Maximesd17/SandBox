@@ -11,16 +11,26 @@ MySandBox::Scenes::SubScenes::SSWinGame::SSWinGame(MySandBox::State &state, MySa
 /*********Destructor*********/
 MySandBox::Scenes::SubScenes::SSWinGame::~SSWinGame() {}
 
+/*********events************/
+/* Event handling function */
+/*********events************/
 void MySandBox::Scenes::SubScenes::SSWinGame::events(sf::Event &e)
 {
+    // std::cout << "WIN STATE" << std::endl;
     _game.events(e);
 }
 
+/*********update*********/
+/* Update function */
+/*********update*********/ 
 void MySandBox::Scenes::SubScenes::SSWinGame::update()
 {
     _game.update();
 }
 
+/*********display*********/
+/* Display function */
+/*********display*********/ 
 void MySandBox::Scenes::SubScenes::SSWinGame::display()
 {
     _game.display();
