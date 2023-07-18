@@ -5,7 +5,7 @@
 ** AScrollableView
 */
 
-#include "AScrollableView.hpp"
+#include "Components/AScrollableView.hpp"
 #include <iostream>
 
 MySandBox::Components::AScrollableView::AScrollableView(sf::FloatRect size) :

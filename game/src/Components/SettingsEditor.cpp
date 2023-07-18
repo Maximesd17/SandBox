@@ -5,7 +5,7 @@
 ** SettingsEditor
 */
 
-#include "SettingsEditor.hpp"
+#include "Components/SettingsEditor.hpp"
 #include <iostream>
 
 /*********Constructor*********/

@@ -5,7 +5,7 @@
 ** Range
 */
 
-#include "Range.hpp"
+#include "Components/Range.hpp"
 #include <SFML/Window/Mouse.hpp>
 
 /*********Constructor*********/

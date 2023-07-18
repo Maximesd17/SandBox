@@ -11,18 +11,15 @@
 
 namespace MySandBox
 {
-    namespace Game
+    namespace Sound
     {
-        namespace Sounds
+        class Sound
         {
-            class Sound
-            {
-            public:
-                Sound();
-                ~Sound();
-                explicit Sound(const sf::SoundBuffer);
-            };
-        }   
+        public:
+            Sound();
+            ~Sound();
+            explicit Sound(const sf::SoundBuffer);
+        };
     }
 }
 
