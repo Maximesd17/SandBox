@@ -16,6 +16,7 @@
 #include "KeyboardMoves.hpp"
 #include "ControllerMoves.hpp"
 #include "LogManager.hpp"
+#include "Entity.hpp"
 
 namespace MySandBox {
     namespace Game {
@@ -66,15 +67,6 @@ namespace MySandBox {
                 void setFallingFrame();
                 void setAttackingFrame();
                 void setDeadFrame();
-
-                int _speed;
-                double _gravity;
-                int _jump_height;
-                size_t _jump_frame;
-                double _jump_speed;
-                size_t _idle_frame;
-                double _idle_speed;
-
                 std::shared_ptr<MySandBox::Game::Player::Moves::IMoves> _moves;
                 sf::Vector2f _position;
                 size_t _sprite_index;
@@ -82,7 +74,13 @@ namespace MySandBox {
                 PlayerState _state;
                 PlayerDirection _direction;
                 LogManager _log_manager;
-
+                int _speed;
+                double _gravity;
+                int _jump_height;
+                size_t _jump_frame;
+                double _jump_speed;
+                size_t _idle_frame;
+                double _idle_speed;
             };
         }
     }
