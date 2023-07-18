@@ -12,7 +12,7 @@
 /* This build the object     */
 /*********Constructor*********/
 MySandBox::Components::SettingsEditor::SettingsEditor(Game::Game& game, sf::Vector2i position, sf::Vector2f size) :
-    AScrollableView(sf::FloatRect(0, 0, size.x, size.y)),
+    AScrollableView(sf::Vector2f(size.x, 3890), game.getWindowOriginSize(), true),
     _game(game),
     _music_volume(
         "Music Volume",
@@ -58,8 +58,11 @@ MySandBox::Components::SettingsEditor::~SettingsEditor()
 /*********update*********/
 void MySandBox::Components::SettingsEditor::update()
 {
-    this->AScrollableView::update();
     sf::RenderWindow& window = _game.getWindow();
+    sf::Vector2i mouse_pos = sf::Mouse::getPosition(window);
+
+    this->checkScrollbar(mouse_pos);
+    this->AScrollableView::update();
 
     setView(window);
     _music_volume.check(window);
@@ -75,6 +78,7 @@ void MySandBox::Components::SettingsEditor::display()
 {
     sf::RenderWindow& window = _game.getWindow();
 
+    this->AScrollableView::display(window);
     setView(window);
     window.draw(background);
     _music_volume.display(window);
