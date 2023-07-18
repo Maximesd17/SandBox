@@ -22,7 +22,7 @@ LOGDIR      =   errors/
 
 INCLUDES    =   -I./include/                         \
                 -I./                         \
-				$(shell find include/ -type d -exec echo -I{} \;)
+				$(shell find include -type d -exec echo -I{} \;)
 
 
 FLAGS       =   -std=c++20

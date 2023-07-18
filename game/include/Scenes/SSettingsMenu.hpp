@@ -9,6 +9,7 @@
 #pragma once
 
 #include "SMenu.hpp"
+#include "Components/Button.hpp"
 
 namespace MySandBox {
     namespace Scenes {
@@ -20,7 +21,7 @@ namespace MySandBox {
                 void display();
             protected:
             private:
-                MySandBox::Component::Button _return_button;
+                MySandBox::Components::Button _return_button;
         };
     };
 };
