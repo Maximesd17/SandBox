@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>MySandBox Documentation</title>
+  <link rel="stylesheet" type="text/css" href="../style.css">
+</head>
+<body>
+  <div class="container">
+    <h1>MySandBox - DOC - Game</h1>
+    <div class="description">
+      <h2>Description</h2>
+      <p>
+        This class is used for managing the game state, initializing game components, handling events, updating game logic, and displaying game elements.
+      </p>
+    </div>
+
+    <div class="code">
+      <h2>Code</h2>
+      <pre>
+
+        /*
+        ** EPITECH PROJECT, 2022
+        ** MySandBox
+        ** File description:
+        ** Game
+        */
+        
+        #include "Game.hpp"
+        #include <fstream>
+        #include <iostream>
+        #include <memory>
+        
+        /*********Constructor*********/
+        /* This build the object     */
+        /*********Constructor*********/
+        MySandBox::Game::Game::Game(sf::RenderWindow& window) : _window(window)
+        {
+        }
+        
+        /*********Destructor*********/
+        /* This destroy the sandbox */
+        /*********Destructor*********/
+        MySandBox::Game::Game::~Game()
+        {
+        }
+        
+        /*********init**************/
+        /* Initialization function */
+        /*********init**************/
+        void MySandBox::Game::Game::init()
+        {
+            _window_origin_size = _window.getSize();
+        }
+        
+        /*********reset*********/
+        /* Reset function      */
+        /*********reset*********/
+        void MySandBox::Game::Game::reset()
+        {
+            std::string line;
+        
+            _t_wall.loadFromFile("resources/map_textures/wall.png", sf::IntRect(0, 0, 64, 64));
+            _sprite_shit.loadFromFile("resources/player.png");
+        
+            _player.setPlayerSprites(_sprite_shit);
+            _s_wall.setTexture(_t_wall);
+            _s_wall.setScale(2, 2);
+        }
+        
+        /*********displayMap*********/
+        /* Display map function     */
+        /*********displayMap*********/
+        void MySandBox::Game::Game::displayMap()
+        {
+        /*
+            sf::Vector2u size = _window.getSize();
+            sf::Vector2u pos = sf::Vector2u(0, size.y - 64 * 2);
+        
+            for (size_t i = 0; i < size.x / 64; ++i) {
+                _s_wall.setPosition(pos.x, pos.y);
+                _window.draw(_s_wall);
+                pos.x += 64;
+            }*/
+            std::string mapFile("maps/fullscreen.txt");
+            _mapGenerator = SandBox::MapGenerator(mapFile);
+            _mapGenerator.displayMap(_window);
+        
+        }
+        
+        /*********displayPlayer*********/
+        /* Display player function     */
+        /*********displayPlayer*********/
+        void MySandBox::Game::Game::displayPlayer()
+        {
+            _player.display(_window);
+        }
+        
+        /*********events************/
+        /* Event handling function */
+        /*********events************/
+        void MySandBox::Game::Game::events(sf::Event& event)
+        {
+            _player.events(event);
+            winningCondition();
+        }
+        
+        /*********update*********/
+        /* Update function      */
+        /*********update*********/
+        void MySandBox::Game::Game::update()
+        {
+            _player.update();
+        }
+        
+        /*********display*********/
+        /* Display function      */
+        /*********display*********/
+        void MySandBox::Game::Game::display()
+        {
+            displayMap();
+            displayPlayer();
+        }
+        
+        /*********getWindow**********/
+        /* Get the window reference */
+        /*********getWindow**********/
+        sf::RenderWindow& MySandBox::Game::Game::getWindow() const
+        {
+            return _window;
+        }
+        
+        /*********getWindowOriginSize*********/
+        /* Get the original window size      */
+        /*********getWindowOriginSize*********/
+        sf::Vector2u MySandBox::Game::Game::getWindowOriginSize() const
+        {
+            return _window_origin_size;
+        }
+        
+        /************winningCondition************/
+        /* Check for winning condition.         */
+        /* If player position reaches end point */
+        /* it return True. Otherwise, false     */
+        /************winningCondition************/
+        void MySandBox::Game::Game::winningCondition()
+        {
+            sf::Vector2f pos = _player.getPosition();
+        
+            /*Temporary values before having access to real values*/
+            sf::Vector2i endPoint = _mapGenerator.getEndPoint();
+            int textures_size = 40;
+            /*---------------------*/
+        
+            // std::cout << "[PLAYER] X: " << pos.x << " | " << "Y: " << pos.y << std::endl;
+            // std::cout << "[END] X: " << endPoint.x * textures_size << " | " << "Y: " << endPoint.y * textures_size << std::endl;
+            if ((size_t)pos.x >= endPoint.x * textures_size &&
+                (size_t)pos.x <= endPoint.x * textures_size + textures_size &&
+                (size_t)pos.y >= endPoint.y * textures_size &&
+                (size_t)pos.y <= endPoint.y * textures_size - textures_size) {
+                // std::cout << "WIN" << std::endl;
+                _game_state = WIN;
+            }
+        }
+        
+        MySandBox::Game::State MySandBox::Game::Game::getGameState() const
+        {
+            return _game_state;
+        }
+        
+        void MySandBox::Game::Game::setGameState(MySandBox::Game::State &game_state)
+        {
+            _game_state = game_state;
+        }
+
+      </pre>
+    </div>
+
+    <div class="function">
+      <h2>Constructor</h2>
+      <p>
+        The constructor creates a Game object and initializes it with the specified window object, which represents the game window.
+      </p>
+      <pre>
+        MySandBox::Game::Game::Game(sf::RenderWindow&amp; window)
+      </pre>
+    </div>
+
+    <div class="function">
+      <h2>Destructor</h2>
+      <p>
+        The destructor destroys the Game object.
+      </p>
+      <pre>
+        MySandBox::Game::Game::~Game()
+      </pre>
+    </div>
+
+    <div class="function">
+      <h2>init</h2>
+      <p>
+        This function initializes the game. It sets the original window size.
+      </p>
+      <pre>
+        void MySandBox::Game::Game::init()
+      </pre>
+    </div>
+
+    <div class="function">
+      <h2>reset</h2>
+      <p>
+        This function resets the game. It loads textures and sets up game elements such as walls and the player.
+      </p>
+      <pre>
+        void MySandBox::Game::Game::reset()
+      </pre>
+    </div>
+
+    <div class="function">
+      <h2>displayMap</h2>
+      <p>
+        This function displays the game map on the window.
+      </p>
+      <pre>
+        void MySandBox::Game::Game::displayMap()
+      </pre>
+    </div>
+
+    <div class="function">
+      <h2>displayPlayer</h2>
+      <p>
+        This function displays the player on the window.
+      </p>
+      <pre>
+        void MySandBox::Game::Game::displayPlayer()
+      </pre>
+    </div>
+
+    <div class="function">
+      <h2>events</h2>
+      <p>
+        This function handles events, such as keyboard or mouse events, and updates the game state accordingly.
+      </p>
+      <pre>
+        void MySandBox::Game::Game::events(sf::Event&amp; event)
+      </pre>
+    </div>
+
+    <div class="function">
+      <h2>update</h2>
+      <p>
+        This function updates the game logic.
+      </p>
+      <pre>
+        void MySandBox::Game::Game::update()
+      </pre>
+    </div>
+
+    <div class="function">
+      <h2>display</h2>
+      <p>
+        This function displays the game elements on the window, including the map and the player.
+      </p>
+      <pre>
+        void MySandBox::Game::Game::display()
+      </pre>
+    </div>
+
+    <div class="function">
+      <h2>getWindow</h2>
+      <p>
+        This function returns a reference to the game window.
+      </p>
+      <pre>
+        sf::RenderWindow&amp; MySandBox::Game::Game::getWindow() const
+      </pre>
+    </div>
+
+    <div class="function">
+      <h2>getWindowOriginSize</h2>
+      <p>
+        This function returns the original size of the game window.
+      </p>
+      <pre>
+        sf::Vector2u MySandBox::Game::Game::getWindowOriginSize() const
+      </pre>
+    </div>
+
+    <div class="function">
+      <h2>winningCondition</h2>
+      <p>
+        This function checks for the winning condition in the game. If the player reaches the end point, it updates the game state to indicate a win.
+      </p>
+      <pre>
+        void MySandBox::Game::Game::winningCondition()
+      </pre>
+    </div>
+
+    <div class="function">
+      <h2>getGameState</h2>
+      <p>
+        This function returns the current game state.
+      </p>
+      <pre>
+        MySandBox::Game::State MySandBox::Game::Game::getGameState() const
+      </pre>
+    </div>
+
+    <div class="function">
+      <h2>setGameState</h2>
+      <p>
+        This function sets the game state to the specified game_state.
+      </p>
+      <pre>
+        void MySandBox::Game::Game::setGameState(MySandBox::Game::State&amp; game_state)
+      </pre>
+    </div>
+
+    <div class="location">
+      <h2>Location</h2>
+      <p>
+        This file source is at src/Game/Game.cpp<br>
+        This file header is at include/Game/Game.hpp
+      </p>
+    </div>
+  </div>
+</body>
+</html>

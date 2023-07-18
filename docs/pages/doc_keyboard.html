@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>MySandBox Documentation</title>
+  <link rel="stylesheet" type="text/css" href="../style.css">
+</head>
+<body>
+  <div class="container">
+    <h1>MySandBox - DOC - KeyboardMoves</h1>
+    <div class="description">
+      <h2>Description</h2>
+      <p>
+        This class represents the keyboard moves for the player. It handles the input from the keyboard and computes the player's movement direction.
+      </p>
+    </div>
+
+    <div class="code">
+      <h2>Code</h2>
+      <pre>
+        /*
+        ** EPITECH PROJECT, 2023
+        ** final-project
+        ** File description:
+        ** KeyboardMoves
+        */
+        
+        #include "KeyboardMoves.hpp"
+        #include <SFML/Window/Keyboard.hpp>
+        
+        /*********Constructor*********/
+        /* This build the object     */
+        /*********Constructor*********/
+        MySandBox::Game::Player::Moves::KeyboardMoves::KeyboardMoves()
+        {
+        }
+        
+        /*********Destructor*********/
+        /* This destroy the sandbox */
+        /*********Destructor*********/
+        MySandBox::Game::Player::Moves::KeyboardMoves::~KeyboardMoves()
+        {
+        }
+        
+        /*********computeDirection*********/
+        /* Compute direction function     */
+        /*********computeDirection*********/
+        void MySandBox::Game::Player::Moves::KeyboardMoves::computeDirection()
+        {
+            sf::Vector2f direction = sf::Vector2f(0, 0);
+        
+            if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
+                direction.y -= 1;
+            if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
+                direction.y += 1;
+            if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
+                direction.x -= 1;
+            if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
+                direction.x += 1;
+            _lastMove = direction;
+        }
+        
+        /*********events************/
+        /* Event handling function */
+        /*********events************/
+        void MySandBox::Game::Player::Moves::KeyboardMoves::events(sf::Event& event)
+        {
+            computeDirection();
+        }
+        
+        /*********getLastMove*********/
+        /* Get the last move         */
+        /*********getLastMove*********/
+        sf::Vector2f MySandBox::Game::Player::Moves::KeyboardMoves::getLastMove()
+        {
+            return _lastMove;
+        }
+        
+      </pre>
+    </div>
+
+    <div class="function">
+      <h2>Constructor</h2>
+      <p>
+        The constructor creates a KeyboardMoves object.
+      </p>
+      <pre>
+        MySandBox::Game::Player::Moves::KeyboardMoves::KeyboardMoves()
+      </pre>
+    </div>
+
+    <div class="function">
+      <h2>Destructor</h2>
+      <p>
+        The destructor destroys the KeyboardMoves object.
+      </p>
+      <pre>
+        MySandBox::Game::Player::Moves::KeyboardMoves::~KeyboardMoves()
+      </pre>
+    </div>
+
+    <div class="function">
+      <h2>computeDirection</h2>
+      <p>
+        This function computes the player's movement direction based on input from the keyboard.
+      </p>
+      <pre>
+        void MySandBox::Game::Player::Moves::KeyboardMoves::computeDirection()
+      </pre>
+    </div>
+
+    <div class="function">
+      <h2>events</h2>
+      <p>
+        This function handles events related to the keyboard moves.
+      </p>
+      <pre>
+        void MySandBox::Game::Player::Moves::KeyboardMoves::events(sf::Event&amp; event)
+      </pre>
+    </div>
+
+    <div class="function">
+      <h2>getLastMove</h2>
+      <p>
+        This function returns the last computed movement direction for the player.
+      </p>
+      <pre>
+        sf::Vector2f MySandBox::Game::Player::Moves::KeyboardMoves::getLastMove()
+      </pre>
+    </div>
+
+    <div class="location">
+      <h2>Location</h2>
+      <p>
+        This file source is at src/Game/Player/Moves/KeyboardMoves.cpp<br>
+        This file header is at include/Game/Player/Moves/KeyboardMoves.hpp
+      </p>
+    </div>
+  </div>
+</body>
+</html>
