@@ -10,13 +10,12 @@
 
 class GameSpriteObject
 {
-/*
+
 public:
   virtual void update() = 0;
   virtual void display(sf::RenderWindow&) = 0;
   virtual sf::Vector2f getPosition() = 0;
   virtual void setPosition(sf::Vector2f position) = 0;
 
-  */
 };
 #endif //______GAMESPRITEOBJECT_HPP___

@@ -38,6 +38,7 @@ SandBox::MapGenerator::MapGenerator(std::string& filepath)
         return;
     }
     while (std::getline(fs, buf))
+      std::cout << buf << std::endl;
         _map.push_back(buf);
     fs.close();
     validateMap(_map);
@@ -58,7 +59,7 @@ bool SandBox::MapGenerator::isValid()
     return _valid;
 }
 
-bool SandBox::MapGenerator::validateMap(std::vector<std::string>& map)
+bool SandBox::MapGenerator::validateMap(std::vector<SandBox::MapObject>& map)
 {
     size_t line_length = 0;
 
@@ -249,7 +250,7 @@ SandBox::MapGenerator SandBox::MapGenerator::operator=(const SandBox::MapGenerat
     if (this == &other)
         return *this;
     this->_map_file = std::move(other._map_file);
-    this->_map = std::vector<std::string>(other._map);
+    this->_map = std::vector<SandBox::MapObject>(other._map);
     this->_spawnPoint = sf::Vector2f(other._spawnPoint);
     this->_endPoint = sf::Vector2f(other._endPoint);
     this->_hasAir = other._hasAir;
