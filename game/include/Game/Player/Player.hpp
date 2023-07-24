@@ -1,5 +1,5 @@
 /*
-** EPITECH PROJECT, 2022
+** EPITECH PROJECT, 2023
 ** MySandBox
 ** File description:
 ** Player
@@ -16,6 +16,7 @@
 #include "KeyboardMoves.hpp"
 #include "ControllerMoves.hpp"
 #include "LogManager.hpp"
+#include "Entity.hpp"
 
 namespace MySandBox {
     namespace Game {
@@ -90,7 +91,6 @@ namespace MySandBox {
                 PlayerState _state;
                 PlayerDirection _direction;
                 LogManager _log_manager;
-
             };
         }
     }

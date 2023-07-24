@@ -1,5 +1,5 @@
 /*
-** EPITECH PROJECT, 2022
+** EPITECH PROJECT, 2023
 ** MySandBox
 ** File description:
 ** State
@@ -8,7 +8,7 @@
 #include "State.hpp"
 
 /*********Constructor*********/
-/* init state of the game    */ 
+/* init state of the game    */
 /*********Constructor*********/
 MySandBox::State::State()
 {
@@ -18,14 +18,14 @@ MySandBox::State::State()
 
 /*********Destructor*********/
 /* This destroy the object  */
-/*********Destructor*********/ 
+/*********Destructor*********/
 MySandBox::State::~State()
 {
 }
 
 /*********getScene*********/
 /* Getter for the current */
-/*********getScene*********/ 
+/*********getScene*********/
 MySandBox::Scenes::Type MySandBox::State::getScene() const
 {
     return _current_scene;

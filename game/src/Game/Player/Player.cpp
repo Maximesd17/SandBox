@@ -69,9 +69,14 @@ void MySandBox::Game::Player::Player::ApplyGravity(const std::vector<sf::Vector2
 {
     //_log_manager.addLog("Player", "OK", "gravity fall");
     float future_y = _position.y + _gravity;
-    if (checkWallCollisionY(future_y, collisionPositions)) {
-        _state = PLAYER_IDLE;
-        return;
+
+    while (checkWallCollisionY(future_y, collisionPositions)) {
+        future_y -= 0.1;
+        if (future_y <= _position.y) {
+            future_y = floor(future_y);
+            _state = PLAYER_IDLE;
+            break;
+        }
     }
     if (_position.y >= 1080) {
         _position.y = 0;
@@ -87,8 +92,15 @@ void MySandBox::Game::Player::Player::ApplyGravity(const std::vector<sf::Vector2
 void MySandBox::Game::Player::Player::ApplyJump(const std::vector<sf::Vector2f>& collisionPositions)
 {
     float future_y = _position.y - _jump_height / _jump_speed;
-    if (checkWallCollisionY(future_y, collisionPositions))
-        return;
+
+    while (checkWallCollisionY(future_y, collisionPositions)) {
+        future_y += 0.1;
+        if (future_y >= _position.y) {
+            future_y = ceil(future_y);
+            _state = PLAYER_IDLE;
+            break;
+        }
+    }
     if (_jump_frame < _jump_speed) {
         //_log_manager.addLog("Player", "OK", "jump");
         _position.y = future_y;
@@ -376,20 +388,20 @@ bool MySandBox::Game::Player::Player::checkWallCollisionY(const float future_y, 
     for (const sf::Vector2f& wallPosition : collisionPositions) {
         sf::FloatRect wallBounds(wallPosition.x, wallPosition.y, 40, 40);
 
+        //help refacto I went dirty
         if (playerBounds.intersects(wallBounds)) {
-            if (playerBounds.top + playerBounds.height > wallBounds.top && playerBounds.top < wallBounds.top + wallBounds.height) {
-                if (_state != WALKING)
-                {
-                   _state = PLAYER_IDLE;
+            if (_state == JUMPING) {
+                if (playerBounds.top <= wallBounds.top + wallBounds.height) {
+                    return true;
                 }
+            }
+            if (playerBounds.top + playerBounds.height >= wallBounds.top) {
                 return true;
             }
-
         }
-        if (_state == JUMPING)
-            return false;
     }
-    _state = FALLING;
+    if (_state != JUMPING)
+        _state = FALLING;
     return false;
 }
 

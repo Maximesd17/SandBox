@@ -1,20 +1,21 @@
 /*
-** EPITECH PROJECT, 2022
+** EPITECH PROJECT, 2023
 ** MySandBox
 ** File description:
 ** Button
 */
 
-#include "Button.hpp"
+#include "Components/Button.hpp"
 #include <SFML/Window/Mouse.hpp>
 
 /*********Constructor*********/
 /* This build the object     */
 /*********Constructor*********/
-MySandBox::Component::Button::Button(std::string text, sf::Vector2i pos, sf::Vector2f size,
+MySandBox::Components::Button::Button(std::string text, sf::Vector2i pos, sf::Vector2f size,
     sf::Vector2u window_origin_size)
-    : _state(MySandBox::Component::IDLE), _window_origin_size(window_origin_size)
+    : _state(MySandBox::Components::IDLE), _window_origin_size(window_origin_size)
 {
+    _is_clicked = false;
     _rect.setPosition(pos.x, pos.y);
     _rect.setSize(size);
     _font.loadFromFile("resources/fonts/button.ttf");
@@ -32,14 +33,14 @@ MySandBox::Component::Button::Button(std::string text, sf::Vector2i pos, sf::Vec
 /*********Destructor*********/
 /* This destroy the sandbox */
 /*********Destructor*********/
-MySandBox::Component::Button::~Button()
+MySandBox::Components::Button::~Button()
 {
 }
 
 /*********isHovered*****************************/
 /* Check if the button is hovered by the mouse */
 /*********isHovered*****************************/
-bool MySandBox::Component::Button::isHovered(sf::Vector2i mouse_pos, sf::Vector2u window_size)
+bool MySandBox::Components::Button::isHovered(sf::Vector2i mouse_pos, sf::Vector2u window_size)
 {
     sf::Vector2f pos = _rect.getPosition();
     sf::Vector2f size = _rect.getSize();
@@ -56,31 +57,28 @@ bool MySandBox::Component::Button::isHovered(sf::Vector2i mouse_pos, sf::Vector2
 /*********check************************************************************/
 /* Check if the button is clicked or hovered, and update the button state */
 /*********check************************************************************/
-bool MySandBox::Component::Button::check(sf::RenderWindow& window)
+bool MySandBox::Components::Button::check(sf::RenderWindow& window)
 {
     sf::Vector2i mouse_pos = sf::Mouse::getPosition(window);
+    bool is_hovered = isHovered(mouse_pos, window.getSize());
 
-    if (_state == CLICKED && !sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
-        if (isHovered(mouse_pos, window.getSize()))
-            _state = HOVER;
-        else
-            _state = IDLE;
-        return true;
+    if (is_hovered && sf::Mouse::isButtonPressed(sf::Mouse::Left) && _state == IDLE) {
+        return false;
     }
-    else if (isHovered(mouse_pos, window.getSize())) {
-        _state = HOVER;
-        if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
-            _state = CLICKED;
-    }
-    else
-        _state = IDLE;
+    if ((is_hovered || _state == CLICKED) && sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
+        _state = CLICKED;
+    } else if (_state == CLICKED && !sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
+        if (is_hovered) return true;
+        else _state = IDLE;
+    } else if (is_hovered) _state = HOVER;
+    else _state = IDLE;
     return false;
 }
 
 /*********display********************/
 /* Display the button on the window */
 /*********display********************/
-void MySandBox::Component::Button::display(sf::RenderWindow& window)
+void MySandBox::Components::Button::display(sf::RenderWindow& window)
 {
     _rect.setFillColor(_colors[_state]);
     window.draw(_rect);
