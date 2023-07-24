@@ -15,7 +15,7 @@ SandBox::MapGenerator::MapGenerator() {}
 SandBox::MapGenerator::MapGenerator(std::string &filepath) {
     std::ifstream fs;
     std::string buf;
-    sf::RenderWindow _window;
+
     _map_file = filepath;
     fs.open(_map_file, std::ios::in);
     if (!fs.is_open()) {
@@ -26,6 +26,25 @@ SandBox::MapGenerator::MapGenerator(std::string &filepath) {
         _map.push_back(buf);
     fs.close();
     validateMap(_map);
+    setKeyPoints();
+}
+
+void SandBox::MapGenerator::setMapFile(std::string &filepath)
+{
+    std::ifstream fs;
+    std::string buf;
+
+    _map_file = filepath;
+    fs.open(_map_file, std::ios::in);
+    if (!fs.is_open()) {
+        std::cerr << "Error on opening file '" << _map_file << "'." << std::endl;
+        return;
+    }
+    while (std::getline(fs, buf))
+        _map.push_back(buf);
+    fs.close();
+    validateMap(_map);
+    setKeyPoints();
 }
 
 std::string SandBox::MapGenerator::getMapFile() {
@@ -126,6 +145,45 @@ void SandBox::MapGenerator::keyPoints(std::string &line) {
 SandBox::MapGenerator::~MapGenerator() {
 }
 
+void SandBox::MapGenerator::setKeyPoints()
+{
+    sf::Vector2f spawnPoint;
+    sf::Vector2f endPoint;
+
+    for (size_t y = 0; y < _map.size(); ++y) {
+        const std::string& line = _map[y];
+        for (size_t x = 0; x < line.size(); ++x) {
+            char ch = line[x];
+
+            sf::Sprite tileSprite;
+
+            switch (ch) {
+                case 'G':
+                    _collisionPositions.push_back(sf::Vector2f(x * 40, y * 40));
+                    break;
+                case 'W':
+                     _collisionPositions.push_back(sf::Vector2f(x * 40, y * 40));
+                    break;
+                case 'B':
+                    _collisionPositions.push_back(sf::Vector2f(x * 40, y * 40));
+                    break;
+                case 'S':
+                    spawnPoint = sf::Vector2f(x * 40 , y * 40);
+                    break;
+                case 'E':
+                    endPoint = sf::Vector2f(x * 40, y * 40);
+                    break;
+
+                default:
+                    continue;
+            }
+
+        }
+    }
+    _spawnPoint = spawnPoint;
+    _endPoint = endPoint;
+}
+
 void SandBox::MapGenerator::displayMap(sf::RenderWindow &_window) {
 
     std::vector<sf::Sprite> tiles;
@@ -182,7 +240,7 @@ void SandBox::MapGenerator::displayMap(sf::RenderWindow &_window) {
                     break;
                 case 'S':
                     tileSprite.setTexture(spawnTexture);
-                    spawnPoint = sf::Vector2f(x * 40, y * 40);
+                    spawnPoint = sf::Vector2f(x * 40 , y * 40);
                     break;
                 case 'E':
                     tileSprite.setTexture(endTexture);
@@ -203,6 +261,7 @@ void SandBox::MapGenerator::displayMap(sf::RenderWindow &_window) {
     }
     _spawnPoint = spawnPoint;
     _endPoint = endPoint;
+
     for (const sf::Sprite& tile : tiles) {
         _window.draw(tile);
     }

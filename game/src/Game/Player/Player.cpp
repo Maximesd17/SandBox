@@ -15,7 +15,7 @@
 /*********Constructor*********/
 MySandBox::Game::Player::Player::Player()
 {
-    _speed = 10;
+    _speed = 8;
     _gravity = 9.81;
     _jump_height = 150;
     _position = sf::Vector2f(45, 100);
@@ -23,11 +23,19 @@ MySandBox::Game::Player::Player::Player()
     _idle_speed = 1 * 60; // 60 = default frame rate
     _jump_frame = 0;
     _jump_speed = 0.1 * 60; // 60 = default frame rate
+    _walk_frame = 0;
+    _walk_speed = 1 * 60; // 60 = default frame rate
+
+    _attack_speed = 0.7 * 60; // 60 = default frame rate
+    _attack_frame = 0;
+
+    _death_speed = 1 * 60; // 60 = default frame rate
+    _death_frame = 0;
 
     _state = PLAYER_IDLE;
     _direction = RIGHT;
-
-
+    _player_width = 32;
+    _player_height = 32;
     _moves = std::make_shared<Moves::KeyboardMoves>();
 }
 
@@ -127,13 +135,15 @@ void MySandBox::Game::Player::Player::computeXMoves(float directionX, const std:
     _position.x = future_x;
     if (directionX < 0) {
         _direction = LEFT;
-        if (_state != JUMPING && _state != FALLING)
+        if (_state != JUMPING && _state != FALLING){
             _state = WALKING;
+        }
     }
     else if (directionX > 0) {
         _direction = RIGHT;
-        if (_state != JUMPING && _state != FALLING)
+        if (_state != JUMPING && _state != FALLING){
             _state = WALKING;
+        }
     }
     else {
         _state = _state != JUMPING && _state != FALLING ? PLAYER_IDLE : _state;
@@ -158,9 +168,9 @@ void MySandBox::Game::Player::Player::setIdleFrame()
 {
     if (_idle_frame >= _idle_speed) _idle_frame = 0;
 
-    const int frame_to_display = floor(4 / _idle_speed * _idle_frame);
+    const int frame_to_display = floor(2 / _idle_speed * _idle_frame);
 
-    _player.setTextureRect(sf::IntRect(40 * frame_to_display, 0 + 58 * (int)_direction, 40, 58));
+    _player.setTextureRect(sf::IntRect(_player_width * frame_to_display, 0 + _player_height * (int)_direction, _player_width, _player_height));
     _idle_frame++;
 }
 
@@ -169,7 +179,10 @@ void MySandBox::Game::Player::Player::setIdleFrame()
 /*********setWalkingFrame*********/
 void MySandBox::Game::Player::Player::setWalkingFrame()
 {
-    _player.setTextureRect(sf::IntRect( 0, 0 + 58 * (int)_direction, 40, 58 ));
+    if (_walk_frame >= _walk_speed) _walk_frame = 0;
+    const int frame_to_display = floor(8 / _walk_speed * _walk_frame);
+    _player.setTextureRect(sf::IntRect(_player_width * frame_to_display, 64 + _player_height * (int)_direction, _player_width, _player_height ));
+    _walk_frame++;
 }
 
 /*********setJumpingFrame*********/
@@ -179,7 +192,7 @@ void MySandBox::Game::Player::Player::setJumpingFrame()
 {
     const int frame_to_display = floor(4 / _jump_speed * _jump_frame);
 
-    _player.setTextureRect(sf::IntRect(40 * frame_to_display, 116 + 58 * (int)_direction, 40, 58 ));
+    _player.setTextureRect(sf::IntRect(_player_width * frame_to_display, 128 + _player_height * (int)_direction, _player_width, _player_height ));
 }
 
 /*********setFallingFrame*********/
@@ -187,7 +200,7 @@ void MySandBox::Game::Player::Player::setJumpingFrame()
 /*********setFallingFrame*********/
 void MySandBox::Game::Player::Player::setFallingFrame()
 {
-    _player.setTextureRect(sf::IntRect( 120, 116 + 58 * (int)_direction, 40, 58));
+    _player.setTextureRect(sf::IntRect( 132, 128 + _player_height * (int)_direction, _player_width, _player_height));
 }
 
 /*********setAttackingFrame*********/
@@ -195,7 +208,11 @@ void MySandBox::Game::Player::Player::setFallingFrame()
 /*********setAttackingFrame*********/
 void MySandBox::Game::Player::Player::setAttackingFrame()
 {
-    std::cout << "setAttackingFrame" << std::endl;
+    //TODO mettre les _attack_frame et _attack_speed
+    if (_attack_frame >= _attack_speed) _attack_frame = 0;
+    const int frame_to_display = floor(8 / _attack_speed * _attack_frame);
+    _player.setTextureRect(sf::IntRect(_player_width * frame_to_display, 256 + _player_height * (int)_direction, _player_width, _player_height ));
+    _attack_frame++;
 }
 
 
@@ -204,7 +221,11 @@ void MySandBox::Game::Player::Player::setAttackingFrame()
 /*********setDeadFrame*********/
 void MySandBox::Game::Player::Player::setDeadFrame()
 {
-    std::cout << "setDeadFrame" << std::endl;
+    //TODO mettre les _death_frame et _death_speed
+    if (_death_frame >= _death_speed) _death_frame = 0;
+    const int frame_to_display = floor(8 / _death_speed * _death_frame);
+    _player.setTextureRect(sf::IntRect(_player_width * frame_to_display, 192 + _player_height * (int)_direction, _player_width, _player_height ));
+    _death_frame++;
 }
 
 /*********display*********/
@@ -213,6 +234,7 @@ void MySandBox::Game::Player::Player::setDeadFrame()
 void MySandBox::Game::Player::Player::display(sf::RenderWindow& window)
 {
     _sprite_index++;
+   // std::cout << _state << std::endl;
     switch (_state) {
     case PLAYER_IDLE:
         setIdleFrame();
@@ -356,10 +378,13 @@ bool MySandBox::Game::Player::Player::checkWallCollisionY(const float future_y, 
 
         if (playerBounds.intersects(wallBounds)) {
             if (playerBounds.top + playerBounds.height > wallBounds.top && playerBounds.top < wallBounds.top + wallBounds.height) {
-                _state = PLAYER_IDLE;
+                if (_state != WALKING)
+                {
+                   _state = PLAYER_IDLE;
+                }
                 return true;
             }
-            
+
         }
         if (_state == JUMPING)
             return false;

@@ -36,6 +36,7 @@ namespace SandBox {
         public:
             MapGenerator();
             MapGenerator(std::string &filepath);
+            void setKeyPoints();
             std::string getMapFile();
             std::vector<std::string> getMap();
             sf::Vector2f getSpawnPoint();
@@ -44,6 +45,7 @@ namespace SandBox {
             bool validateMap(std::vector<std::string> &map);
             bool isValid();
             void displayMap(sf::RenderWindow &_window);
+            void setMapFile(std::string &filepath);
             MapGenerator operator=(const MapGenerator &other);
             ~MapGenerator();
     };
