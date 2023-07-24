@@ -10,7 +10,7 @@ EventManager::~EventManager()
 }
 
 
-bool EventManager::fetch_event()
+bool EventManager::fetchEvent()
 {
     sf::Event event;
     sf::RenderWindow& window = _window;
@@ -18,6 +18,10 @@ bool EventManager::fetch_event()
     while (window.pollEvent(event)) {
         if (event.type == sf::Event::Closed || event.key.code == sf::Keyboard::Escape) {
             window.close();
+            return true;
+        }
+
+        if (event.type == sf::Event::Closed || event.key.code == sf::Keyboard::Space) {
             return true;
         }
     }

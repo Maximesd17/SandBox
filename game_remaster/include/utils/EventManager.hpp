@@ -1,5 +1,6 @@
 #ifndef ______EVENTMANAGER_HPP______
 #define ______EVENTMANAGER_HPP______
+
 #include <SFML/Window/VideoMode.hpp>
 #include <SFML/Graphics/RenderWindow.hpp>
 #include <map>
@@ -20,7 +21,7 @@ public:
     EventManager(sf::RenderWindow &, GameCamera &, std::map<const std::string, GameEntity&> &);
     ~EventManager();
 
-    bool fetch_event();
+    bool fetchEvent();
 
 };
 #endif //______EVENTMANAGER_HPP______

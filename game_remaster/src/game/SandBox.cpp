@@ -29,7 +29,7 @@ void SandBox::loop()
 {
     while (_window.isOpen()) 
     {
-        if (this->_event_manager.fetch_event()) 
+        if (this->_event_manager.fetchEvent()) 
             _window.clear(sf::Color::Green);
         else           
             _window.clear(sf::Color::Black);

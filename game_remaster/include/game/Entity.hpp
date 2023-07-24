@@ -16,7 +16,6 @@ public:
   void gravity();
   void jump();
   unsigned int getId() const;
-
 };
   
 

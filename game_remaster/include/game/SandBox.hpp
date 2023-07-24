@@ -16,7 +16,7 @@
 
 class SandBox 
 {
-public:
+private:
   unsigned int _framerate;
   sf::RenderWindow _window;
   sf::VideoMode _window_size;
@@ -31,7 +31,7 @@ public:
 public:
   SandBox();
   ~SandBox();
-  void loop();        
+  void loop();
   void start();
 
 };

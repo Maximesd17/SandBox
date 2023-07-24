@@ -8,7 +8,7 @@ class GameSpriteObject
 
 public:
   virtual void display(sf::RenderWindow&) = 0;
-  virtual sf::Vector2f getPosition() = 0;
+  virtual sf::Vector2f getPosition() const = 0;
   virtual void setPosition(sf::Vector2f) = 0;
 
 };

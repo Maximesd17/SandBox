@@ -1,0 +1,88 @@
+[
+    [
+        {
+            "width": 16,
+            "height": 5
+        },
+        [
+            [
+                {
+                    "type": "AIR",
+                    "texture": "air.png",
+                    "x-size": 16
+                }
+            ],
+            [
+                {
+                    "type": "AIR",
+                    "texture": "air.png",
+                    "x-size": 10
+                },
+                {
+                    "type": "WALL",
+                    "texture": "wall.png",
+                    "x-size": 2
+                },
+                {
+                    "type": "AIR",
+                    "texture": "air.png",
+                    "x-size": 4
+                }
+            ],
+            [
+                {
+                    "type": "AIR",
+                    "texture": "air.png",
+                    "x-size": 1
+                },
+                {
+                    "type": "PLATFORM",
+                    "texture": "platform.png",
+                    "start": true,
+                    "x-size": 1
+                },
+                {
+                    "type": "AIR",
+                    "texture": "air.png",
+                    "x-size": 8
+                },
+                {
+                    "type": "WALL",
+                    "texture": "wall.png",
+                    "x-size": 2
+                },
+                {
+                    "type": "AIR",
+                    "texture": "air.png",
+                    "x-size": 2
+                },
+                {
+                    "type": "PLATFORM",
+                    "texture": "platform.png",
+                    "end": true,
+                    "action": "undefined",
+                    "x-size": 1
+                },
+                {
+                    "type": "AIR",
+                    "texture": "air.png",
+                    "x-size": 1
+                }
+            ],
+            [
+                {
+                    "type": "GROUND",
+                    "texture": "ground.png",
+                    "x-size": 16
+                }
+            ],
+            [
+                {
+                    "type": "GROUND",
+                    "texture": "ground.png",
+                    "x-size": 16
+                }
+            ]
+        ]
+    ]
+]
