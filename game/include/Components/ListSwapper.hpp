@@ -20,12 +20,12 @@ namespace MySandBox {
                 std::string text,
                 sf::FloatRect rect,
                 sf::Vector2u window_origin_size,
-                std::vector<std::string> list,
                 int default_value = 0
             );
             ~ListSwapper();
             void display(sf::RenderWindow& window);
             bool check(sf::RenderWindow& window);
+            void setList(std::vector<std::string> &list);
             std::string getValue();
         protected:
         private:

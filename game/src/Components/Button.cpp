@@ -71,9 +71,7 @@ bool MySandBox::Components::Button::check(sf::RenderWindow& window)
     }
     if ((is_hovered || _state == CLICKED) && sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
         _state = CLICKED;
-    } else if (_state == CLICKED && !sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
-        if (is_hovered) return true;
-        else _state = IDLE;
+        return true;
     } else if (is_hovered) _state = HOVER;
     else _state = IDLE;
     return false;

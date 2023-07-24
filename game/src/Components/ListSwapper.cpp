@@ -12,23 +12,20 @@ MySandBox::Components::ListSwapper::ListSwapper(
     std::string text,
     sf::FloatRect rect,
     sf::Vector2u window_origin_size,
-    std::vector<std::string> list,
     int default_value
-) : _list(list), _current_value(list[default_value]), _window_origin_size(window_origin_size),
+) : _window_origin_size(window_origin_size),
 _button_left("<", sf::Vector2i(rect.left - rect.width / 2, rect.top), sf::Vector2f(rect.width / 2, rect.height), window_origin_size),
 _button_right(">", sf::Vector2i(rect.left + rect.width + rect.width / 2, rect.top), sf::Vector2f(rect.width / 2, rect.height), window_origin_size)
 {
     _font.loadFromFile("resources/fonts/button.ttf");
-
     _text.setFont(_font);
     _text.setString(text);
-    _text.setCharacterSize(20);
+    _text.setCharacterSize(60);
     _text.setFillColor(sf::Color::White);
     _text.setPosition(rect.left, rect.top);
     _text.setOrigin(_text.getGlobalBounds().width / 2, _text.getGlobalBounds().height / 2);
     _value.setFont(_font);
-    _value.setString(list[default_value]);
-    _value.setCharacterSize(20);
+    _value.setCharacterSize(60);
     _value.setFillColor(sf::Color::White);
     _value.setPosition(rect.left + rect.width, rect.top);
     _value.setOrigin(_value.getGlobalBounds().width / 2, _value.getGlobalBounds().height / 2);
@@ -41,6 +38,13 @@ _button_right(">", sf::Vector2i(rect.left + rect.width + rect.width / 2, rect.to
 
 MySandBox::Components::ListSwapper::~ListSwapper()
 {
+}
+
+void MySandBox::Components::ListSwapper::setList(std::vector<std::string> &list)
+{
+    _list = list;
+    _current_value = _list[0];
+    _value.setString(_current_value);
 }
 
 bool MySandBox::Components::ListSwapper::check(sf::RenderWindow& window)

@@ -7,6 +7,7 @@
 
 #include "SettingsEditor.hpp"
 #include <iostream>
+#include <vector>
 
 /*********Constructor*********/
 /* This build the object     */
@@ -40,11 +41,16 @@ MySandBox::Components::SettingsEditor::SettingsEditor(Game::Game& game, sf::Vect
             70
         ),
         game.getWindowOriginSize(),
-        std::vector<std::string> ({ "30", "60", "120"}),
         1
     )
 
 {
+    std::vector<std::string> list;
+    list.push_back("30");
+    list.push_back("60");
+    list.push_back("120");
+    list.push_back("240");
+    _fps.setList(list);
 }
 
 /*********Destructor*********/
