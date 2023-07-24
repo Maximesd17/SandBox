@@ -46,6 +46,7 @@ namespace SandBox {
             bool isValid();
             void displayMap(sf::RenderWindow &_window);
             void setMapFile(std::string &filepath);
+            void clear();
             MapGenerator operator=(const MapGenerator &other);
             ~MapGenerator();
     };

@@ -43,9 +43,23 @@ SandBox::MapGenerator::MapGenerator(std::string& filepath)
     validateMap(_map);
     setKeyPoints();
 }
+void SandBox::MapGenerator::clear()
+{
+    _hasAir = false;
+    _hasGround = false;
+    _hasSpawn = false;
+    _hasEnd = false;
+    _valid = false;
+    _map_file.clear();
+    _map.clear();
+    _spawnPoint = sf::Vector2f();
+    _endPoint = sf::Vector2f();
+    _collisionPositions.clear();
+}
 
 void SandBox::MapGenerator::setMapFile(std::string &filepath)
 {
+    clear();
     std::ifstream fs;
     std::string buf;
 
