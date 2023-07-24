@@ -11,7 +11,6 @@
 #include <SFML/Graphics.hpp>
 #include "KeyboardMoves.hpp"
 #include "ControllerMoves.hpp"
-#include "Sound.hpp"
 
 namespace MySandBox {
     namespace Game {
@@ -57,8 +56,6 @@ namespace MySandBox {
                 PlayerState _state;
                 PlayerDirection _direction;
                 PlayerControlledBy _controlled_by;
-                MySandBox::Game::Sound::Sound _walking_sound;
-                MySandBox::Game::Sound::Sound _jumping_sound;
             };
         }
     }

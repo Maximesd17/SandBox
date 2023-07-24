@@ -10,7 +10,6 @@
 #include <iostream>
 #include <SFML/Window/Joystick.hpp>
 #include "SandBox.hpp"
-#include "Sound/Sound.hpp"
 
 MySandBox::Game::Player::Player::Player()
 {
@@ -47,6 +46,8 @@ void MySandBox::Game::Player::Player::setPlayerSprites(std::vector<sf::Texture>&
 
 void MySandBox::Game::Player::Player::events(sf::Event& event)
 {
+    /* Controller / Keyboard events */
+
     if (sf::Joystick::isConnected(0) && !_is_moves_manual_changed) {
         std::cout << "GAMEPAD CONNECTED" << std::endl;
         _controlled_by = JOYSTICK;
@@ -55,6 +56,10 @@ void MySandBox::Game::Player::Player::events(sf::Event& event)
         _controlled_by = KEYBOARD;
     }
     _moves[_controlled_by]->events(event);
+
+    /* Sound events */
+
+    // TO-DO
 }
 
 void MySandBox::Game::Player::Player::update()
@@ -97,13 +102,9 @@ void MySandBox::Game::Player::Player::update()
         break;
     case WALKING:
         std::cout << "walking" << std::endl;
-        _walking_sound.loadSound("resources/sounds/footsteps.wav");
-        _walking_sound.playSound();
         break;
     case JUMPING:
         std::cout << "jumping" << std::endl;
-        _jumping_sound.loadSound("resources/sounds/jump.wav");
-        _jumping_sound.playSound();
         break;
     case FALLING:
         std::cout << "falling" << std::endl;
