@@ -49,7 +49,6 @@ void MySandBox::Game::Game::reset()
 /*********displayMap*********/
 void MySandBox::Game::Game::displayMap()
 {
-
     _mapGenerator.displayMap(_window);
 }
 
@@ -81,8 +80,7 @@ void MySandBox::Game::Game::update()
     sf::Vector2f endPosition = _mapGenerator.getEndPoint();
 
     bool hasWin = _player.checkEndPointCollision(endPosition);
-    if (hasWin)
-    {
+    if (hasWin) {
         _game_state = WIN;
     }
 
@@ -140,7 +138,7 @@ MySandBox::Game::State MySandBox::Game::Game::getGameState() const
 /*********setGameState*********/
 /* Set game state function    */
 /*********setGameState*********/
-void MySandBox::Game::Game::setGameState(MySandBox::Game::State &game_state)
+void MySandBox::Game::Game::setGameState(MySandBox::Game::State& game_state)
 {
     _game_state = game_state;
 }

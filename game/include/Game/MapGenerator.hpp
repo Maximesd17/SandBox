@@ -26,11 +26,11 @@ namespace SandBox {
             sf::Vector2f _spawnPoint;
             sf::Vector2f _endPoint;
             std::vector<sf::Vector2f> _collisionPositions;
-            bool _hasAir = false;
-            bool _hasGround = false;
-            bool _hasSpawn = false;
-            bool _hasEnd = false;
-            bool _valid = false;
+            bool _hasAir;
+            bool _hasGround;
+            bool _hasSpawn;
+            bool _hasEnd;
+            bool _valid;
             bool checkIdentifiers(std::string &line);
             void keyPoints(std::string &line);
         public:

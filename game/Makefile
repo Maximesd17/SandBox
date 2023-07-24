@@ -64,7 +64,7 @@ TRASH       =   $(shell find src/ -name "*~") $(shell find include/ -name "*~") 
 ##################################################################################################################
 ##  COMPILING RULES                                                                                             ##
 ##################################################################################################################
-all:            FLAGS = -ffast-math -O2
+all:            FLAGS = -ffast-math -O2 -Wno-c++11-extensions
 all:            erase full
 
 debug:          FLAGS = -W -Werror -Wall -Wextra -g -g3 -ggdb

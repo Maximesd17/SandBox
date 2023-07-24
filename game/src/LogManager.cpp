@@ -3,28 +3,31 @@
 /*********Constructor*********/
 /* This build the object     */
 /*********Constructor*********/
-LogManager::LogManager() {
+LogManager::LogManager()
+{
 
 }
 
 /*********Destructor*********/
 /* This destroy the sandbox */
 /*********Destructor*********/
-LogManager::~LogManager() {
-    
+LogManager::~LogManager()
+{
 }
 
 /********addLog*******/
 /* add log in memory */
 /********addLog*******/
-void LogManager::addLog(const std::string& name, const std::string& state, const std::string& content) {
-    _logs.push_back({ name, state, content });
+void LogManager::addLog(const std::string& name, const std::string& state, const std::string& content)
+{
+    _logs.push_back((Log) { name, state, content });
 }
 
 /**********ClearLogs*********/
 /* clear all logs in memory */
 /**********ClearLogs*********/
-void LogManager::removeAllLogs() {
+void LogManager::removeAllLogs()
+{
     _logs.clear();
 }
 
@@ -32,7 +35,8 @@ void LogManager::removeAllLogs() {
 /**********saveLogsToFile*********/
 /* save all logs in file         */
 /**********saveLogsToFile*********/
-void LogManager::saveLogsToFile(const std::string& filename) {
+void LogManager::saveLogsToFile(const std::string& filename)
+{
     std::ofstream file(filename);
 
     if (file.is_open()) {
@@ -49,7 +53,8 @@ void LogManager::saveLogsToFile(const std::string& filename) {
 /**********loadLogsFromFile*********/
 /* load all logs from file         */
 /**********loadLogsFromFile*********/
-void LogManager::loadLogsFromFile(const std::string& filename) {
+void LogManager::loadLogsFromFile(const std::string& filename)
+{
     std::ifstream file(filename);
 
     if (file.is_open()) {
@@ -63,7 +68,7 @@ void LogManager::loadLogsFromFile(const std::string& filename) {
             std::getline(ss, state, ',');
             std::getline(ss, content, ',');
 
-            _logs.push_back({ name, state, content });
+            _logs.push_back((Log) { name, state, content });
         }
 
         file.close();
@@ -73,7 +78,8 @@ void LogManager::loadLogsFromFile(const std::string& filename) {
     }
 }
 
-void LogManager::printLogs() {
+void LogManager::printLogs()
+{
     if (!_logs.empty())
         for (const Log& log : _logs) {
             std::cout << "Name: " << log.name << ", State: " << log.state << ", Content: " << log.content << std::endl;

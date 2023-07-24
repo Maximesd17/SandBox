@@ -10,9 +10,24 @@
 #include <memory>
 #include <vector>
 
-SandBox::MapGenerator::MapGenerator() {}
+SandBox::MapGenerator::MapGenerator()
+{
+    _hasAir = false;
+    _hasGround = false;
+    _hasSpawn = false;
+    _hasEnd = false;
+    _valid = false;
 
-SandBox::MapGenerator::MapGenerator(std::string &filepath) {
+}
+
+SandBox::MapGenerator::MapGenerator(std::string& filepath)
+{
+    _hasAir = false;
+    _hasGround = false;
+    _hasSpawn = false;
+    _hasEnd = false;
+    _valid = false;
+
     std::ifstream fs;
     std::string buf;
 
@@ -47,19 +62,23 @@ void SandBox::MapGenerator::setMapFile(std::string &filepath)
     setKeyPoints();
 }
 
-std::string SandBox::MapGenerator::getMapFile() {
+std::string SandBox::MapGenerator::getMapFile()
+{
     return _map_file;
 }
 
-std::vector<std::string> SandBox::MapGenerator::getMap() {
+std::vector<std::string> SandBox::MapGenerator::getMap()
+{
     return _map;
 }
 
-bool SandBox::MapGenerator::isValid() {
+bool SandBox::MapGenerator::isValid()
+{
     return _valid;
 }
 
-bool SandBox::MapGenerator::validateMap(std::vector<std::string> &map) {
+bool SandBox::MapGenerator::validateMap(std::vector<std::string>& map)
+{
     size_t line_length = 0;
 
     if (!(map.size() > 0))
@@ -93,7 +112,8 @@ bool SandBox::MapGenerator::validateMap(std::vector<std::string> &map) {
 ** If there are any other characters than those specified,
 ** it's an error and map is invalid !
 */
-bool SandBox::MapGenerator::checkIdentifiers(std::string &line) {
+bool SandBox::MapGenerator::checkIdentifiers(std::string& line)
+{
     bool res = true;
     for (size_t c = 0; c < line.length(); c++) {
         char ch = line.at(c);
@@ -111,11 +131,11 @@ bool SandBox::MapGenerator::checkIdentifiers(std::string &line) {
 ** Checks for 'S' identifier for spawn and 'E' identifier for end points.
 ** There must be exactly 1 "S" and 1 "E". No more, no less.
 */
-void SandBox::MapGenerator::keyPoints(std::string &line) {
+void SandBox::MapGenerator::keyPoints(std::string& line)
+{
     for (size_t c = 0; c < line.length(); c++) {
         char ch = line.at(c);
-        switch (ch)
-        {
+        switch (ch) {
         case '0':
             _hasAir = true;
             break;
@@ -142,7 +162,8 @@ void SandBox::MapGenerator::keyPoints(std::string &line) {
     }
 }
 
-SandBox::MapGenerator::~MapGenerator() {
+SandBox::MapGenerator::~MapGenerator()
+{
 }
 
 void SandBox::MapGenerator::setKeyPoints()
@@ -247,8 +268,8 @@ void SandBox::MapGenerator::displayMap(sf::RenderWindow &_window) {
                     endPoint = sf::Vector2f(x * 40, y * 40);
                     break;
 
-                default:
-                    continue;
+            default:
+                continue;
             }
 
             //tileSprite.setScale(2, 2);
@@ -267,19 +288,23 @@ void SandBox::MapGenerator::displayMap(sf::RenderWindow &_window) {
     }
 }
 
-sf::Vector2f SandBox::MapGenerator::getSpawnPoint() {
+sf::Vector2f SandBox::MapGenerator::getSpawnPoint()
+{
     return _spawnPoint;
 }
 
-sf::Vector2f SandBox::MapGenerator::getEndPoint() {
+sf::Vector2f SandBox::MapGenerator::getEndPoint()
+{
     return _endPoint;
 }
 
-std::vector<sf::Vector2f> SandBox::MapGenerator::getCollisionPositions(){
+std::vector<sf::Vector2f> SandBox::MapGenerator::getCollisionPositions()
+{
     return _collisionPositions;
 }
 
-SandBox::MapGenerator SandBox::MapGenerator::operator=(const SandBox::MapGenerator &other) {
+SandBox::MapGenerator SandBox::MapGenerator::operator=(const SandBox::MapGenerator& other)
+{
     if (this == &other)
         return *this;
     this->_map_file = std::move(other._map_file);
