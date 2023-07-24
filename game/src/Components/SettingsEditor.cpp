@@ -5,44 +5,46 @@
 ** SettingsEditor
 */
 
-#include "Components/SettingsEditor.hpp"
+#include "SettingsEditor.hpp"
 #include <iostream>
 
 /*********Constructor*********/
 /* This build the object     */
 /*********Constructor*********/
 MySandBox::Components::SettingsEditor::SettingsEditor(Game::Game& game, sf::Vector2i position, sf::Vector2f size) :
-    AScrollableView(sf::Vector2f(size.x, 3890), game.getWindowOriginSize(), true),
+    AScrollableView(sf::Vector2f(size.x, size.y), game.getWindowOriginSize(), false),
     _game(game),
     _music_volume(
         "Music Volume",
         sf::Vector2i(
-            position.x + size.x / 2 - 300 / 2,
-            position.y + 150
-        ),        sf::Vector2f(300, 50),
-        game.getWindowOriginSize(),
-        0,
-        100,
-        50,
-        true
+            size.x / 2 - 600 / 2,
+            150
+        ), sf::Vector2f(600, 70),
+        game.getWindowOriginSize()
     ),
     _sound_volume(
         "Sound Volume",
         sf::Vector2i(
-            position.x + size.x / 2 - 300 / 2,
-            position.y + 300
+            size.x / 2 - 600 / 2,
+            400
         ),
-        sf::Vector2f(300, 50),
+        sf::Vector2f(600, 70),
+        game.getWindowOriginSize()
+    ),
+    _fps(
+        "FPS",
+        sf::FloatRect(
+            size.x / 2 - 600 / 2,
+            650,
+            600,
+            70
+        ),
         game.getWindowOriginSize(),
-        0,
-        100,
-        50,
-        true
+        std::vector<std::string> ({ "30", "60", "120"}),
+        1
     )
+
 {
-    bgTexture.loadFromFile("resources/bg.png");
-    background.setTexture(bgTexture);
-    background.setPosition(150, 0);
 }
 
 /*********Destructor*********/
@@ -67,6 +69,7 @@ void MySandBox::Components::SettingsEditor::update()
     setView(window);
     _music_volume.check(window);
     _sound_volume.check(window);
+    _fps.check(window);
     window.setView(window.getDefaultView());
 
 }
@@ -80,8 +83,8 @@ void MySandBox::Components::SettingsEditor::display()
 
     this->AScrollableView::display(window);
     setView(window);
-    window.draw(background);
     _music_volume.display(window);
     _sound_volume.display(window);
+    _fps.display(window);
     window.setView(window.getDefaultView());
 }

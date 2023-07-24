@@ -11,9 +11,12 @@
 /*********Constructor*********/
 /* This build the object     */
 /*********Constructor*********/
-MySandBox::Components::Button::Button(std::string text, sf::Vector2i pos, sf::Vector2f size,
-    sf::Vector2u window_origin_size)
-    : _state(MySandBox::Components::IDLE), _window_origin_size(window_origin_size)
+MySandBox::Components::Button::Button(
+    std::string text,
+    sf::Vector2i pos,
+    sf::Vector2f size,
+    sf::Vector2u window_origin_size
+) : _state(MySandBox::Components::IDLE), _window_origin_size(window_origin_size)
 {
     _is_clicked = false;
     _rect.setPosition(pos.x, pos.y);
@@ -40,7 +43,7 @@ MySandBox::Components::Button::~Button()
 /*********isHovered*****************************/
 /* Check if the button is hovered by the mouse */
 /*********isHovered*****************************/
-bool MySandBox::Components::Button::isHovered(sf::Vector2i mouse_pos, sf::Vector2u window_size)
+bool MySandBox::Components::Button::isHovered(sf::Vector2f mouse_pos, sf::Vector2u window_size)
 {
     sf::Vector2f pos = _rect.getPosition();
     sf::Vector2f size = _rect.getSize();
@@ -60,7 +63,8 @@ bool MySandBox::Components::Button::isHovered(sf::Vector2i mouse_pos, sf::Vector
 bool MySandBox::Components::Button::check(sf::RenderWindow& window)
 {
     sf::Vector2i mouse_pos = sf::Mouse::getPosition(window);
-    bool is_hovered = isHovered(mouse_pos, window.getSize());
+    sf::Vector2f computed_mouse_pos = window.mapPixelToCoords(mouse_pos);
+    bool is_hovered = isHovered(computed_mouse_pos, window.getSize());
 
     if (is_hovered && sf::Mouse::isButtonPressed(sf::Mouse::Left) && _state == IDLE) {
         return false;

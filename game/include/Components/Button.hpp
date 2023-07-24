@@ -28,7 +28,7 @@ namespace MySandBox {
             void display(sf::RenderWindow& window);
         protected:
         private:
-            bool isHovered(sf::Vector2i mousePos, sf::Vector2u window_size);
+            bool isHovered(sf::Vector2f mousePos, sf::Vector2u window_size);
             bool _is_clicked;
             sf::RectangleShape _rect;
             sf::Text _text;

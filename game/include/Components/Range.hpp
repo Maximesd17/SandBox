@@ -19,9 +19,9 @@ namespace MySandBox {
                     sf::Vector2i pos,
                     sf::Vector2f size,
                     sf::Vector2u window_origin_size,
-                    int min,
-                    int max,
-                    int value,
+                    int value = 50,
+                    int min = 0,
+                    int max = 100,
                     bool show_value = true
                 );
                 ~Range();
