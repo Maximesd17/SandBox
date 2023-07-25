@@ -3,12 +3,14 @@
 
 #include "Game.hpp"
 #include "ASubScene.hpp"
-
+#include "Components/Button.hpp"
 namespace MySandBox {
     namespace Scenes {
         namespace SubScenes {
             class SSWinGame : public ASubScene {
                 private:
+                    MySandBox::Components::Button _return_button;
+                    MySandBox::Components::Button _restart_button;
                 public:
                     SSWinGame(MySandBox::State &state, Game::Game &game);
                     ~SSWinGame();
