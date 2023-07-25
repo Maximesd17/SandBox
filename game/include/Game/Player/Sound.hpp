@@ -5,6 +5,9 @@
 ** Sound.hpp
 */
 
+#ifndef SOUND_HPP
+#define SOUND_HPP
+
 #include <SFML/Audio/Sound.hpp>
 #include <SFML/Audio/SoundBuffer.hpp>
 #include <iostream>
@@ -16,12 +19,16 @@ namespace MySandBox {
                 public:
                     Sound();
                     ~Sound();
-                    void playSound(std::string fileName);
+                    sf::Sound loadSound(std::string _fileName);
+                    void playSound();
                     void stopSound();
                 private:
+                    std::string fileName;
                     sf::Sound _sound;
                     sf::SoundBuffer _buffer;
             };
         }
     }
 };
+
+#endif // SOUND_HPP

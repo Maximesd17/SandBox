@@ -14,20 +14,20 @@ MySandBox::Game::Sound::Sound::Sound(){
 MySandBox::Game::Sound::Sound::~Sound(){
     /* Class destructor */
 };
-void MySandBox::Game::Sound::Sound::playSound(std::string fileName){
-    /* Method to load file into buffer then play said sound */
-
-    sf::Sound _sound;
-    sf::SoundBuffer _buffer;
-
-    _buffer.loadFromFile(fileName);
+sf::Sound MySandBox::Game::Sound::Sound::loadSound(std::string _fileName){
+    /* Method to load file into buffer */
+    _buffer.loadFromFile(_fileName);
     _sound.setBuffer(_buffer);
-    _sound.play();
 
+    return _sound;
 };
+
+void MySandBox::Game::Sound::Sound::playSound(){
+    /* Method to play sound */
+    _sound.play();
+};
+
 void MySandBox::Game::Sound::Sound::stopSound(){
     /* Method to stop sound playback */
-
     _sound.stop();
-    
 };
