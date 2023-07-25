@@ -38,11 +38,11 @@ namespace MySandBox {
                 Player();
                 ~Player();
                 void setPlayerSprites(sf::Texture&);
-                void update(const std::vector<sf::Vector2f> &collisionPositions, const sf::RenderWindow& window);
+                void update(const std::vector<sf::FloatRect> &collisionBlocks, const sf::Vector2f &);
                 void events(sf::Event&);
                 void display(sf::RenderWindow&);
-                void ApplyGravity(const std::vector<sf::Vector2f>& collisionPositions, const sf::Vector2u &window_size);
-                void ApplyJump(const std::vector<sf::Vector2f>& collisionPositions);
+                void ApplyGravity(const std::vector<sf::FloatRect>& collisionBlocks, const sf::Vector2f &);
+                void ApplyJump(const std::vector<sf::FloatRect>& collisionBlocks);
                 sf::Vector2f getPosition() const;
                 PlayerState getState() const;
                 PlayerDirection getDirection() const;
@@ -53,13 +53,13 @@ namespace MySandBox {
                 void setDirection(MySandBox::Game::PlayerDirection playerDirection);
                 void setGravity(double gravity);
                 void setJumpHeight(int height);
-                bool checkEndPointCollision(const sf::Vector2f& endPosition);
+                bool checkEndPointCollision(const sf::FloatRect& endPosition);
             protected:
             private:
-                void computeYMoves(float directionY, const std::vector<sf::Vector2f> &collisionPositions, const sf::Vector2u &window_size);
-                void computeXMoves(float directionX, const std::vector<sf::Vector2f> &collisionPositions);
-                bool checkWallCollisionX(const float future_x, const std::vector<sf::Vector2f>& collisionPositions);
-                bool checkWallCollisionY(const float future_y, const std::vector<sf::Vector2f>& collisionPositions);
+                void computeYMoves(float directionY, const std::vector<sf::FloatRect> &collisionBlocks, const sf::Vector2f &);
+                void computeXMoves(float directionX, const std::vector<sf::FloatRect> &collisionBlocks);
+                std::optional<sf::FloatRect> checkWallCollisionX(const float future_x, const std::vector<sf::FloatRect>& collisionBlocks);
+                std::optional<sf::FloatRect> checkWallCollisionY(const float future_y, const std::vector<sf::FloatRect>& collisionBlocks);
                 void setIdleFrame();
                 void setWalkingFrame();
                 void setJumpingFrame();

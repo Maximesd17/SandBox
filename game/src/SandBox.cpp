@@ -22,13 +22,12 @@ MySandBox::SandBox::SandBox() : _game(_window)
     _window.setFramerateLimit(_framerate);
     _font.loadFromFile("resources/fonts/roboto.ttf");
     _fps.setFont(_font);
-    _fps.setCharacterSize(30);
+    _fps.setCharacterSize(40);
     _fps.setPosition(0, 0);
     _fps.setFillColor(sf::Color::Red);
     _game.init();
     _scenes[MySandBox::Scenes::MENU] = std::make_shared<MySandBox::Scenes::SMenu>(_state, _game);
     _scenes[MySandBox::Scenes::GAME] = std::make_shared<MySandBox::Scenes::SGame>(_state, _game);
-
 }
 
 
