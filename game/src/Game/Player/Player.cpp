@@ -97,8 +97,7 @@ void MySandBox::Game::Player::Player::ApplyJump(const std::vector<sf::Vector2f>&
         //_log_manager.addLog("Player", "OK", "jump");
         _position.y = future_y;
         _jump_frame++;
-    }
-    else {
+    } else {
         _state = FALLING;
     }
 }
@@ -106,7 +105,7 @@ void MySandBox::Game::Player::Player::ApplyJump(const std::vector<sf::Vector2f>&
 /*********computeYMoves***********/
 /* Compute Y-axis moves function */
 /*********computeYMoves***********/
-void MySandBox::Game::Player::Player::computeYMoves(float directionY, const std::vector<sf::Vector2f> &collisionPositions)
+void MySandBox::Game::Player::Player::computeYMoves(float directionY, const std::vector<sf::Vector2f>& collisionPositions)
 {
     float future_y = _state == JUMPING ? (_position.y - _jump_height / _jump_speed) : (_position.y + _gravity);
     //_log_manager.printLogs();
@@ -130,7 +129,7 @@ void MySandBox::Game::Player::Player::computeYMoves(float directionY, const std:
 /*********computeXMoves***********/
 /* Compute X-axis moves function */
 /*********computeXMoves***********/
-void MySandBox::Game::Player::Player::computeXMoves(float directionX, const std::vector<sf::Vector2f> &collisionPositions)
+void MySandBox::Game::Player::Player::computeXMoves(float directionX, const std::vector<sf::Vector2f>& collisionPositions)
 {
     float future_x = _position.x + directionX * _speed;
 
@@ -141,13 +140,11 @@ void MySandBox::Game::Player::Player::computeXMoves(float directionX, const std:
         _direction = LEFT;
         if (_state != JUMPING && _state != FALLING)
             _state = WALKING;
-    }
-    else if (directionX > 0) {
+    } else if (directionX > 0) {
         _direction = RIGHT;
         if (_state != JUMPING && _state != FALLING)
             _state = WALKING;
-    }
-    else {
+    } else {
         _state = _state != JUMPING && _state != FALLING ? PLAYER_IDLE : _state;
     }
 }
@@ -155,7 +152,7 @@ void MySandBox::Game::Player::Player::computeXMoves(float directionX, const std:
 /*********update*********/
 /* Update function      */
 /*********update*********/
-void MySandBox::Game::Player::Player::update(const std::vector<sf::Vector2f> &collisionPositions)
+void MySandBox::Game::Player::Player::update(const std::vector<sf::Vector2f>& collisionPositions)
 {
     sf::Vector2f direction = _moves->getLastMove();
 
@@ -181,7 +178,7 @@ void MySandBox::Game::Player::Player::setIdleFrame()
 /*********setWalkingFrame*********/
 void MySandBox::Game::Player::Player::setWalkingFrame()
 {
-    _player.setTextureRect(sf::IntRect( 0, 0 + 58 * (int)_direction, 40, 58 ));
+    _player.setTextureRect(sf::IntRect(0, 0 + 58 * (int)_direction, 40, 58));
 }
 
 /*********setJumpingFrame*********/
@@ -191,7 +188,7 @@ void MySandBox::Game::Player::Player::setJumpingFrame()
 {
     const int frame_to_display = floor(4 / _jump_speed * _jump_frame);
 
-    _player.setTextureRect(sf::IntRect(40 * frame_to_display, 116 + 58 * (int)_direction, 40, 58 ));
+    _player.setTextureRect(sf::IntRect(40 * frame_to_display, 116 + 58 * (int)_direction, 40, 58));
 }
 
 /*********setFallingFrame*********/
@@ -199,7 +196,7 @@ void MySandBox::Game::Player::Player::setJumpingFrame()
 /*********setFallingFrame*********/
 void MySandBox::Game::Player::Player::setFallingFrame()
 {
-    _player.setTextureRect(sf::IntRect( 120, 116 + 58 * (int)_direction, 40, 58));
+    _player.setTextureRect(sf::IntRect(120, 116 + 58 * (int)_direction, 40, 58));
 }
 
 /*********setAttackingFrame*********/
@@ -304,14 +301,16 @@ void MySandBox::Game::Player::Player::setPosition(sf::Vector2f position)
 /*********setState*********/
 /*     _state setter      */
 /*********setState*********/
-void MySandBox::Game::Player::Player::setState(MySandBox::Game::PlayerState playerState) {
+void MySandBox::Game::Player::Player::setState(MySandBox::Game::PlayerState playerState)
+{
     _state = playerState;
 }
 
 /*********setDirection*********/
 /*     _direction setter      */
 /*********setDirection*********/
-void MySandBox::Game::Player::Player::setDirection(MySandBox::Game::PlayerDirection playerDirection) {
+void MySandBox::Game::Player::Player::setDirection(MySandBox::Game::PlayerDirection playerDirection)
+{
     _direction = playerDirection;
 }
 
@@ -356,7 +355,9 @@ bool MySandBox::Game::Player::Player::checkWallCollisionX(float const future_x, 
 /*********checkWallCollisionY*********/
 /* checkWallCollision on Y axis      */
 /*********checkWallCollisionY*********/
-bool MySandBox::Game::Player::Player::checkWallCollisionY(const float future_y, const std::vector<sf::Vector2f>& collisionPositions)
+bool MySandBox::Game::Player::Player::checkWallCollisionY(
+    const float future_y, const std::vector<sf::Vector2f>& collisionPositions
+)
 {
     sf::Sprite future_player = sf::Sprite(_player);
     sf::FloatRect playerBounds = sf::FloatRect(0, 0, 0, 0);
@@ -366,17 +367,8 @@ bool MySandBox::Game::Player::Player::checkWallCollisionY(const float future_y, 
     for (const sf::Vector2f& wallPosition : collisionPositions) {
         sf::FloatRect wallBounds(wallPosition.x, wallPosition.y, 40, 40);
 
-        //help refacto I went dirty
-        if (playerBounds.intersects(wallBounds)) {
-            if (_state == JUMPING) {
-                if (playerBounds.top <= wallBounds.top + wallBounds.height) {
-                    return true;
-                }
-            }
-            if (playerBounds.top + playerBounds.height >= wallBounds.top) {
-                return true;
-            }
-        }
+        if (playerBounds.intersects(wallBounds)) return true;
+;
     }
     if (_state != JUMPING)
         _state = FALLING;
@@ -389,9 +381,8 @@ bool MySandBox::Game::Player::Player::checkWallCollisionY(const float future_y, 
 bool MySandBox::Game::Player::Player::checkEndPointCollision(const sf::Vector2f& endPosition)
 {
     sf::FloatRect playerBounds = _player.getGlobalBounds();
-    sf::FloatRect endBounds(endPosition.x,endPosition.y, 40, 40);
-    if (playerBounds.intersects(endBounds))
-    {
+    sf::FloatRect endBounds(endPosition.x, endPosition.y, 40, 40);
+    if (playerBounds.intersects(endBounds)) {
         return true;
     }
     return false;
