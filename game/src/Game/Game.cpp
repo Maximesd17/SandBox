@@ -30,9 +30,11 @@ MySandBox::Game::Game::~Game()
 void MySandBox::Game::Game::init()
 {
     _window_origin_size = _window.getSize();
+
     _game_view.setSize(_window.getSize().x, _window.getSize().y);
     _game_view.setCenter(_window.getSize().x / 2, _window.getSize().y / 2);
     _game_view.setViewport(sf::FloatRect(0, 0, 1, 1));
+
 }
 
 /*********reset*********/
@@ -40,7 +42,8 @@ void MySandBox::Game::Game::init()
 /*********reset*********/
 void MySandBox::Game::Game::reset()
 {
-    std::string mapFile("maps/collisions.txt");
+
+    std::string mapFile("maps/large.txt");
     _mapGenerator.setMapFile(mapFile);
     _sprite_shit.loadFromFile("resources/player.png");
     _player.setPlayerSprites(_sprite_shit);

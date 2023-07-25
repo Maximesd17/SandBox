@@ -26,7 +26,6 @@ namespace MySandBox {
         ~SandBox();
         int loop();
         bool checkElapsedTime();
-        
 
     protected:
     private:
@@ -37,6 +36,8 @@ namespace MySandBox {
         MySandBox::Game::Game _game;
         MySandBox::State _state;
         sf::VideoMode _window_size;
+        sf::Text _fps;
+        sf::Font _font;
     };
 };
 
