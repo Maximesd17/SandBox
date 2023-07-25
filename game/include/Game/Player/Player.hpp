@@ -38,10 +38,10 @@ namespace MySandBox {
                 Player();
                 ~Player();
                 void setPlayerSprites(sf::Texture&);
-                void update(const std::vector<sf::Vector2f> &collisionPositions);
+                void update(const std::vector<sf::Vector2f> &collisionPositions, const sf::RenderWindow& window);
                 void events(sf::Event&);
                 void display(sf::RenderWindow&);
-                void ApplyGravity(const std::vector<sf::Vector2f>& collisionPositions);
+                void ApplyGravity(const std::vector<sf::Vector2f>& collisionPositions, const sf::Vector2u &window_size);
                 void ApplyJump(const std::vector<sf::Vector2f>& collisionPositions);
                 sf::Vector2f getPosition() const;
                 PlayerState getState() const;
@@ -56,9 +56,8 @@ namespace MySandBox {
                 bool checkEndPointCollision(const sf::Vector2f& endPosition);
             protected:
             private:
-                void computeYMoves(float directionY, const std::vector<sf::Vector2f> &collisionPositions);
+                void computeYMoves(float directionY, const std::vector<sf::Vector2f> &collisionPositions, const sf::Vector2u &window_size);
                 void computeXMoves(float directionX, const std::vector<sf::Vector2f> &collisionPositions);
-                bool checkWallCollision(const std::vector<sf::Vector2f>& wallPositions) const;
                 bool checkWallCollisionX(const float future_x, const std::vector<sf::Vector2f>& collisionPositions);
                 bool checkWallCollisionY(const float future_y, const std::vector<sf::Vector2f>& collisionPositions);
                 void setIdleFrame();

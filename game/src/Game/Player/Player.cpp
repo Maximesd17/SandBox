@@ -65,7 +65,10 @@ void MySandBox::Game::Player::Player::events(sf::Event& event)
 /*********ApplyGravity*********/
 /* Apply gravity function     */
 /*********ApplyGravity*********/
-void MySandBox::Game::Player::Player::ApplyGravity(const std::vector<sf::Vector2f>& collisionPositions)
+void MySandBox::Game::Player::Player::ApplyGravity(
+    const std::vector<sf::Vector2f>& collisionPositions,
+    const sf::Vector2u &window_size
+)
 {
     //_log_manager.addLog("Player", "OK", "gravity fall");
     float future_y = _position.y + _gravity;
@@ -78,7 +81,7 @@ void MySandBox::Game::Player::Player::ApplyGravity(const std::vector<sf::Vector2
             break;
         }
     }
-    if (_position.y >= 1080) {
+    if (_position.y >= window_size.y) {
         _position.y = 0;
         _state = PLAYER_IDLE;
         return;
@@ -113,7 +116,7 @@ void MySandBox::Game::Player::Player::ApplyJump(const std::vector<sf::Vector2f>&
 /*********computeYMoves***********/
 /* Compute Y-axis moves function */
 /*********computeYMoves***********/
-void MySandBox::Game::Player::Player::computeYMoves(float directionY, const std::vector<sf::Vector2f>& collisionPositions)
+void MySandBox::Game::Player::Player::computeYMoves(float directionY, const std::vector<sf::Vector2f>& collisionPositions, const sf::Vector2u& windowSize)
 {
     float future_y = _state == JUMPING ? (_position.y - _jump_height / _jump_speed) : (_position.y + _gravity);
     //_log_manager.printLogs();
@@ -127,7 +130,7 @@ void MySandBox::Game::Player::Player::computeYMoves(float directionY, const std:
         ApplyJump(collisionPositions);
         break;
     case FALLING:
-        ApplyGravity(collisionPositions);
+        ApplyGravity(collisionPositions, windowSize);
         break;
     default:
         break;
@@ -160,12 +163,15 @@ void MySandBox::Game::Player::Player::computeXMoves(float directionX, const std:
 /*********update*********/
 /* Update function      */
 /*********update*********/
-void MySandBox::Game::Player::Player::update(const std::vector<sf::Vector2f>& collisionPositions)
+void MySandBox::Game::Player::Player::update(const std::vector<sf::Vector2f>& collisionPositions, const sf::RenderWindow& window)
 {
     sf::Vector2f direction = _moves->getLastMove();
+    // sf::View view = window.getView();
 
     computeXMoves(direction.x, collisionPositions);
-    computeYMoves(direction.y, collisionPositions);
+    computeYMoves(direction.y, collisionPositions, window.getSize());
+
+    // view.move(10, 0);
 }
 
 /*********setIdleFrame*********/
@@ -264,6 +270,7 @@ void MySandBox::Game::Player::Player::display(sf::RenderWindow& window)
     default:
         break;
     }
+
     _player.setPosition(_position);
     _player.setScale(2, 2);
     window.draw(_player);

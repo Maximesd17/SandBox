@@ -30,6 +30,9 @@ MySandBox::Game::Game::~Game()
 void MySandBox::Game::Game::init()
 {
     _window_origin_size = _window.getSize();
+    _game_view.setSize(_window.getSize().x, _window.getSize().y);
+    _game_view.setCenter(_window.getSize().x / 2, _window.getSize().y / 2);
+    _game_view.setViewport(sf::FloatRect(0, 0, 1, 1));
 }
 
 /*********reset*********/
@@ -42,6 +45,9 @@ void MySandBox::Game::Game::reset()
     _sprite_shit.loadFromFile("resources/player.png");
     _player.setPlayerSprites(_sprite_shit);
     _player.setPosition(_mapGenerator.getSpawnPoint());
+    _s_wall.setTexture(_t_wall);
+    _s_wall.setScale(2, 2);
+
 }
 
 /*********displayMap*********/
@@ -76,14 +82,16 @@ void MySandBox::Game::Game::update()
 {
    // std::cout << _game_state << std::endl;
     std::vector<sf::Vector2f> wallPositions = _mapGenerator.getCollisionPositions();
-    _player.update(wallPositions);
+    _window.setView(_game_view);
+    _player.update(wallPositions, _window);
+    _game_view.setCenter(_player.getPosition());
+    _window.setView(_window.getDefaultView());
     sf::Vector2f endPosition = _mapGenerator.getEndPoint();
 
     bool hasWin = _player.checkEndPointCollision(endPosition);
     if (hasWin) {
         _game_state = WIN;
     }
-
 }
 
 /*********display*********/
@@ -91,8 +99,10 @@ void MySandBox::Game::Game::update()
 /*********display*********/
 void MySandBox::Game::Game::display()
 {
+    _window.setView(_game_view);
     displayMap();
     displayPlayer();
+    _window.setView(_window.getDefaultView());
 }
 
 /*********getWindow**********/

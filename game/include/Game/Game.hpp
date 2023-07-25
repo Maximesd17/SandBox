@@ -49,11 +49,14 @@ namespace MySandBox {
             void winningCondition();
             void displayMap();
             void displayPlayer();
+
             sf::RenderWindow& _window;
             sf::Vector2u _window_origin_size;
             sf::Texture _t_wall;
             sf::Texture _sprite_shit;
             sf::Sprite _s_wall;
+            sf::View _game_view;
+
             MySandBox::Game::Player::Player _player;
             SandBox::MapGenerator _mapGenerator;
             State _game_state = PENDING;
