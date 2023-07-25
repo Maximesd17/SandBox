@@ -10,12 +10,27 @@
 #include <memory>
 #include <vector>
 
-SandBox::MapGenerator::MapGenerator() {}
+SandBox::MapGenerator::MapGenerator()
+{
+    _hasAir = false;
+    _hasGround = false;
+    _hasSpawn = false;
+    _hasEnd = false;
+    _valid = false;
 
-SandBox::MapGenerator::MapGenerator(std::string &filepath) {
+}
+
+SandBox::MapGenerator::MapGenerator(std::string& filepath)
+{
+    _hasAir = false;
+    _hasGround = false;
+    _hasSpawn = false;
+    _hasEnd = false;
+    _valid = false;
+
     std::ifstream fs;
     std::string buf;
-    sf::RenderWindow _window;
+
     _map_file = filepath;
     fs.open(_map_file, std::ios::in);
     if (!fs.is_open()) {
@@ -26,21 +41,58 @@ SandBox::MapGenerator::MapGenerator(std::string &filepath) {
         _map.push_back(buf);
     fs.close();
     validateMap(_map);
+    setKeyPoints();
+}
+void SandBox::MapGenerator::clear()
+{
+    _hasAir = false;
+    _hasGround = false;
+    _hasSpawn = false;
+    _hasEnd = false;
+    _valid = false;
+    _map_file.clear();
+    _map.clear();
+    _spawnPoint = sf::Vector2f();
+    _endPoint = sf::Vector2f();
+    _collisionPositions.clear();
 }
 
-std::string SandBox::MapGenerator::getMapFile() {
+void SandBox::MapGenerator::setMapFile(std::string &filepath)
+{
+    clear();
+    std::ifstream fs;
+    std::string buf;
+
+    _map_file = filepath;
+    fs.open(_map_file, std::ios::in);
+    if (!fs.is_open()) {
+        std::cerr << "Error on opening file '" << _map_file << "'." << std::endl;
+        return;
+    }
+    while (std::getline(fs, buf))
+        _map.push_back(buf);
+    fs.close();
+    validateMap(_map);
+    setKeyPoints();
+}
+
+std::string SandBox::MapGenerator::getMapFile()
+{
     return _map_file;
 }
 
-std::vector<std::string> SandBox::MapGenerator::getMap() {
+std::vector<std::string> SandBox::MapGenerator::getMap()
+{
     return _map;
 }
 
-bool SandBox::MapGenerator::isValid() {
+bool SandBox::MapGenerator::isValid()
+{
     return _valid;
 }
 
-bool SandBox::MapGenerator::validateMap(std::vector<std::string> &map) {
+bool SandBox::MapGenerator::validateMap(std::vector<std::string>& map)
+{
     size_t line_length = 0;
 
     if (!(map.size() > 0))
@@ -74,7 +126,8 @@ bool SandBox::MapGenerator::validateMap(std::vector<std::string> &map) {
 ** If there are any other characters than those specified,
 ** it's an error and map is invalid !
 */
-bool SandBox::MapGenerator::checkIdentifiers(std::string &line) {
+bool SandBox::MapGenerator::checkIdentifiers(std::string& line)
+{
     bool res = true;
     for (size_t c = 0; c < line.length(); c++) {
         char ch = line.at(c);
@@ -92,11 +145,11 @@ bool SandBox::MapGenerator::checkIdentifiers(std::string &line) {
 ** Checks for 'S' identifier for spawn and 'E' identifier for end points.
 ** There must be exactly 1 "S" and 1 "E". No more, no less.
 */
-void SandBox::MapGenerator::keyPoints(std::string &line) {
+void SandBox::MapGenerator::keyPoints(std::string& line)
+{
     for (size_t c = 0; c < line.length(); c++) {
         char ch = line.at(c);
-        switch (ch)
-        {
+        switch (ch) {
         case '0':
             _hasAir = true;
             break;
@@ -123,7 +176,47 @@ void SandBox::MapGenerator::keyPoints(std::string &line) {
     }
 }
 
-SandBox::MapGenerator::~MapGenerator() {
+SandBox::MapGenerator::~MapGenerator()
+{
+}
+
+void SandBox::MapGenerator::setKeyPoints()
+{
+    sf::Vector2f spawnPoint;
+    sf::Vector2f endPoint;
+
+    for (size_t y = 0; y < _map.size(); ++y) {
+        const std::string& line = _map[y];
+        for (size_t x = 0; x < line.size(); ++x) {
+            char ch = line[x];
+
+            sf::Sprite tileSprite;
+
+            switch (ch) {
+                case 'G':
+                    _collisionPositions.push_back(sf::Vector2f(x * 40, y * 40));
+                    break;
+                case 'W':
+                     _collisionPositions.push_back(sf::Vector2f(x * 40, y * 40));
+                    break;
+                case 'B':
+                    _collisionPositions.push_back(sf::Vector2f(x * 40, y * 40));
+                    break;
+                case 'S':
+                    spawnPoint = sf::Vector2f(x * 40 , y * 40);
+                    break;
+                case 'E':
+                    endPoint = sf::Vector2f(x * 40, y * 40);
+                    break;
+
+                default:
+                    continue;
+            }
+
+        }
+    }
+    _spawnPoint = spawnPoint;
+    _endPoint = endPoint;
 }
 
 void SandBox::MapGenerator::displayMap(sf::RenderWindow &_window) {
@@ -182,15 +275,15 @@ void SandBox::MapGenerator::displayMap(sf::RenderWindow &_window) {
                     break;
                 case 'S':
                     tileSprite.setTexture(spawnTexture);
-                    spawnPoint = sf::Vector2f(x * 40, y * 40);
+                    spawnPoint = sf::Vector2f(x * 40 , y * 40);
                     break;
                 case 'E':
                     tileSprite.setTexture(endTexture);
                     endPoint = sf::Vector2f(x * 40, y * 40);
                     break;
 
-                default:
-                    continue;
+            default:
+                continue;
             }
 
             //tileSprite.setScale(2, 2);
@@ -203,24 +296,29 @@ void SandBox::MapGenerator::displayMap(sf::RenderWindow &_window) {
     }
     _spawnPoint = spawnPoint;
     _endPoint = endPoint;
+
     for (const sf::Sprite& tile : tiles) {
         _window.draw(tile);
     }
 }
 
-sf::Vector2f SandBox::MapGenerator::getSpawnPoint() {
+sf::Vector2f SandBox::MapGenerator::getSpawnPoint()
+{
     return _spawnPoint;
 }
 
-sf::Vector2f SandBox::MapGenerator::getEndPoint() {
+sf::Vector2f SandBox::MapGenerator::getEndPoint()
+{
     return _endPoint;
 }
 
-std::vector<sf::Vector2f> SandBox::MapGenerator::getCollisionPositions(){
+std::vector<sf::Vector2f> SandBox::MapGenerator::getCollisionPositions()
+{
     return _collisionPositions;
 }
 
-SandBox::MapGenerator SandBox::MapGenerator::operator=(const SandBox::MapGenerator &other) {
+SandBox::MapGenerator SandBox::MapGenerator::operator=(const SandBox::MapGenerator& other)
+{
     if (this == &other)
         return *this;
     this->_map_file = std::move(other._map_file);

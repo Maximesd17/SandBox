@@ -67,13 +67,7 @@ namespace MySandBox {
                 void setFallingFrame();
                 void setAttackingFrame();
                 void setDeadFrame();
-                std::shared_ptr<MySandBox::Game::Player::Moves::IMoves> _moves;
-                sf::Vector2f _position;
-                size_t _sprite_index;
-                sf::Sprite _player;
-                PlayerState _state;
-                PlayerDirection _direction;
-                LogManager _log_manager;
+
                 int _speed;
                 double _gravity;
                 int _jump_height;
@@ -81,6 +75,22 @@ namespace MySandBox {
                 double _jump_speed;
                 size_t _idle_frame;
                 double _idle_speed;
+                size_t _walk_frame;
+                double _walk_speed;
+                size_t _attack_frame;
+                double _attack_speed;
+                size_t _death_frame;
+                double _death_speed;
+                int _player_width;
+                int _player_height;
+
+                std::shared_ptr<MySandBox::Game::Player::Moves::IMoves> _moves;
+                sf::Vector2f _position;
+                size_t _sprite_index;
+                sf::Sprite _player;
+                PlayerState _state;
+                PlayerDirection _direction;
+                LogManager _log_manager;
             };
         }
     }

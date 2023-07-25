@@ -37,14 +37,11 @@ void MySandBox::Game::Game::init()
 /*********reset*********/
 void MySandBox::Game::Game::reset()
 {
-    std::string line;
-
-    _t_wall.loadFromFile("resources/map_textures/wall.png", sf::IntRect(0, 0, 64, 64));
+    std::string mapFile("maps/collisions.txt");
+    _mapGenerator.setMapFile(mapFile);
     _sprite_shit.loadFromFile("resources/player.png");
-
     _player.setPlayerSprites(_sprite_shit);
-    _s_wall.setTexture(_t_wall);
-    _s_wall.setScale(2, 2);
+    _player.setPosition(_mapGenerator.getSpawnPoint());
 }
 
 /*********displayMap*********/
@@ -52,19 +49,7 @@ void MySandBox::Game::Game::reset()
 /*********displayMap*********/
 void MySandBox::Game::Game::displayMap()
 {
-/*
-    sf::Vector2u size = _window.getSize();
-    sf::Vector2u pos = sf::Vector2u(0, size.y - 64 * 2);
-
-    for (size_t i = 0; i < size.x / 64; ++i) {
-        _s_wall.setPosition(pos.x, pos.y);
-        _window.draw(_s_wall);
-        pos.x += 64;
-    }*/
-    std::string mapFile("maps/collisions.txt");
-    _mapGenerator = SandBox::MapGenerator(mapFile);
     _mapGenerator.displayMap(_window);
-
 }
 
 /*********displayPlayer*********/
@@ -89,16 +74,15 @@ void MySandBox::Game::Game::events(sf::Event& event)
 /*********update*********/
 void MySandBox::Game::Game::update()
 {
+   // std::cout << _game_state << std::endl;
     std::vector<sf::Vector2f> wallPositions = _mapGenerator.getCollisionPositions();
     _player.update(wallPositions);
     sf::Vector2f endPosition = _mapGenerator.getEndPoint();
 
     bool hasWin = _player.checkEndPointCollision(endPosition);
-    if (hasWin)
-    {
+    if (hasWin) {
         _game_state = WIN;
     }
-    
 
 }
 
@@ -141,22 +125,6 @@ void MySandBox::Game::Game::winningCondition()
     /*Temporary values before having access to real values*/
     int textures_size = 40;
     endPoint = sf::Vector2f(endPoint.x * textures_size, endPoint.y * textures_size);
-    /*---------------------*/
-
-    //std::cout << "Player: " << pos.x << ";" << pos.y << std::endl;
-    //std::cout << "Endpoint: " << endPoint.x << ";" << endPoint.y << std::endl;
-    /*
-    ** Requires player size to check all boundaries.
-    ** ATM, checking only player's origin 0;0 position
-    */
-
-   /*
-    if ((size_t)pos.x >= endPoint.x &&
-        (size_t)pos.x <= endPoint.x + textures_size &&
-        (size_t)pos.y >= endPoint.y - textures_size &&
-        (size_t)pos.y <= endPoint.y) {
-        _game_state = WIN;
-    } */
 }
 
 /*********getGameState*********/
@@ -170,7 +138,7 @@ MySandBox::Game::State MySandBox::Game::Game::getGameState() const
 /*********setGameState*********/
 /* Set game state function    */
 /*********setGameState*********/
-void MySandBox::Game::Game::setGameState(MySandBox::Game::State &game_state)
+void MySandBox::Game::Game::setGameState(MySandBox::Game::State& game_state)
 {
     _game_state = game_state;
 }

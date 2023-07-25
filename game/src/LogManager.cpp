@@ -13,7 +13,6 @@ LogManager::LogManager()
 /*********Destructor*********/
 LogManager::~LogManager()
 {
-
 }
 
 /********addLog*******/
