@@ -58,6 +58,10 @@ SandBox::MapGenerator::MapGenerator(std::string& filepath)
     validateMap(_map);
     setKeyPoints();
 }
+
+/***************clear***************/
+/*clear all value from MapGenerator*/
+/***************clear***************/
 void SandBox::MapGenerator::clear()
 {
     _hasAir = false;

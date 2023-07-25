@@ -151,7 +151,7 @@ MySandBox::Game::State MySandBox::Game::Game::getGameState() const
 /*********setGameState*********/
 /* Set game state function    */
 /*********setGameState*********/
-void MySandBox::Game::Game::setGameState(MySandBox::Game::State& game_state)
+void MySandBox::Game::Game::setGameState(MySandBox::Game::State game_state)
 {
     _game_state = game_state;
 }

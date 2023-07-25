@@ -43,7 +43,7 @@ namespace MySandBox {
             sf::RenderWindow& getWindow() const;
             sf::Vector2u getWindowOriginSize() const;
             State getGameState() const;
-            void setGameState(State &game_state);
+            void setGameState(State game_state);
         protected:
         private:
             void winningCondition();
