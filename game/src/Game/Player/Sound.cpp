@@ -5,8 +5,8 @@
 ** Sound.cpp
 */
 
+#include <iostream>
 #include "Sound.hpp"
-#include "SandBox.hpp"
 
 MySandBox::Game::Sound::Sound::Sound(){
     /* Class constructor */
@@ -14,16 +14,15 @@ MySandBox::Game::Sound::Sound::Sound(){
 MySandBox::Game::Sound::Sound::~Sound(){
     /* Class destructor */
 };
-sf::Sound MySandBox::Game::Sound::Sound::loadSound(std::string _fileName){
+void MySandBox::Game::Sound::Sound::loadSound(std::string _fileName){
     /* Method to load file into buffer */
-    _buffer.loadFromFile(_fileName);
-    _sound.setBuffer(_buffer);
-
-    return _sound;
+    if(!_buffer.loadFromFile(_fileName))
+        std::cout << "Error loading sound file" << std::endl;
 };
 
 void MySandBox::Game::Sound::Sound::playSound(){
     /* Method to play sound */
+    _sound.setBuffer(_buffer);
     _sound.play();
 };
 

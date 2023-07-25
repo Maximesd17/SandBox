@@ -19,7 +19,7 @@ namespace MySandBox {
                 public:
                     Sound();
                     ~Sound();
-                    sf::Sound loadSound(std::string _fileName);
+                    void loadSound(std::string _fileName);
                     void playSound();
                     void stopSound();
                 private:

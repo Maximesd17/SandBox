@@ -28,6 +28,9 @@ MySandBox::Game::Player::Player::Player()
     _is_moves_manual_changed = false;
     _moves[JOYSTICK] = std::make_shared<Moves::ControllerMoves>();
     _moves[KEYBOARD] = std::make_shared<Moves::KeyboardMoves>();
+
+    jumping_sf.loadSound("resources/sounds/jump.wav");
+    walking_sf.loadSound("resources/sounds/walk.wav");
 }
 
 MySandBox::Game::Player::Player::~Player()
@@ -49,10 +52,10 @@ void MySandBox::Game::Player::Player::events(sf::Event& event)
     /* Controller / Keyboard events */
 
     if (sf::Joystick::isConnected(0) && !_is_moves_manual_changed) {
-        // std::cout << "GAMEPAD CONNECTED" << std::endl;
+        std::cout << "GAMEPAD CONNECTED" << std::endl;
         _controlled_by = JOYSTICK;
     } else {
-        // std::cout << "GAMEPAD DISCONNECTED" << std::endl;
+        std::cout << "GAMEPAD DISCONNECTED" << std::endl;
         _controlled_by = KEYBOARD;
     }
     _moves[_controlled_by]->events(event);
@@ -61,8 +64,6 @@ void MySandBox::Game::Player::Player::events(sf::Event& event)
 void MySandBox::Game::Player::Player::update()
 {
     sf::Vector2f direction = _moves[_controlled_by]->getLastMove();
-    walking_sf.loadSound("resources/sounds/walk.wav");
-    jumping_sf.loadSound("resources/sounds/jump.wav");
 
     if (direction.y < 0 && _state != JUMPING && _state != FALLING) {
         _state = JUMPING;
@@ -70,6 +71,7 @@ void MySandBox::Game::Player::Player::update()
         jumping_sf.playSound();
     }
     if (_state == JUMPING) {
+        jumping_sf.playSound();
         _position.y -= _jump_height / (_jump_speed * 60);
         _jump_frame++;
         if (_jump_frame >= _jump_speed * 60)
@@ -86,10 +88,14 @@ void MySandBox::Game::Player::Player::update()
 
 
     _position.x += direction.x * _speed;
-    if (direction.x < 0)
+    if (direction.x < 0){
         _direction = PlayerDirection::LEFT;
-    else if (direction.x > 0)
+        walking_sf.playSound();
+    }
+    else if (direction.x > 0){
         _direction = PlayerDirection::RIGHT;
+        walking_sf.playSound();
+    }
     if (direction.x != 0 && _state != JUMPING && (_state != FALLING || _position.y >= 780))
         _state = WALKING;
     else if (direction.x == 0 && _state == PLAYER_IDLE)
@@ -97,24 +103,22 @@ void MySandBox::Game::Player::Player::update()
 
     switch (_state) {
     case PLAYER_IDLE:
-        // std::cout << "idle" << std::endl;
+        std::cout << "idle" << std::endl;
         break;
     case WALKING:
-        // std::cout << "walking" << std::endl;
-        walking_sf.playSound();
+        std::cout << "walking" << std::endl;
         break;
     case JUMPING:
-        // std::cout << "jumping" << std::endl;
-        jumping_sf.playSound();
+        std::cout << "jumping" << std::endl;
         break;
     case FALLING:
-        // std::cout << "falling" << std::endl;
+        std::cout << "falling" << std::endl;
         break;
     case ATTACKING:
-        // std::cout << "attacking" << std::endl;
+        std::cout << "attacking" << std::endl;
         break;
     case DEAD:
-        // std::cout << "dead" << std::endl;
+        std::cout << "dead" << std::endl;
         break;
     default:
         break;
