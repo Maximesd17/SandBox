@@ -16,6 +16,7 @@ namespace MySandBox {
             GAME,
             MAIN,
             WIN,
+            PAUSE,
         };
     };
 };
