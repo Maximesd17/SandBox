@@ -12,6 +12,9 @@
 #include "GameMapObject.hpp"
 #include "GameCamera.hpp"
 #include "EventManager.hpp"
+#include "JsonData.hpp"
+#include "JsonParser.hpp"
+#include "GameMap.hpp"
 
 
 class SandBox 
