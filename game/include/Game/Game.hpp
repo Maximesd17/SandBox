@@ -46,6 +46,9 @@ namespace MySandBox {
             void setGameState(State game_state);
         protected:
         private:
+            sf::Clock _clock;
+            sf::Font _fontClock;
+            sf::Text _textClock;
             void winningCondition();
             void displayMap();
             void displayPlayer();

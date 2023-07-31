@@ -9,7 +9,7 @@
 #include <fstream>
 #include <iostream>
 #include <memory>
-
+#include <cmath>
 /*********Constructor*********/
 /* This build the object     */
 /*********Constructor*********/
@@ -30,6 +30,11 @@ MySandBox::Game::Game::~Game()
 void MySandBox::Game::Game::init()
 {
     _window_origin_size = _window.getSize();
+    _fontClock.loadFromFile("resources/fonts/button.ttf");
+    _textClock.setFont(_fontClock);
+    _textClock.setCharacterSize(30);
+    _textClock.setPosition(20, 50);
+    _textClock.setFillColor(sf::Color::Black);
 }
 
 /*********reset*********/
@@ -42,6 +47,7 @@ void MySandBox::Game::Game::reset()
     _sprite_shit.loadFromFile("resources/player.png");
     _player.setPlayerSprites(_sprite_shit);
     _player.setPosition(_mapGenerator.getSpawnPoint());
+    _clock.restart();
 }
 
 /*********displayMap*********/
@@ -75,6 +81,8 @@ void MySandBox::Game::Game::events(sf::Event& event)
 void MySandBox::Game::Game::update()
 {
    // std::cout << _game_state << std::endl;
+    sf::Time elapsedTime = _clock.getElapsedTime();
+    _textClock.setString(std::to_string(round(elapsedTime.asSeconds())));
     std::vector<sf::Vector2f> wallPositions = _mapGenerator.getCollisionPositions();
     _player.update(wallPositions);
     sf::Vector2f endPosition = _mapGenerator.getEndPoint();
@@ -93,6 +101,7 @@ void MySandBox::Game::Game::display()
 {
     displayMap();
     displayPlayer();
+    _window.draw(_textClock);
 }
 
 /*********getWindow**********/
