@@ -20,10 +20,14 @@ MySandBox::SandBox::SandBox() : _game(_window)
     _window.create(sf::VideoMode(sf::VideoMode::getDesktopMode()), "MySandBox");
     _framerate = 60;
     _window.setFramerateLimit(_framerate);
+    _font.loadFromFile("resources/fonts/roboto.ttf");
+    _fps.setFont(_font);
+    _fps.setCharacterSize(40);
+    _fps.setPosition(0, 0);
+    _fps.setFillColor(sf::Color::Red);
     _game.init();
     _scenes[MySandBox::Scenes::MENU] = std::make_shared<MySandBox::Scenes::SMenu>(_state, _game);
     _scenes[MySandBox::Scenes::GAME] = std::make_shared<MySandBox::Scenes::SGame>(_state, _game);
-
 }
 
 
@@ -43,6 +47,7 @@ bool MySandBox::SandBox::checkElapsedTime()
 {
     if (_deltaTime.getElapsedTime().asMilliseconds() > 1000 / _framerate ||
         _deltaTime.getElapsedTime().asMilliseconds() <= 0) {
+        _fps.setString(std::to_string(static_cast<int>(1 / _deltaTime.getElapsedTime().asSeconds())));
         _deltaTime.restart();
         return true;
     }
@@ -50,7 +55,7 @@ bool MySandBox::SandBox::checkElapsedTime()
 }
 
 /*****Main loop of the sandbox*****/
-/*  a loop to cach actions        */
+/*  the main loop of the game     */
 /*****Main loop of the sandbox*****/
 int MySandBox::SandBox::loop()
 {
@@ -62,6 +67,7 @@ int MySandBox::SandBox::loop()
             break;
         _scenes[_state.getScene()]->update();
         _scenes[_state.getScene()]->display();
+        _window.draw(_fps);
         _window.display();
     }
     return 0;

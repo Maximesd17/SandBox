@@ -35,6 +35,15 @@ void MySandBox::Game::Game::init()
     _textClock.setCharacterSize(30);
     _textClock.setPosition(20, 50);
     _textClock.setFillColor(sf::Color::Black);
+
+    _game_view.setSize(_window.getSize().x, _window.getSize().y);
+    _game_view.setCenter(_window.getSize().x / 2, _window.getSize().y / 2);
+    _game_view.setViewport(sf::FloatRect(0, 0, 1, 1));
+
+    int texture_ratio = _window.getSize().y * _default_texture_size;
+
+    _texture_size = round(texture_ratio / 1080);
+    _player.setTextureSize(_texture_size);
 }
 
 /*********reset*********/
@@ -43,11 +52,12 @@ void MySandBox::Game::Game::init()
 void MySandBox::Game::Game::reset()
 {
     std::string mapFile("maps/collisions.txt");
-    _mapGenerator.setMapFile(mapFile);
+    _mapGenerator.setMapFile(mapFile, _texture_size);
     _sprite_shit.loadFromFile("resources/player.png");
     _player.setPlayerSprites(_sprite_shit);
-    _player.setPosition(_mapGenerator.getSpawnPoint());
     _clock.restart();
+    sf::FloatRect rect = _mapGenerator.getSpawnPoint();
+    _player.setPosition(sf::Vector2f(rect.left, rect.top - rect.height));
 }
 
 /*********displayMap*********/
@@ -72,7 +82,29 @@ void MySandBox::Game::Game::displayPlayer()
 void MySandBox::Game::Game::events(sf::Event& event)
 {
     _player.events(event);
-    winningCondition();
+}
+
+/**********updateViewPosition*********/
+/* update the position of the camera */
+/**********updateViewPosition*********/
+void MySandBox::Game::Game::updateViewPosition()
+{
+    sf::Vector2f new_pos = _player.getPosition();
+    sf::Vector2f player_pos = _player.getPosition();
+
+    if (new_pos.x < _window.getSize().x / 2)
+        new_pos.x = _window.getSize().x / 2;
+    if (new_pos.x > _mapGenerator.getMapSize().x - _window.getSize().x / 2)
+        new_pos.x = _mapGenerator.getMapSize().x - _window.getSize().x / 2;
+
+    if (new_pos.y < _window.getSize().y / 2)
+        new_pos.y = _window.getSize().y / 2;
+    if (new_pos.y > _mapGenerator.getMapSize().y - _window.getSize().y / 2)
+        new_pos.y = _mapGenerator.getMapSize().y - _window.getSize().y / 2;
+
+    _window.setView(_game_view);
+    _game_view.setCenter(new_pos);
+    _window.setView(_window.getDefaultView());
 }
 
 /*********update*********/
@@ -82,16 +114,24 @@ void MySandBox::Game::Game::update()
 {
    // std::cout << _game_state << std::endl;
     sf::Time elapsedTime = _clock.getElapsedTime();
-    _textClock.setString(std::to_string(round(elapsedTime.asSeconds())));
-    std::vector<sf::Vector2f> wallPositions = _mapGenerator.getCollisionPositions();
-    _player.update(wallPositions);
-    sf::Vector2f endPosition = _mapGenerator.getEndPoint();
+    double elapsedTimeSeconds = elapsedTime.asSeconds();
+    double roundedTime = std::round(elapsedTimeSeconds * 1000) / 1000;
 
-    bool hasWin = _player.checkEndPointCollision(endPosition);
-    if (hasWin) {
+    std::ostringstream ss;
+    ss << std::fixed << std::setprecision(3) << roundedTime;
+    std::string timeString = ss.str();
+    _textClock.setString(timeString);
+    updateViewPosition();
+    _player.update(_mapGenerator.getCollisionBlocks(), _mapGenerator.getMapSize());
+
+    bool hasWin = _player.checkEndPointCollision(_mapGenerator.getEndPoint());
+
+        if (hasWin)
+    {
         _game_state = WIN;
+        double elapsedTimeSeconds = elapsedTime.asSeconds();
+        writeWinTime(elapsedTimeSeconds);
     }
-
 }
 
 /*********display*********/
@@ -99,8 +139,10 @@ void MySandBox::Game::Game::update()
 /*********display*********/
 void MySandBox::Game::Game::display()
 {
+    _window.setView(_game_view);
     displayMap();
     displayPlayer();
+    _window.setView(_window.getDefaultView());
     _window.draw(_textClock);
 }
 
@@ -120,22 +162,6 @@ sf::Vector2u MySandBox::Game::Game::getWindowOriginSize() const
     return _window_origin_size;
 }
 
-/************winningCondition************/
-/* Check for winning condition.         */
-/* If player position reaches end point */
-/* it return True. Otherwise, false     */
-/************winningCondition************/
-void MySandBox::Game::Game::winningCondition()
-{
-    sf::Vector2f pos = _player.getPosition();
-    sf::Vector2f endPoint = _mapGenerator.getEndPoint();
-    // sf::FloatRect playerBound = _player.get
-
-    /*Temporary values before having access to real values*/
-    int textures_size = 40;
-    endPoint = sf::Vector2f(endPoint.x * textures_size, endPoint.y * textures_size);
-}
-
 /*********getGameState*********/
 /* Get game state function    */
 /*********setGameState*********/
@@ -150,4 +176,35 @@ MySandBox::Game::State MySandBox::Game::Game::getGameState() const
 void MySandBox::Game::Game::setGameState(MySandBox::Game::State game_state)
 {
     _game_state = game_state;
+}
+
+/*********writeWinTime*********/
+/*       Write Win Time       */
+/*********writeWinTime*********/
+void MySandBox::Game::Game::writeWinTime(double timeInSeconds)
+{
+    std::ofstream outFile(_timeFileName, std::ios::app);
+
+    if (outFile.is_open())
+    {
+        double roundedTime = std::round(timeInSeconds * 1000) / 1000;
+
+        outFile << std::fixed << std::setprecision(3) << roundedTime << std::endl;
+        outFile.close();
+    }
+    else
+    {
+        std::ofstream newFile(_timeFileName);
+
+        if (newFile.is_open())
+        {
+            double roundedTime = std::round(timeInSeconds * 1000) / 1000;
+            newFile << std::fixed << std::setprecision(3) << roundedTime;
+            newFile.close();
+        }
+        else
+        {
+            std::cout << "Unable to create or open the file " << _timeFileName << " for writing." << std::endl;
+        }
+    }
 }

@@ -13,6 +13,7 @@
 #include <vector>
 #include <memory>
 #include <SFML/Graphics.hpp>
+#include <optional>
 #include "KeyboardMoves.hpp"
 #include "ControllerMoves.hpp"
 #include "LogManager.hpp"
@@ -38,11 +39,11 @@ namespace MySandBox {
                 Player();
                 ~Player();
                 void setPlayerSprites(sf::Texture&);
-                void update(const std::vector<sf::Vector2f> &collisionPositions);
+                void update(const std::vector<sf::FloatRect> &collisionBlocks, const sf::Vector2f &);
                 void events(sf::Event&);
                 void display(sf::RenderWindow&);
-                void ApplyGravity(const std::vector<sf::Vector2f>& collisionPositions);
-                void ApplyJump(const std::vector<sf::Vector2f>& collisionPositions);
+                void ApplyGravity(const std::vector<sf::FloatRect>& collisionBlocks, const sf::Vector2f &);
+                void ApplyJump(const std::vector<sf::FloatRect>& collisionBlocks);
                 sf::Vector2f getPosition() const;
                 PlayerState getState() const;
                 PlayerDirection getDirection() const;
@@ -53,14 +54,14 @@ namespace MySandBox {
                 void setDirection(MySandBox::Game::PlayerDirection playerDirection);
                 void setGravity(double gravity);
                 void setJumpHeight(int height);
-                bool checkEndPointCollision(const sf::Vector2f& endPosition);
+                bool checkEndPointCollision(const sf::FloatRect& endPosition);
+                void setTextureSize(float texture_size);
             protected:
             private:
-                void computeYMoves(float directionY, const std::vector<sf::Vector2f> &collisionPositions);
-                void computeXMoves(float directionX, const std::vector<sf::Vector2f> &collisionPositions);
-                bool checkWallCollision(const std::vector<sf::Vector2f>& wallPositions) const;
-                bool checkWallCollisionX(const float future_x, const std::vector<sf::Vector2f>& collisionPositions);
-                bool checkWallCollisionY(const float future_y, const std::vector<sf::Vector2f>& collisionPositions);
+                void computeYMoves(float directionY, const std::vector<sf::FloatRect> &collisionBlocks, const sf::Vector2f &);
+                void computeXMoves(float directionX, const std::vector<sf::FloatRect> &collisionBlocks);
+                std::optional<sf::FloatRect> checkWallCollisionX(const float future_x, const std::vector<sf::FloatRect>& collisionBlocks);
+                std::optional<sf::FloatRect> checkWallCollisionY(const float future_y, const std::vector<sf::FloatRect>& collisionBlocks);
                 void setIdleFrame();
                 void setWalkingFrame();
                 void setJumpingFrame();
@@ -83,6 +84,8 @@ namespace MySandBox {
                 double _death_speed;
                 int _player_width;
                 int _player_height;
+                float _texture_size;
+
 
                 std::shared_ptr<MySandBox::Game::Player::Moves::IMoves> _moves;
                 sf::Vector2f _position;

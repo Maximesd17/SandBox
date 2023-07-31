@@ -18,15 +18,33 @@ SandBox::MapGenerator::MapGenerator()
     _hasEnd = false;
     _valid = false;
 
+    _airTexture.loadFromFile("resources/map_textures/air.png");
+    _groundTexture.loadFromFile("resources/map_textures/ground.png");
+    _plateformTexture.loadFromFile("resources/map_textures/plateform.png");
+    _wallTexture.loadFromFile("resources/map_textures/wall.png");
+    _boxTexture.loadFromFile("resources/map_textures/box.png");
+    _spawnTexture.loadFromFile("resources/map_textures/start.png");
+    _endTexture.loadFromFile("resources/map_textures/end.png");
 }
 
-SandBox::MapGenerator::MapGenerator(std::string& filepath)
+SandBox::MapGenerator::MapGenerator(std::string& filepath, int texture_size)
 {
     _hasAir = false;
     _hasGround = false;
     _hasSpawn = false;
     _hasEnd = false;
     _valid = false;
+
+    _texture_size = texture_size;
+    std::cout << "Texture size: " << _texture_size << std::endl;
+
+    _airTexture.loadFromFile("resources/map_textures/air.png");
+    _groundTexture.loadFromFile("resources/map_textures/ground.png");
+    _plateformTexture.loadFromFile("resources/map_textures/plateform.png");
+    _wallTexture.loadFromFile("resources/map_textures/wall.png");
+    _boxTexture.loadFromFile("resources/map_textures/box.png");
+    _spawnTexture.loadFromFile("resources/map_textures/start.png");
+    _endTexture.loadFromFile("resources/map_textures/end.png");
 
     std::ifstream fs;
     std::string buf;
@@ -54,20 +72,23 @@ void SandBox::MapGenerator::clear()
     _hasSpawn = false;
     _hasEnd = false;
     _valid = false;
+
     _map_file.clear();
     _map.clear();
-    _spawnPoint = sf::Vector2f();
-    _endPoint = sf::Vector2f();
-    _collisionPositions.clear();
+    _spawnPoint = sf::FloatRect();
+    _endPoint = sf::FloatRect();
+    _collisionBlocks.clear();
 }
 
-void SandBox::MapGenerator::setMapFile(std::string &filepath)
+void SandBox::MapGenerator::setMapFile(std::string& filepath, int texture_size)
 {
     clear();
     std::ifstream fs;
     std::string buf;
 
     _map_file = filepath;
+    _texture_size = texture_size;
+
     fs.open(_map_file, std::ios::in);
     if (!fs.is_open()) {
         std::cerr << "Error on opening file '" << _map_file << "'." << std::endl;
@@ -186,9 +207,6 @@ SandBox::MapGenerator::~MapGenerator()
 
 void SandBox::MapGenerator::setKeyPoints()
 {
-    sf::Vector2f spawnPoint;
-    sf::Vector2f endPoint;
-
     for (size_t y = 0; y < _map.size(); ++y) {
         const std::string& line = _map[y];
         for (size_t x = 0; x < line.size(); ++x) {
@@ -197,128 +215,68 @@ void SandBox::MapGenerator::setKeyPoints()
             sf::Sprite tileSprite;
 
             switch (ch) {
-                case 'G':
-                    _collisionPositions.push_back(sf::Vector2f(x * 40, y * 40));
-                    break;
-                case 'W':
-                     _collisionPositions.push_back(sf::Vector2f(x * 40, y * 40));
-                    break;
-                case 'B':
-                    _collisionPositions.push_back(sf::Vector2f(x * 40, y * 40));
-                    break;
-                case 'S':
-                    spawnPoint = sf::Vector2f(x * 40 , y * 40);
-                    break;
-                case 'E':
-                    endPoint = sf::Vector2f(x * 40, y * 40);
-                    break;
-
-                default:
-                    continue;
-            }
-
-        }
-    }
-    _spawnPoint = spawnPoint;
-    _endPoint = endPoint;
-}
-
-void SandBox::MapGenerator::displayMap(sf::RenderWindow &_window) {
-
-    std::vector<sf::Sprite> tiles;
-
-    sf::Texture airTexture;
-    airTexture.loadFromFile("resources/map_textures/air.png");
-
-    sf::Texture groundTexture;
-    groundTexture.loadFromFile("resources/map_textures/ground.png");
-
-    sf::Texture plateformTexture;
-    plateformTexture.loadFromFile("resources/map_textures/plateform.png");
-
-    sf::Texture wallTexture;
-    wallTexture.loadFromFile("resources/map_textures/wall.png");
-
-    sf::Texture boxTexture;
-    boxTexture.loadFromFile("resources/map_textures/box.png");
-
-    sf::Texture spawnTexture;
-    spawnTexture.loadFromFile("resources/map_textures/start.png");
-
-    sf::Texture endTexture;
-    endTexture.loadFromFile("resources/map_textures/end.png");
-
-    sf::Vector2f spawnPoint;
-    sf::Vector2f endPoint;
-
-    for (size_t y = 0; y < _map.size(); ++y) {
-        const std::string& line = _map[y];
-        for (size_t x = 0; x < line.size(); ++x) {
-            char ch = line[x];
-
-            sf::Sprite tileSprite;
-
-            switch (ch) {
-                case '0':
-                    tileSprite.setTexture(airTexture);
-                    break;
-                case 'G':
-                    tileSprite.setTexture(groundTexture);
-                    _collisionPositions.push_back(sf::Vector2f(x * 40, y * 40));
-                    break;
-                case 'P':
-                    tileSprite.setTexture(plateformTexture);
-                    break;
-                case 'W':
-                    tileSprite.setTexture(wallTexture);
-                     _collisionPositions.push_back(sf::Vector2f(x * 40, y * 40));
-                    break;
-                case 'B':
-                    tileSprite.setTexture(boxTexture);
-                    _collisionPositions.push_back(sf::Vector2f(x * 40, y * 40));
-                    break;
-                case 'S':
-                    tileSprite.setTexture(spawnTexture);
-                    spawnPoint = sf::Vector2f(x * 40 , y * 40);
-                    break;
-                case 'E':
-                    tileSprite.setTexture(endTexture);
-                    endPoint = sf::Vector2f(x * 40, y * 40);
-                    break;
-
+            case '0':
+                tileSprite.setTexture(_airTexture);
+                break;
+            case 'G':
+                tileSprite.setTexture(_groundTexture);
+                _collisionBlocks.push_back(sf::FloatRect(x * _texture_size, y * _texture_size, _texture_size, _texture_size));
+                break;
+            case 'P':
+                tileSprite.setTexture(_plateformTexture);
+                _collisionBlocks.push_back(sf::FloatRect(x * _texture_size, y * _texture_size, _texture_size, _texture_size));
+                break;
+            case 'W':
+                tileSprite.setTexture(_wallTexture);
+                _collisionBlocks.push_back(sf::FloatRect(x * _texture_size, y * _texture_size, _texture_size, _texture_size));
+                break;
+            case 'B':
+                tileSprite.setTexture(_boxTexture);
+                _collisionBlocks.push_back(sf::FloatRect(x * _texture_size, y * _texture_size, _texture_size, _texture_size));
+                break;
+            case 'S':
+                tileSprite.setTexture(_spawnTexture);
+                _spawnPoint = sf::FloatRect(x * _texture_size, y * _texture_size, _texture_size, _texture_size);
+                break;
+            case 'E':
+                tileSprite.setTexture(_endTexture);
+                _endPoint = sf::FloatRect(x * _texture_size, y * _texture_size, _texture_size, _texture_size);
+                break;
             default:
                 continue;
             }
-
-            //tileSprite.setScale(2, 2);
-
-            tileSprite.setPosition(x * 40, y * 40);
-
-            tiles.push_back(tileSprite);
-
+            tileSprite.setPosition(x * _texture_size, y * _texture_size);
+            tileSprite.scale((float)_texture_size / 40, (float)_texture_size / 40);
+            _tiles.push_back(tileSprite);
         }
     }
-    _spawnPoint = spawnPoint;
-    _endPoint = endPoint;
+}
 
-    for (const sf::Sprite& tile : tiles) {
+void SandBox::MapGenerator::displayMap(sf::RenderWindow& _window)
+{
+    for (const sf::Sprite& tile : _tiles) {
         _window.draw(tile);
     }
 }
 
-sf::Vector2f SandBox::MapGenerator::getSpawnPoint()
+sf::FloatRect SandBox::MapGenerator::getSpawnPoint()
 {
     return _spawnPoint;
 }
 
-sf::Vector2f SandBox::MapGenerator::getEndPoint()
+sf::FloatRect SandBox::MapGenerator::getEndPoint()
 {
     return _endPoint;
 }
 
-std::vector<sf::Vector2f> SandBox::MapGenerator::getCollisionPositions()
+sf::Vector2f SandBox::MapGenerator::getMapSize()
 {
-    return _collisionPositions;
+    return sf::Vector2f(_map[0].length() * _texture_size, _map.size() * _texture_size);
+}
+
+std::vector<sf::FloatRect> SandBox::MapGenerator::getCollisionBlocks()
+{
+    return _collisionBlocks;
 }
 
 SandBox::MapGenerator SandBox::MapGenerator::operator=(const SandBox::MapGenerator& other)
@@ -327,8 +285,8 @@ SandBox::MapGenerator SandBox::MapGenerator::operator=(const SandBox::MapGenerat
         return *this;
     this->_map_file = std::move(other._map_file);
     this->_map = std::vector<std::string>(other._map);
-    this->_spawnPoint = sf::Vector2f(other._spawnPoint);
-    this->_endPoint = sf::Vector2f(other._endPoint);
+    this->_spawnPoint = sf::FloatRect(other._spawnPoint);
+    this->_endPoint = sf::FloatRect(other._endPoint);
     this->_hasAir = other._hasAir;
     this->_hasGround = other._hasGround;
     this->_hasSpawn = other._hasSpawn;

@@ -17,14 +17,14 @@ MySandBox::Scenes::SubScenes::SSMainGame::SSMainGame(MySandBox::State& state, My
 
 /*********Destructor*********/
 /* This destroy the sandbox */
-/*********Destructor*********/ 
+/*********Destructor*********/
 MySandBox::Scenes::SubScenes::SSMainGame::~SSMainGame()
 {
 }
 
 /*********events************/
 /* Event handling function */
-/*********events************/ 
+/*********events************/
 void MySandBox::Scenes::SubScenes::SSMainGame::events(sf::Event& Event)
 {
     _game.events(Event);
@@ -32,7 +32,7 @@ void MySandBox::Scenes::SubScenes::SSMainGame::events(sf::Event& Event)
 
 /*********update*********/
 /* Update function */
-/*********update*********/ 
+/*********update*********/
 void MySandBox::Scenes::SubScenes::SSMainGame::update()
 {
     _game.update();
@@ -43,7 +43,7 @@ void MySandBox::Scenes::SubScenes::SSMainGame::update()
 
 /*********display*********/
 /* Display function */
-/*********display*********/ 
+/*********display*********/
 void MySandBox::Scenes::SubScenes::SSMainGame::display()
 {
     _game.display();
