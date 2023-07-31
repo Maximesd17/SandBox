@@ -9,7 +9,6 @@
 #include <math.h>
 #include <iostream>
 #include <cmath>
-#include <optional>
 #include <iostream>
 
 /*********Constructor*********/

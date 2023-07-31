@@ -13,6 +13,7 @@
 #include <vector>
 #include <memory>
 #include <SFML/Graphics.hpp>
+#include <optional>
 #include "KeyboardMoves.hpp"
 #include "ControllerMoves.hpp"
 #include "LogManager.hpp"
