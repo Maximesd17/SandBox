@@ -54,6 +54,7 @@ MySandBox::Game::Player::Player::~Player()
 void MySandBox::Game::Player::Player::setPlayerSprites(sf::Texture& sprite_shit)
 {
     _player.setTexture(sprite_shit);
+    setIdleFrame();
     _player.setScale(2 + _texture_size / 40,  2 + _texture_size / 40);
 }
 
@@ -369,6 +370,11 @@ double MySandBox::Game::Player::Player::getGravity() const
 int MySandBox::Game::Player::Player::getJumpHeight() const
 {
     return _jump_height;
+}
+
+float MySandBox::Game::Player::Player::getPlayerHeight() const
+{
+    return _player.getGlobalBounds().height;
 }
 
 /*********setPosition*********/
