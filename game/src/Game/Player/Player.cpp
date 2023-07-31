@@ -38,6 +38,7 @@ MySandBox::Game::Player::Player::Player()
     _direction = RIGHT;
     _player_width = 32;
     _player_height = 32;
+    _texture_size = 40;
     _moves = std::make_shared<Moves::KeyboardMoves>();
 }
 
@@ -54,6 +55,15 @@ MySandBox::Game::Player::Player::~Player()
 void MySandBox::Game::Player::Player::setPlayerSprites(sf::Texture& sprite_shit)
 {
     _player.setTexture(sprite_shit);
+}
+
+/*********setTextureSize*********/
+/* Set the size of the player   */
+/*********setTextureSize*********/
+void MySandBox::Game::Player::Player::setTextureSize(float size)
+{
+    _texture_size = size;
+    _jump_height = _jump_height * _texture_size / 40;
 }
 
 /*********events************/
@@ -309,7 +319,7 @@ void MySandBox::Game::Player::Player::display(sf::RenderWindow& window)
     }
 
     _player.setPosition(_position);
-    _player.setScale(4, 4);
+    _player.setScale(2 + _texture_size / 40,  2 + _texture_size / 40);
 
     sf::RectangleShape rect(sf::Vector2f(_player.getGlobalBounds().width, _player.getGlobalBounds().height));
     rect.setPosition(_player.getPosition());
@@ -411,13 +421,11 @@ std::optional<sf::FloatRect> MySandBox::Game::Player::Player::checkWallCollision
 )
 {
     sf::Sprite future_player = sf::Sprite(_player);
-    sf::FloatRect playerBounds = sf::FloatRect(0, 0, 0, 0);
 
     future_player.setPosition(sf::Vector2f(future_x, future_player.getPosition().y));
-    playerBounds = future_player.getGlobalBounds();
 
     for (const sf::FloatRect& wall : collisionBlocks) {
-        if (playerBounds.intersects(wall)) return wall;
+        if (future_player.getGlobalBounds().intersects(wall)) return wall;
     }
     return std::nullopt;
 
@@ -450,6 +458,7 @@ std::optional<sf::FloatRect> MySandBox::Game::Player::Player::checkWallCollision
 bool MySandBox::Game::Player::Player::checkEndPointCollision(const sf::FloatRect& endPosition)
 {
     sf::FloatRect playerBounds = _player.getGlobalBounds();
+
 
     if (playerBounds.intersects(endPosition))return true;
     return false;

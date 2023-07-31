@@ -54,6 +54,7 @@ namespace MySandBox {
                 void setGravity(double gravity);
                 void setJumpHeight(int height);
                 bool checkEndPointCollision(const sf::FloatRect& endPosition);
+                void setTextureSize(float texture_size);
             protected:
             private:
                 void computeYMoves(float directionY, const std::vector<sf::FloatRect> &collisionBlocks, const sf::Vector2f &);
@@ -82,6 +83,8 @@ namespace MySandBox {
                 double _death_speed;
                 int _player_width;
                 int _player_height;
+                float _texture_size;
+
 
                 std::shared_ptr<MySandBox::Game::Player::Moves::IMoves> _moves;
                 sf::Vector2f _position;

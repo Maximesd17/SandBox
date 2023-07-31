@@ -38,6 +38,7 @@ void MySandBox::Game::Game::init()
     int texture_ratio = _window.getSize().y * _default_texture_size;
 
     _texture_size = round(texture_ratio / 1080);
+    _player.setTextureSize(_texture_size);
 }
 
 /*********reset*********/
@@ -45,12 +46,12 @@ void MySandBox::Game::Game::init()
 /*********reset*********/
 void MySandBox::Game::Game::reset()
 {
-    std::string mapFile("maps/large.txt");
+    std::string mapFile("maps/collisions.txt");
     _mapGenerator.setMapFile(mapFile, _texture_size);
     _sprite_shit.loadFromFile("resources/player.png");
     _player.setPlayerSprites(_sprite_shit);
     sf::FloatRect rect = _mapGenerator.getSpawnPoint();
-    _player.setPosition(sf::Vector2f(rect.left, rect.top));
+    _player.setPosition(sf::Vector2f(rect.left, rect.top - rect.height));
 }
 
 /*********displayMap*********/
