@@ -12,7 +12,7 @@
 /* This build the object     */
 /*********Constructor*********/
 MySandBox::Components::Range::Range(std::string text, sf::Vector2i pos, sf::Vector2f size,
-    sf::Vector2u window_origin_size, int min, int max, int value, bool show_value)
+    sf::Vector2u window_origin_size, int value, int min, int max, bool show_value)
     : _state(MySandBox::Components::IDLE), _window_origin_size(window_origin_size)
 {
     _min_value = min;
@@ -69,7 +69,11 @@ bool MySandBox::Components::Range::isCursorHovered(sf::Vector2f mouse_pos, sf::V
     pos.x = pos.x * window_size.x / _window_origin_size.x;
     pos.y = pos.y * window_size.y / _window_origin_size.y;
     size = size * window_size.x / _window_origin_size.x * 2;
-    if (mouse_pos.x >= pos.x && mouse_pos.x <= pos.x + size && mouse_pos.y >= pos.y && mouse_pos.y <= pos.y + size)
+    if (mouse_pos.x >= pos.x &&
+        mouse_pos.x <= pos.x + size &&
+        mouse_pos.y >= pos.y &&
+        mouse_pos.y <= pos.y + size
+    )
         return true;
     return false;
 }
@@ -86,7 +90,11 @@ bool MySandBox::Components::Range::isBarHovered(sf::Vector2f mouse_pos, sf::Vect
     pos.y = pos.y * window_size.y / _window_origin_size.y;
     size.x = size.x * window_size.x / _window_origin_size.x;
     size.y = size.y * window_size.y / _window_origin_size.y;
-    if (mouse_pos.x >= pos.x && mouse_pos.x <= pos.x + size.x && mouse_pos.y >= pos.y && mouse_pos.y <= pos.y + size.y)
+    if (mouse_pos.x >= pos.x &&
+        mouse_pos.x <= pos.x + size.x &&
+        mouse_pos.y >= pos.y &&
+        mouse_pos.y <= pos.y + size.y
+    )
         return true;
     return false;
 }
@@ -98,11 +106,13 @@ bool MySandBox::Components::Range::check(sf::RenderWindow& window)
 {
     sf::Vector2i mouse_pos = sf::Mouse::getPosition(window);
     sf::Vector2f computed_mouse_pos = window.mapPixelToCoords(mouse_pos);
-    bool is_hovered = isCursorHovered(computed_mouse_pos, window.getSize());
+    bool is_cursor_hovered = isCursorHovered(computed_mouse_pos, window.getSize());
+    bool is_bar_hovered = isBarHovered(computed_mouse_pos, window.getSize());
 
-    // TODO : @hollitizz CLEAN THIS CODE
-
-    if (is_hovered && sf::Mouse::isButtonPressed(sf::Mouse::Left) && _state == IDLE) {
+    if ((is_cursor_hovered || is_bar_hovered) &&
+        sf::Mouse::isButtonPressed(sf::Mouse::Left) &&
+        _state == IDLE
+    ) {
         return false;
     }
     if (_state == CLICKED && sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
@@ -116,19 +126,15 @@ bool MySandBox::Components::Range::check(sf::RenderWindow& window)
             pos.x = _bar.getPosition().x + _bar.getSize().x - size;
         _cursor.setPosition(pos);
         return true;
-    } else if (_state == CLICKED && !sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
-        if (is_hovered)
-            _state = HOVER;
-        else
-            _state = IDLE;
-        return true;
-    } else if (is_hovered) {
+    } else if (is_cursor_hovered) {
         _state = HOVER;
         if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
             _state = CLICKED;
-    } else
-        _state = IDLE;
-    if (sf::Mouse::isButtonPressed(sf::Mouse::Left) && isBarHovered(computed_mouse_pos, window.getSize())) {
+        return true;
+    } else if (
+        sf::Mouse::isButtonPressed(sf::Mouse::Left) &&
+        is_bar_hovered
+    ) {
         sf::Vector2f pos = _cursor.getPosition();
         float size = _cursor.getRadius();
 
@@ -140,6 +146,8 @@ bool MySandBox::Components::Range::check(sf::RenderWindow& window)
             pos.x = _bar.getPosition().x + _bar.getSize().x - size;
         _cursor.setPosition(pos);
         return true;
+    } else {
+        _state = IDLE;
     }
     return false;
 }
