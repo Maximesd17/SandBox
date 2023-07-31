@@ -30,3 +30,8 @@ void MySandBox::Game::Sound::Sound::stopSound(){
     /* Method to stop sound playback */
     _sound.stop();
 };
+
+void MySandBox::Game::Sound::Sound::noLoop(){
+    std::cout << _sound.getLoop() << std::endl;
+    _sound.setLoop(false);
+};

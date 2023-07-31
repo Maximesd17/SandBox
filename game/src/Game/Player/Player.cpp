@@ -28,9 +28,6 @@ MySandBox::Game::Player::Player::Player()
     _is_moves_manual_changed = false;
     _moves[JOYSTICK] = std::make_shared<Moves::ControllerMoves>();
     _moves[KEYBOARD] = std::make_shared<Moves::KeyboardMoves>();
-
-    jumping_sf.loadSound("resources/sounds/jump.wav");
-    walking_sf.loadSound("resources/sounds/walk.wav");
 }
 
 MySandBox::Game::Player::Player::~Player()
@@ -68,10 +65,8 @@ void MySandBox::Game::Player::Player::update()
     if (direction.y < 0 && _state != JUMPING && _state != FALLING) {
         _state = JUMPING;
         _jump_frame = 0;
-        jumping_sf.playSound();
     }
     if (_state == JUMPING) {
-        jumping_sf.playSound();
         _position.y -= _jump_height / (_jump_speed * 60);
         _jump_frame++;
         if (_jump_frame >= _jump_speed * 60)
@@ -88,14 +83,10 @@ void MySandBox::Game::Player::Player::update()
 
 
     _position.x += direction.x * _speed;
-    if (direction.x < 0){
+    if (direction.x < 0)
         _direction = PlayerDirection::LEFT;
-        walking_sf.playSound();
-    }
-    else if (direction.x > 0){
+    else if (direction.x > 0)
         _direction = PlayerDirection::RIGHT;
-        walking_sf.playSound();
-    }
     if (direction.x != 0 && _state != JUMPING && (_state != FALLING || _position.y >= 780))
         _state = WALKING;
     else if (direction.x == 0 && _state == PLAYER_IDLE)

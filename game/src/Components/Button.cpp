@@ -27,6 +27,9 @@ MySandBox::Component::Button::Button(std::string text, sf::Vector2i pos, sf::Vec
     _colors[IDLE] = sf::Color::Blue;
     _colors[HOVER] = sf::Color::Green;
     _colors[CLICKED] = sf::Color::Red;
+
+    hover.loadSound("resources/sounds/hover_sound.wav");
+    click.loadSound("resources/sounds/click_sound.wav");
 }
 
 /*********Destructor*********/
@@ -85,4 +88,23 @@ void MySandBox::Component::Button::display(sf::RenderWindow& window)
     _rect.setFillColor(_colors[_state]);
     window.draw(_rect);
     window.draw(_text);
+}
+
+/********makeSound********/
+/* Enables button sounds */
+/********makeSound********/
+void MySandBox::Component::Button::makeSound(){
+    std::cout << hover_isplayed << std::endl;
+
+    if (_state == HOVER && hover_isplayed == false){
+        hover.playSound();
+        hover_isplayed = true;
+    }
+    else if(_state == CLICKED){
+        click.playSound();
+    }
+    else if(_state == IDLE){
+        hover_isplayed = false;
+    }
+    std::cout << hover_isplayed << std::endl;
 }

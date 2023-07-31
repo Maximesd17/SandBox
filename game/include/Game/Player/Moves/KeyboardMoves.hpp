@@ -8,6 +8,7 @@
 #pragma once
 
 #include "IMoves.hpp"
+#include "Sound.hpp"
 
 namespace MySandBox {
     namespace Game {
@@ -23,6 +24,8 @@ namespace MySandBox {
                 private:
                     void computeDirection();
                     sf::Vector2f _lastMove;
+                    MySandBox::Game::Sound::Sound walking_sf;
+                    MySandBox::Game::Sound::Sound jumping_sf;
                 };
             }
         }

@@ -22,6 +22,7 @@ namespace MySandBox {
                     void loadSound(std::string _fileName);
                     void playSound();
                     void stopSound();
+                    void noLoop();
                 private:
                     std::string fileName;
                     sf::Sound _sound;
