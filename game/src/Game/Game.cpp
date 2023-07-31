@@ -51,7 +51,6 @@ void MySandBox::Game::Game::reset()
     _sprite_shit.loadFromFile("resources/player.png");
     _player.setPlayerSprites(_sprite_shit);
     sf::FloatRect rect = _mapGenerator.getSpawnPoint();
-    std::cout << _player.getPlayerHeight() << std::endl;
     _player.setPosition(sf::Vector2f(rect.left, rect.top - _player.getPlayerHeight()));
 }
 
