@@ -16,6 +16,7 @@ public:
   void display(sf::RenderWindow&);
   sf::Vector2f getPosition() const;
   void setPosition(sf::Vector2f);
+  sf::Sprite getSprite() const;
 
 };
 #endif //______GAMESPRITEOBJECT_HPP___

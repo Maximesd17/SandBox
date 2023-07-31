@@ -21,3 +21,8 @@ void GameSprite::setPosition(sf::Vector2f position)
 {
     _sprite.setPosition(position);
 }
+
+sf::Sprite GameSprite::getSprite() const
+{
+    return _sprite;
+}

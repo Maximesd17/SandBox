@@ -19,15 +19,13 @@ int main(int argc, char* argv[]) {
     // JsonData jsonData = parser.parse_simple(json);
     // jsonData.print();
 
-    GameMap map = parser.parse(json);
-
-    // Display the map
-    map.display();
 
 
     SandBox *game_instance;
     game_instance = new SandBox();
 
+    game_instance->set_map(parser.parse(json));
+    game_instance->getMap().display();
 
     game_instance->start();
     

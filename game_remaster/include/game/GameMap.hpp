@@ -8,13 +8,18 @@
 
 class GameMap {
 public:
+    GameMap() = default;
     GameMap(int width, int height, std::vector<GameMapObject> objects);
     void display() const;
+
+    std::vector<GameMapObject> getObjects();
+    int getWidth() const;
+    int getHeight() const;
 
 private:
     int width_;
     int height_;
-    std::vector<GameMapObject> objects_;
+    std::vector<GameMapObject> _objects;
 };
 
 

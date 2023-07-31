@@ -1,7 +1,7 @@
     #ifndef ______GAMEMAPOBJECT_HPP___
     #define ______GAMEMAPOBJECT_HPP___
 
-    #include "GameSpriteObject.hpp"
+    #include "GameSprite.hpp"
 
     /*
     ** _identifiers:
@@ -14,7 +14,7 @@
     ** - E = MUD
     */
 
-    class GameMapObject : GameSpriteObject
+    class GameMapObject : GameSprite
     {
         public:
         enum class Types {
@@ -27,8 +27,7 @@
             BOX
         };
 
-
-        public:
+        private:
             Types _type = Types::AIR;
             bool _isCheckpoint = false;
             bool _isSpawn = false;
@@ -36,6 +35,7 @@
             sf::Vector2f _position;
             std::string _texture;
 
+        public:
             GameMapObject();
             ~GameMapObject();
 
@@ -52,7 +52,7 @@
             void setEnd();
             void setPosition(sf::Vector2f);
             void setTexture(std::string);
-
+            using GameSprite::getSprite;
 
             void display(sf::RenderWindow& window) override;
     };

@@ -29,14 +29,18 @@ private:
   std::map<const std::string, GameSpriteObject&> _sprites;
   std::map<const std::string, GameSoundObject&> _sounds;
   std::map<const int, GameMapObject&> _map_data;
-  
+  std::map<const std::string, sf::Texture> _textures;
+  GameMap _map;
 
 public:
   SandBox();
   ~SandBox();
   void loop();
   void start();
+  void set_map(GameMap);
+  GameMap getMap() const;
 
+  void display_map();
 };
 
 #endif //______MYSANDBOX_HPP___
