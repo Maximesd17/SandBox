@@ -41,6 +41,7 @@ MySandBox::Game::Player::Player::Player()
     _moves = std::make_shared<Moves::KeyboardMoves>();
 
     walking_sf.loadSound("resources/sounds/footsteps.wav");
+    walking_sf.loopSetter(true);
     jumping_sf.loadSound("resources/sounds/jump.wav");
 }
 
@@ -477,6 +478,11 @@ bool MySandBox::Game::Player::Player::checkEndPointCollision(const sf::FloatRect
 void MySandBox::Game::Player::Player::makeSound(){
     if (_state == JUMPING)
         jumping_sf.playSound();
-    if (_state == WALKING)
+    if (_state == WALKING && walking_is_played == false){
         walking_sf.playSound();
+        walking_is_played = true;
+    }
+    if (_state == PLAYER_IDLE)
+        walking_sf.stopSound();
+        walking_is_played = false;
 }

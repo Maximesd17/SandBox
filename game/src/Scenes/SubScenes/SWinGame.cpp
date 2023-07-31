@@ -53,4 +53,5 @@ void MySandBox::Scenes::SubScenes::SSWinGame::display()
 {
     sf::RenderWindow &window = _game.getWindow();
     _return_button.display(window);
+    _return_button.makeSound();
 }

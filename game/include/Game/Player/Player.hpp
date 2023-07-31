@@ -88,6 +88,7 @@ namespace MySandBox {
                 int _player_width;
                 int _player_height;
                 float _texture_size;
+                bool walking_is_played;
 
 
                 std::shared_ptr<MySandBox::Game::Player::Moves::IMoves> _moves;
