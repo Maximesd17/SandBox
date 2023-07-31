@@ -39,6 +39,8 @@ namespace MySandBox {
             sf::Vector2u _window_origin_size;
             Button _button_left;
             Button _button_right;
+            bool _is_left_clicked;
+            bool _is_right_clicked;
         };
     }
 }

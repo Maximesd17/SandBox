@@ -33,6 +33,8 @@ _button_right(">", sf::Vector2i(rect.left + rect.width + rect.width / 2, rect.to
     _colors[MySandBox::Components::ButtonState::IDLE] = sf::Color(255, 255, 255, 255);
     _colors[MySandBox::Components::ButtonState::HOVER] = sf::Color(255, 255, 255, 255);
     _colors[MySandBox::Components::ButtonState::CLICKED] = sf::Color(255, 255, 255, 255);
+    _is_left_clicked = false;
+    _is_right_clicked = false;
 
 }
 
@@ -50,7 +52,8 @@ void MySandBox::Components::ListSwapper::setList(std::vector<std::string> &list)
 bool MySandBox::Components::ListSwapper::check(sf::RenderWindow& window)
 {
 
-    if (_button_left.check(window)) {
+    if (_button_left.check(window) && !_is_left_clicked) {
+        _is_left_clicked = true;
         int index = 0;
         for (int i = 0; i < _list.size(); i++) {
             if (_list[i] == _current_value)
@@ -65,7 +68,7 @@ bool MySandBox::Components::ListSwapper::check(sf::RenderWindow& window)
         _value.setOrigin(_value.getGlobalBounds().width / 2, _value.getGlobalBounds().height / 2);
         return true;
     }
-    if (_button_right.check(window)) {
+    if (_button_right.check(window) && !_is_right_clicked) {
         int index = 0;
         for (int i = 0; i < _list.size(); i++) {
             if (_list[i] == _current_value)
@@ -80,12 +83,15 @@ bool MySandBox::Components::ListSwapper::check(sf::RenderWindow& window)
         _value.setOrigin(_value.getGlobalBounds().width / 2, _value.getGlobalBounds().height / 2);
         return true;
     }
+    if (!_button_left.check(window))
+        _is_left_clicked = false;
+    if (!_button_right.check(window))
+        _is_right_clicked = false;
     return false;
 }
 
 void MySandBox::Components::ListSwapper::display(sf::RenderWindow& window)
 {
-    std::cout << _current_value << std::endl;
     _button_left.display(window);
     _button_right.display(window);
     window.draw(_text);

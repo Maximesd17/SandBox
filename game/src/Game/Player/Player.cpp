@@ -55,7 +55,7 @@ void MySandBox::Game::Player::Player::setPlayerSprites(sf::Texture& sprite_shit)
 {
     _player.setTexture(sprite_shit);
     setIdleFrame();
-    _player.setScale(2 + _texture_size / 40,  2 + _texture_size / 40);
+    _player.setScale(2 + _texture_size / 40, 2 + _texture_size / 40);
 }
 
 /*********setTextureSize*********/
