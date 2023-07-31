@@ -57,7 +57,7 @@ void MySandBox::Game::Game::reset()
     _player.setPlayerSprites(_sprite_shit);
     _clock.restart();
     sf::FloatRect rect = _mapGenerator.getSpawnPoint();
-    _player.setPosition(sf::Vector2f(rect.left, rect.top - rect.height));
+    _player.setPosition(sf::Vector2f(rect.left, rect.top - _player.getPlayerHeight()));
 }
 
 /*********displayMap*********/

@@ -49,6 +49,7 @@ namespace MySandBox {
                 PlayerDirection getDirection() const;
                 double getGravity() const;
                 int getJumpHeight() const;
+                float getPlayerHeight() const;
                 void setPosition(sf::Vector2f position);
                 void setState(MySandBox::Game::PlayerState playerState);
                 void setDirection(MySandBox::Game::PlayerDirection playerDirection);

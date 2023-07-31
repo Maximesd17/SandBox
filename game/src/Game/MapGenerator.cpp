@@ -36,7 +36,6 @@ SandBox::MapGenerator::MapGenerator(std::string& filepath, int texture_size)
     _valid = false;
 
     _texture_size = texture_size;
-    std::cout << "Texture size: " << _texture_size << std::endl;
 
     _airTexture.loadFromFile("resources/map_textures/air.png");
     _groundTexture.loadFromFile("resources/map_textures/ground.png");
