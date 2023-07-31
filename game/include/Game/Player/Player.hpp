@@ -39,6 +39,7 @@ namespace MySandBox {
                 void update();
                 void events(sf::Event&);
                 void display(sf::RenderWindow&);
+                void makeSound();
 
             protected:
             private:
@@ -56,6 +57,9 @@ namespace MySandBox {
                 PlayerState _state;
                 PlayerDirection _direction;
                 PlayerControlledBy _controlled_by;
+
+                MySandBox::Game::Sound::Sound walking_sf;
+                MySandBox::Game::Sound::Sound jumping_sf;
             };
         }
     }

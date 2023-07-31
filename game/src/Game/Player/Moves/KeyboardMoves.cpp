@@ -10,8 +10,6 @@
 
 MySandBox::Game::Player::Moves::KeyboardMoves::KeyboardMoves()
 {
-    jumping_sf.loadSound("resources/sounds/jump.wav");
-    walking_sf.loadSound("resources/sounds/footsteps.wav");
 }
 
 MySandBox::Game::Player::Moves::KeyboardMoves::~KeyboardMoves()
@@ -24,20 +22,15 @@ void MySandBox::Game::Player::Moves::KeyboardMoves::computeDirection()
 
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up)){
         direction.y -= 1;
-        jumping_sf.playSound();
     }
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down)){
         direction.y += 1;
     }
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left)){
         direction.x -= 1;
-        walking_sf.playSound();
-        walking_sf.stopSound();
     }
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right)){
         direction.x += 1;
-        walking_sf.playSound();
-        walking_sf.stopSound();
     }
     _lastMove = direction;
 }

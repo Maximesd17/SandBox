@@ -28,6 +28,9 @@ MySandBox::Game::Player::Player::Player()
     _is_moves_manual_changed = false;
     _moves[JOYSTICK] = std::make_shared<Moves::ControllerMoves>();
     _moves[KEYBOARD] = std::make_shared<Moves::KeyboardMoves>();
+
+    walking_sf.loadSound("resources/sounds/footsteps.wav");
+    jumping_sf.loadSound("resources/sounds/jump.wav");
 }
 
 MySandBox::Game::Player::Player::~Player()
@@ -49,10 +52,8 @@ void MySandBox::Game::Player::Player::events(sf::Event& event)
     /* Controller / Keyboard events */
 
     if (sf::Joystick::isConnected(0) && !_is_moves_manual_changed) {
-        std::cout << "GAMEPAD CONNECTED" << std::endl;
         _controlled_by = JOYSTICK;
     } else {
-        std::cout << "GAMEPAD DISCONNECTED" << std::endl;
         _controlled_by = KEYBOARD;
     }
     _moves[_controlled_by]->events(event);
@@ -94,22 +95,22 @@ void MySandBox::Game::Player::Player::update()
 
     switch (_state) {
     case PLAYER_IDLE:
-        std::cout << "idle" << std::endl;
+        // std::cout << "idle" << std::endl;
         break;
     case WALKING:
-        std::cout << "walking" << std::endl;
+        // std::cout << "walking" << std::endl;
         break;
     case JUMPING:
-        std::cout << "jumping" << std::endl;
+        // std::cout << "jumping" << std::endl;
         break;
     case FALLING:
-        std::cout << "falling" << std::endl;
+        // std::cout << "falling" << std::endl;
         break;
     case ATTACKING:
-        std::cout << "attacking" << std::endl;
+        // std::cout << "attacking" << std::endl;
         break;
     case DEAD:
-        std::cout << "dead" << std::endl;
+        // std::cout << "dead" << std::endl;
         break;
     default:
         break;
@@ -128,4 +129,14 @@ void MySandBox::Game::Player::Player::display(sf::RenderWindow& window)
     _sprites[computed_index].setScale(3, 3);
     window.draw(_sprites[computed_index]);
     _sprite_index++;
+}
+
+/********makeSound********/
+/* Enables player sounds */
+/********makeSound********/
+void MySandBox::Game::Player::Player::makeSound(){
+    if (_state == JUMPING)
+        jumping_sf.playSound();
+    if (_state == WALKING)
+        walking_sf.playSound();
 }

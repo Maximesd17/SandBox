@@ -19,6 +19,7 @@ namespace MySandBox {
                     ~ControllerMoves();
                     void events(sf::Event& event);
                     sf::Vector2f getLastMove();
+                    void makeSound();
                 protected:
                 private:
                     void computeDirection();

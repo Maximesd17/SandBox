@@ -94,7 +94,6 @@ void MySandBox::Component::Button::display(sf::RenderWindow& window)
 /* Enables button sounds */
 /********makeSound********/
 void MySandBox::Component::Button::makeSound(){
-    std::cout << hover_isplayed << std::endl;
 
     if (_state == HOVER && hover_isplayed == false){
         hover.playSound();
@@ -106,5 +105,4 @@ void MySandBox::Component::Button::makeSound(){
     else if(_state == IDLE){
         hover_isplayed = false;
     }
-    std::cout << hover_isplayed << std::endl;
 }
