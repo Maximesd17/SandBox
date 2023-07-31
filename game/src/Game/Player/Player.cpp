@@ -55,6 +55,7 @@ MySandBox::Game::Player::Player::~Player()
 void MySandBox::Game::Player::Player::setPlayerSprites(sf::Texture& sprite_shit)
 {
     _player.setTexture(sprite_shit);
+    _player.setScale(2 + _texture_size / 40,  2 + _texture_size / 40);
 }
 
 /*********setTextureSize*********/
@@ -319,7 +320,6 @@ void MySandBox::Game::Player::Player::display(sf::RenderWindow& window)
     }
 
     _player.setPosition(_position);
-    _player.setScale(2 + _texture_size / 40,  2 + _texture_size / 40);
 
     sf::RectangleShape rect(sf::Vector2f(_player.getGlobalBounds().width, _player.getGlobalBounds().height));
     rect.setPosition(_player.getPosition());
