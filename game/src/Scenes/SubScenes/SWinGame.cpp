@@ -26,10 +26,11 @@ void MySandBox::Scenes::SubScenes::SSWinGame::events(sf::Event &e)
 
 /*********update*********/
 /* Update function */
-/*********update*********/ 
+/*********update*********/
 void MySandBox::Scenes::SubScenes::SSWinGame::update()
 {
     sf::RenderWindow &window = _game.getWindow();
+
     _restart_button.display(window);
     _return_button.display(window);
     if (_restart_button.check(window)){
@@ -47,7 +48,7 @@ void MySandBox::Scenes::SubScenes::SSWinGame::update()
 
 /*********display*********/
 /* Display function */
-/*********display*********/ 
+/*********display*********/
 void MySandBox::Scenes::SubScenes::SSWinGame::display()
 {
     sf::RenderWindow &window = _game.getWindow();

@@ -11,6 +11,7 @@
 #include "Game.hpp"
 #include "Range.hpp"
 #include "AScrollableView.hpp"
+#include "ListSwapper.hpp"
 
 namespace MySandBox {
     namespace Components {
@@ -26,9 +27,7 @@ namespace MySandBox {
             Game::Game &_game;
             Components::Range _music_volume;
             Components::Range _sound_volume;
-            sf::Texture bgTexture;
-            sf::Sprite background;
-
+            Components::ListSwapper _fps;
         };
     }
 }

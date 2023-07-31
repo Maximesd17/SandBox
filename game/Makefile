@@ -64,7 +64,7 @@ TRASH       =   $(shell find src/ -name "*~") $(shell find include/ -name "*~") 
 ##################################################################################################################
 ##  COMPILING RULES                                                                                             ##
 ##################################################################################################################
-all:            FLAGS = -ffast-math -O2 -Wno-c++11-extensions
+all:            FLAGS = -ffast-math -O2 -Wno-c++11-extensions -std=c++20
 all:            erase full
 
 debug:          FLAGS = -W -Werror -Wall -Wextra -g -g3 -ggdb
@@ -78,10 +78,10 @@ full:           init $(MOBJ) $(OBJ)
 				@$(ECHO) $(YELLOW) "[OK]" $(ORANGE) "./"$(NAME)" to launch the program, may require arguments"
 
 .cpp.o:
-			@$(eval TRACE="$(addprefix $(LOGDIR), $(subst /,-, $<))")
+			@$(eval TRACE="$(addprefix $(LOGDIR), $(subst /,-, $<)).err")
 			@$(COMPILER) $(DEBUGS) $(FLAGS) $(INCLUDES) -c $< -o $@ 2>> $(TRACE) &&       \
 				$(ECHO) $(LGREEN) "[OK]" $(GREEN) $< $(DEFAULT) ||               \
-				$(ECHO) $(LRED)  "[KO]" $(RED) $< $(DEFAULT)
+				$(ECHO) $(LRED)  "[KO]" $(RED) $< "\n       $(addprefix $(LOGDIR), $(subst /,-, $<)).err" $(DEFAULT)
 			@find $(TRACE) -size 0 -delete || true
 
 ##################################################################################################################
