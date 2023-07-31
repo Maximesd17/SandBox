@@ -15,7 +15,7 @@ MySandBox::Components::AScrollableView::AScrollableView(
 ) :
     _view(sf::FloatRect(0, 0, window_size.x, window_size.y))
 {
-    _view.setViewport(sf::FloatRect(0.1, 0.1, 0.8, 0.8));;
+    _view.setViewport(sf::FloatRect(0.1, 0.1, 0.8, 0.8));
     _size = size;
 
     _scrollbar_track.setSize(sf::Vector2f(20, window_size.y));
