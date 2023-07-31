@@ -9,6 +9,7 @@
 
 #include "ASubScene.hpp"
 #include "Button.hpp"
+#include "Sound.hpp"
 
 namespace MySandBox {
     namespace Scenes {
@@ -19,6 +20,7 @@ namespace MySandBox {
                 ~SSMainMenu();
                 void update();
                 void display();
+                void makeSound();
             protected:
             private:
                 MySandBox::Components::Button _play_button;

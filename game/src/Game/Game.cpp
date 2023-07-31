@@ -68,6 +68,7 @@ void MySandBox::Game::Game::displayMap()
 void MySandBox::Game::Game::displayPlayer()
 {
     _player.display(_window);
+    _player.makeSound();
 }
 
 /*********events************/
