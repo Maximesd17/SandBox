@@ -5,10 +5,15 @@
 /*********Constructor*********/
 MySandBox::Scenes::SubScenes::SSWinGame::SSWinGame(MySandBox::State &state, MySandBox::Game::Game &game)
     : MySandBox::Scenes::SubScenes::ASubScene(state, game),
-    _restart_button("Restart", sf::Vector2i(800, 300), sf::Vector2f(300, 100),
+    _username("Type your Username", sf::Vector2i(750, 150), sf::Vector2f(400, 100),
     _game.getWindowOriginSize()),
-    _return_button("Main Menu", sf::Vector2i(800, 450), sf::Vector2f(300, 100),
-    _game.getWindowOriginSize()) {}
+    _validate_username("OK", sf::Vector2i(900, 300), sf::Vector2f(100, 50),
+    _game.getWindowOriginSize()),
+    _restart_button("Restart", sf::Vector2i(800, 450), sf::Vector2f(300, 100),
+    _game.getWindowOriginSize()),
+    _return_button("Main Menu", sf::Vector2i(800, 600), sf::Vector2f(300, 100),
+    _game.getWindowOriginSize()){
+    }
 
 /*********Destructor*********/
 /* This destroy the sandbox */
@@ -20,8 +25,8 @@ MySandBox::Scenes::SubScenes::SSWinGame::~SSWinGame() {}
 /*********events************/
 void MySandBox::Scenes::SubScenes::SSWinGame::events(sf::Event &e)
 {
-    // std::cout << "WIN STATE" << std::endl;
     _game.events(e);
+    _username.handleEvent(e);
 }
 
 /*********update*********/
@@ -31,8 +36,18 @@ void MySandBox::Scenes::SubScenes::SSWinGame::update()
 {
     sf::RenderWindow &window = _game.getWindow();
 
+    _username.display(window);
+    _validate_username.display(window);
     _restart_button.display(window);
     _return_button.display(window);
+
+    if (_validate_username.check(window)){
+        if (_game.getWritedTimer()==false)
+        {
+            _game.writeWinTime(_game.getFinalTimer(), _username.getText());
+            _game.setWritedTimer(true);
+        }
+    }
     if (_restart_button.check(window)){
         _state.setScene(MySandBox::Scenes::GAME);
         _game.setGameState(MySandBox::Game::PENDING);
@@ -52,5 +67,4 @@ void MySandBox::Scenes::SubScenes::SSWinGame::update()
 void MySandBox::Scenes::SubScenes::SSWinGame::display()
 {
     sf::RenderWindow &window = _game.getWindow();
-    _return_button.display(window);
 }

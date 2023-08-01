@@ -4,11 +4,14 @@
 #include "Game.hpp"
 #include "ASubScene.hpp"
 #include "Components/Button.hpp"
+#include "Components/InputText.hpp"
 namespace MySandBox {
     namespace Scenes {
         namespace SubScenes {
             class SSWinGame : public ASubScene {
                 private:
+                    MySandBox::Components::InputText _username;
+                    MySandBox::Components::Button _validate_username;
                     MySandBox::Components::Button _return_button;
                     MySandBox::Components::Button _restart_button;
                 public:

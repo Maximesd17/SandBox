@@ -43,25 +43,28 @@ namespace MySandBox {
             void update();
             void display();
             void setGameState(State &game_state);
-
+            void writeWinTime(double timeInSeconds, std::string text);
             sf::RenderWindow& getWindow() const;
             sf::Vector2u getWindowOriginSize() const;
 
             State getGameState() const;
             void setGameState(State game_state);
+            double getFinalTimer();
+            bool getWritedTimer();
+            void setWritedTimer(bool writedTimer);
         protected:
         private:
             sf::Clock _clock;
             sf::Font _fontClock;
             sf::Text _textClock;
+            double _finalTimer;
             void winningCondition();
             void updateViewPosition();
             void displayMap();
             void displayPlayer();
-            void writeWinTime(double timeInSeconds);
             int _default_texture_size = 40;
             int _texture_size;
-
+            bool _writedTimer = false;
             sf::RenderWindow& _window;
             sf::Vector2u _window_origin_size;
             sf::Texture _t_wall;

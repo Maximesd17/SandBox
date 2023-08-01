@@ -51,6 +51,7 @@ void MySandBox::Game::Game::init()
 /*********reset*********/
 void MySandBox::Game::Game::reset()
 {
+    _writedTimer = false;
     std::string mapFile("maps/collisions.txt");
     _mapGenerator.setMapFile(mapFile, _texture_size);
     _sprite_shit.loadFromFile("resources/player.png");
@@ -129,8 +130,7 @@ void MySandBox::Game::Game::update()
         if (hasWin)
     {
         _game_state = WIN;
-        double elapsedTimeSeconds = elapsedTime.asSeconds();
-        writeWinTime(elapsedTimeSeconds);
+        _finalTimer = elapsedTime.asSeconds();
     }
 }
 
@@ -169,6 +169,9 @@ MySandBox::Game::State MySandBox::Game::Game::getGameState() const
 {
     return _game_state;
 }
+double MySandBox::Game::Game::getFinalTimer(){
+    return _finalTimer;
+}
 
 /*********setGameState*********/
 /* Set game state function    */
@@ -181,7 +184,7 @@ void MySandBox::Game::Game::setGameState(MySandBox::Game::State game_state)
 /*********writeWinTime*********/
 /*       Write Win Time       */
 /*********writeWinTime*********/
-void MySandBox::Game::Game::writeWinTime(double timeInSeconds)
+void MySandBox::Game::Game::writeWinTime(double timeInSeconds, std::string text)
 {
     std::ofstream outFile(_timeFileName, std::ios::app);
 
@@ -189,7 +192,7 @@ void MySandBox::Game::Game::writeWinTime(double timeInSeconds)
     {
         double roundedTime = std::round(timeInSeconds * 1000) / 1000;
 
-        outFile << std::fixed << std::setprecision(3) << roundedTime << std::endl;
+        outFile << std::fixed <<  text << " - " << std::setprecision(3) << roundedTime << std::endl;
         outFile.close();
     }
     else
@@ -208,3 +211,12 @@ void MySandBox::Game::Game::writeWinTime(double timeInSeconds)
         }
     }
 }
+
+bool  MySandBox::Game::Game::getWritedTimer(){
+    return _writedTimer;
+}
+
+void  MySandBox::Game::Game::setWritedTimer(bool writedTimer){
+     _writedTimer = writedTimer;
+}
+
