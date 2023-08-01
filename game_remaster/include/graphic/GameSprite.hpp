@@ -7,7 +7,7 @@
 
 class GameSprite : GameSpriteObject
 {
-private:
+protected:
   sf::Sprite _sprite;
 
 public:
@@ -15,7 +15,7 @@ public:
   ~GameSprite();
   void display(sf::RenderWindow&);
   sf::Vector2f getPosition() const;
-  sf::Sprite &getSprite();
+  sf::Sprite getSprite() const;
 
   void setPosition(sf::Vector2f);
   void setSprite(sf::Texture &);

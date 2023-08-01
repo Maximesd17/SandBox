@@ -14,7 +14,7 @@
     ** - E = MUD
     */
 
-    class GameMapObject : GameSprite
+    class GameMapObject : public GameSprite
     {
         public:
         enum class Types {

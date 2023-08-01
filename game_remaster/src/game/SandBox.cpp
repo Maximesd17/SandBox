@@ -9,7 +9,7 @@ SandBox::SandBox()
 :   _event_manager(this->_window, this->_camera, this->_entities),
     _framerate(60)
 {
-    _window.create(sf::VideoMode(sf::VideoMode::getDesktopMode()), "MySandBox");
+    _window.create(sf::VideoMode((this->_window_size = sf::VideoMode::getDesktopMode())), "MySandBox");
     _window.setFramerateLimit(_framerate);
 
 // ressources/map_textures/ for foreach tout les .png dans ce dossier et je m'occupe de push les texture dans la map lol
@@ -83,7 +83,7 @@ GameMap SandBox::getMap() const
 void SandBox::set_sprite_textures()
 {
     int x = 1;
-    for (GameMapObject map_element : _map.getObjects()) {
+    for (GameMapObject &map_element : _map.getObjects()) {
 //       std::cout << map_element.getTexture() << std::endl;
         map_element.setSprite(_textures[map_element.getTexture()]);
         if (x >= this->_map.getWidth()) {
@@ -93,6 +93,8 @@ void SandBox::set_sprite_textures()
         x++;
     }
 
+    std::cout << "Scale X: " << SCALE_BY_WIDTH(_window_size.width / _map.getWidth()) << std::endl;
+    std::cout << "Scale y: " << SCALE_BY_HEIGHT(_window_size.height / _map.getHeight()) << std::endl;
 }
 
 
@@ -100,10 +102,10 @@ void SandBox::display_map()
 {
 
     int x = 1;
-    for (GameMapObject map_element : _map.getObjects())
+    for (GameMapObject &map_element : _map.getObjects())
     {
         //map_element.setSprite(_textures[map_element.getTexture()]);
-        sf::Sprite test = map_element.getSprite();
+
         _window.draw(map_element.getSprite());
 
         if (x >= this->_map.getWidth()) {

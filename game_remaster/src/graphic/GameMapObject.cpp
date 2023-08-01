@@ -4,7 +4,7 @@
 
 GameMapObject::GameMapObject() = default;
 
-GameMapObject::~GameMapObject() {};
+GameMapObject::~GameMapObject() {}      ;
 
 GameMapObject::Types GameMapObject::getType() const {
     return _type;

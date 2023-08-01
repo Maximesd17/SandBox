@@ -42,6 +42,15 @@ public:
   void set_sprite_textures();
 
   void display_map();
+
+  #define SCALE_H(obj_height, real_size) ((_window_size.height / static_cast<double>(obj_height)) / real_size)
+  #define SCALE_W(obj_width, real_size) ((_window_size.width / static_cast<double>(obj_width)) / real_size)
+
+  #define SCALE_BY_HEIGHT(obj_height) (static_cast<double>(obj_height) / _window_size.height)
+  #define SCALE_BY_WIDTH(obj_width) (static_cast<double>(obj_width) / _window_size.width)
+
+
+
 };
 
 #endif //______MYSANDBOX_HPP___

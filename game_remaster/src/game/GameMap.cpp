@@ -22,7 +22,7 @@ GameMap::GameMap(int width, int height, std::vector<GameMapObject> objects)
 
     }
 
-std::vector<GameMapObject> GameMap::getObjects()
+std::vector<GameMapObject> &GameMap::getObjects()
 {
     return _objects;
 }
