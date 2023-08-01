@@ -1,6 +1,6 @@
 #include "GameMap.hpp"
 
-void GameMap::display() const 
+void GameMap::display() const
 {
     std::cout << "Height is " << height_ << "\nWidth is " << width_ << std::endl;
     int x = 1;
@@ -17,9 +17,9 @@ void GameMap::display() const
 }
 
 GameMap::GameMap(int width, int height, std::vector<GameMapObject> objects)
-    : width_(width), height_(height), _objects(std::move(objects)) 
+    : width_(width), height_(height), _objects(std::move(objects))
     {
-        
+
     }
 
 std::vector<GameMapObject> GameMap::getObjects()

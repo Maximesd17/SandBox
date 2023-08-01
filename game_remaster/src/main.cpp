@@ -26,6 +26,7 @@ int main(int argc, char* argv[]) {
 
     game_instance->set_map(parser.parse(json));
     game_instance->getMap().display();
+    game_instance->set_sprite_textures();
 
     game_instance->start();
     

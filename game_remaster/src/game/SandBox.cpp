@@ -5,7 +5,7 @@
 /* using SFML lib and        */
 /* init the scenes of game   */
 /*********Constructor*********/
-SandBox::SandBox() 
+SandBox::SandBox()
 :   _event_manager(this->_window, this->_camera, this->_entities),
     _framerate(60)
 {
@@ -13,7 +13,7 @@ SandBox::SandBox()
     _window.setFramerateLimit(_framerate);
 
 // ressources/map_textures/ for foreach tout les .png dans ce dossier et je m'occupe de push les texture dans la map lol
-    const std::string map_resources_folder("./resources/map_textures/"); 
+    const std::string map_resources_folder("./resources/map_textures/");
     const std::map<const std::string, const std::string> textures_paths{
         {"AIR", "air.png"},
         {"BOX", "box.png"},
@@ -25,7 +25,11 @@ SandBox::SandBox()
     };
 
     for (std::map<const std::string, const std::string>::const_iterator it = textures_paths.begin(); it != textures_paths.end(); it++) {
-        _textures[it->second].loadFromFile(map_resources_folder + it->second);
+        std::cout << "Initializing: resources/map_textures/" << it->second << std::endl;
+        _textures[it->second] = sf::Texture();
+        if (!_textures[it->second].loadFromFile(map_resources_folder + it->second))
+            std::cerr << "[!!] Texture not loaded: " << map_resources_folder + it->second << std::endl;
+        //_window.draw(sf::Sprite(_textures[it->second]));
     }
 }
 
@@ -42,15 +46,16 @@ SandBox::~SandBox()
 /*****Main loop of the sandbox*****/
 void SandBox::loop()
 {
-    while (_window.isOpen()) 
+    while (_window.isOpen())
     {
-        if (this->_event_manager.fetchEvent()) 
+        if (this->_event_manager.fetchEvent())
         {
-            _window.clear(sf::Color::Green);
-            this->display_map();
+            //_window.clear(sf::Color::Green);
         }
-        else           
-            _window.clear(sf::Color::Black);
+        else
+            //_window.clear(sf::Color::Black);
+
+        this->display_map();
         _window.display();
     }
 }
@@ -75,21 +80,33 @@ GameMap SandBox::getMap() const
 }
 
 
-void SandBox::display_map()
+void SandBox::set_sprite_textures()
 {
-    for (GameMapObject map_element : _map.getObjects())
-    {
-        std::cout << "ressources/map_textures/" << map_element.getTexture() << std::endl;
+    int x = 1;
+    for (GameMapObject map_element : _map.getObjects()) {
+//       std::cout << map_element.getTexture() << std::endl;
+        map_element.setSprite(_textures[map_element.getTexture()]);
+        if (x >= this->_map.getWidth()) {
+            x = 0;
+        }
+
+        x++;
     }
 
+}
+
+
+void SandBox::display_map()
+{
+
     int x = 1;
-    for (GameMapObject map_element : _map.getObjects()) 
+    for (GameMapObject map_element : _map.getObjects())
     {
-        //std::cout << static_cast<int>(obj.getType());
+        //map_element.setSprite(_textures[map_element.getTexture()]);
+        sf::Sprite test = map_element.getSprite();
         _window.draw(map_element.getSprite());
-        //_textures[map_element.getTexture()]
+
         if (x >= this->_map.getWidth()) {
-            std::cout << std::endl;
             x = 0;
         }
 

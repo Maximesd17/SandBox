@@ -52,6 +52,8 @@
             void setEnd();
             void setPosition(sf::Vector2f);
             void setTexture(std::string);
+            
+            using GameSprite::setSprite;
             using GameSprite::getSprite;
 
             void display(sf::RenderWindow& window) override;

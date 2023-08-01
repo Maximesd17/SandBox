@@ -39,6 +39,7 @@ public:
   void start();
   void set_map(GameMap);
   GameMap getMap() const;
+  void set_sprite_textures();
 
   void display_map();
 };
