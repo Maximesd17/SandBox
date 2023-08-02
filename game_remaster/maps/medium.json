@@ -1,0 +1,437 @@
+[
+    [
+        {
+            "width": 32,
+            "height": 22
+        },
+        [
+            [
+                {
+                    "type": "AIR",
+                    "texture": "air.png",
+                    "x-size": 32
+                }
+            ],
+            [
+                {
+                    "type": "AIR",
+                    "texture": "air.png",
+                    "x-size": 32
+                }
+            ],
+            [
+                {
+                    "type": "AIR",
+                    "texture": "air.png",
+                    "x-size": 30
+                },
+                {
+                    "type": "WALL",
+                    "texture": "wall.png",
+                    "x-size": 2
+                }
+            ],
+            [
+                {
+                    "type": "AIR",
+                    "texture": "air.png",
+                    "x-size": 14
+                },
+                {
+                    "type": "WALL",
+                    "texture": "wall.png",
+                    "x-size": 4
+                },
+                {
+                    "type": "AIR",
+                    "texture": "air.png",
+                    "x-size": 12
+                },
+                {
+                    "type": "WALL",
+                    "texture": "wall.png",
+                    "x-size": 2
+                }
+            ],
+            [
+                {
+                    "type": "AIR",
+                    "texture": "air.png",
+                    "x-size": 8
+                },
+                {
+                    "type": "PLATFORM",
+                    "texture": "platform.png",
+                    "x-size": 3
+                },
+                {
+                    "type": "AIR",
+                    "texture": "air.png",
+                    "x-size": 3
+                },
+                {
+                    "type": "WALL",
+                    "texture": "wall.png",
+                    "x-size": 4
+                },
+                {
+                    "type": "AIR",
+                    "texture": "air.png",
+                    "x-size": 12
+                },
+                {
+                    "type": "WALL",
+                    "texture": "wall.png",
+                    "x-size": 2
+                }
+            ],
+            [
+                {
+                    "type": "AIR",
+                    "texture": "air.png",
+                    "x-size": 2
+                },
+                {
+                    "type": "WATER",
+                    "texture": "water.png",
+                    "x-size": 1
+                },
+                {
+                    "type": "AIR",
+                    "texture": "air.png",
+                    "x-size": 11
+                },
+                {
+                    "type": "WALL",
+                    "texture": "wall.png",
+                    "x-size": 4
+                },
+                {
+                    "type": "AIR",
+                    "texture": "air.png",
+                    "x-size": 12
+                },
+                {
+                    "type": "WALL",
+                    "texture": "wall.png",
+                    "x-size": 2
+                }
+            ],
+            [
+                {
+                    "type": "GROUND",
+                    "texture": "ground.png",
+                    "x-size": 7
+                },
+                {
+                    "type": "AIR",
+                    "texture": "air.png",
+                    "x-size": 5
+                },
+                {
+                    "type": "GROUND",
+                    "texture": "ground.png",
+                    "x-size": 11
+                },
+                {
+                    "type": "AIR",
+                    "texture": "air.png",
+                    "x-size": 7
+                },
+                {
+                    "type": "GROUND",
+                    "texture": "ground.png",
+                    "x-size": 2
+                }
+            ],
+            [
+                {
+                    "type": "GROUND",
+                    "texture": "ground.png",
+                    "x-size": 9
+                },
+                {
+                    "type": "AIR",
+                    "texture": "air.png",
+                    "x-size": 6
+                },
+                {
+                    "type": "GROUND",
+                    "texture": "ground.png",
+                    "x-size": 8
+                },
+                {
+                    "type": "AIR",
+                    "texture": "air.png",
+                    "x-size": 7
+                },
+                {
+                    "type": "GROUND",
+                    "texture": "ground.png",
+                    "x-size": 2
+                }
+            ],
+            [
+                {
+                    "type": "GROUND",
+                    "texture": "ground.png",
+                    "x-size": 11
+                },
+                {
+                    "type": "AIR",
+                    "texture": "air.png",
+                    "x-size": 7
+                },
+                {
+                    "type": "GROUND",
+                    "texture": "ground.png",
+                    "x-size": 5
+                },
+                {
+                    "type": "AIR",
+                    "texture": "air.png",
+                    "x-size": 7
+                },
+                {
+                    "type": "GROUND",
+                    "texture": "ground.png",
+                    "x-size": 2
+                }
+            ],
+            [
+                {
+                    "type": "GROUND",
+                    "texture": "ground.png",
+                    "x-size": 13
+                },
+                {
+                    "type": "AIR",
+                    "texture": "air.png",
+                    "x-size": 7
+                },
+                {
+                    "type": "GROUND",
+                    "texture": "ground.png",
+                    "x-size": 3
+                },
+                {
+                    "type": "AIR",
+                    "texture": "air.png",
+                    "x-size": 7
+                },
+                {
+                    "type": "GROUND",
+                    "texture": "ground.png",
+                    "x-size": 2
+                }
+            ],
+            [
+                {
+                    "type": "GROUND",
+                    "texture": "ground.png",
+                    "x-size": 15
+                },
+                {
+                    "type": "AIR",
+                    "texture": "air.png",
+                    "x-size": 7
+                },
+                {
+                    "type": "GROUND",
+                    "texture": "ground.png",
+                    "x-size": 1
+                },
+                {
+                    "type": "AIR",
+                    "texture": "air.png",
+                    "x-size": 7
+                },
+                {
+                    "type": "GROUND",
+                    "texture": "ground.png",
+                    "x-size": 2
+                }
+            ],
+            [
+                {
+                    "type": "GROUND",
+                    "texture": "ground.png",
+                    "x-size": 17
+                },
+                {
+                    "type": "AIR",
+                    "texture": "air.png",
+                    "x-size": 5
+                },
+                {
+                    "type": "GROUND",
+                    "texture": "ground.png",
+                    "x-size": 1
+                },
+                {
+                    "type": "AIR",
+                    "texture": "air.png",
+                    "x-size": 7
+                },
+                {
+                    "type": "GROUND",
+                    "texture": "ground.png",
+                    "x-size": 2
+                }
+            ],
+            [
+                {
+                    "type": "GROUND",
+                    "texture": "ground.png",
+                    "x-size": 17
+                },
+                {
+                    "type": "AIR",
+                    "texture": "air.png",
+                    "x-size": 5
+                },
+                {
+                    "type": "GROUND",
+                    "texture": "ground.png",
+                    "x-size": 1
+                },
+                {
+                    "type": "AIR",
+                    "texture": "air.png",
+                    "x-size": 7
+                },
+                {
+                    "type": "GROUND",
+                    "texture": "ground.png",
+                    "x-size": 2
+                }
+            ],
+            [
+                {
+                    "type": "GROUND",
+                    "texture": "ground.png",
+                    "x-size": 17
+                },
+                {
+                    "type": "AIR",
+                    "texture": "air.png",
+                    "x-size": 13
+                },
+                {
+                    "type": "GROUND",
+                    "texture": "ground.png",
+                    "x-size": 2
+                }
+            ],
+            [
+                {
+                    "type": "GROUND",
+                    "texture": "ground.png",
+                    "x-size": 17
+                },
+                {
+                    "type": "AIR",
+                    "texture": "air.png",
+                    "x-size": 13
+                },
+                {
+                    "type": "GROUND",
+                    "texture": "ground.png",
+                    "x-size": 2
+                }
+            ],
+            [
+                {
+                    "type": "GROUND",
+                    "texture": "ground.png",
+                    "x-size": 17
+                },
+                {
+                    "type": "AIR",
+                    "texture": "air.png",
+                    "x-size": 13
+                },
+                {
+                    "type": "GROUND",
+                    "texture": "ground.png",
+                    "x-size": 2
+                }
+            ],
+            [
+                {
+                    "type": "GROUND",
+                    "texture": "ground.png",
+                    "x-size": 7
+                },
+                {
+                    "type": "AIR",
+                    "texture": "air.png",
+                    "x-size": 23
+                },
+                {
+                    "type": "GROUND",
+                    "texture": "ground.png",
+                    "x-size": 2
+                }
+            ],
+            [
+                {
+                    "type": "GROUND",
+                    "texture": "ground.png",
+                    "x-size": 7
+                },
+                {
+                    "type": "AIR",
+                    "texture": "air.png",
+                    "x-size": 23
+                },
+                {
+                    "type": "GROUND",
+                    "texture": "ground.png",
+                    "x-size": 2
+                }
+            ],
+            [
+                {
+                    "type": "GROUND",
+                    "texture": "ground.png",
+                    "x-size": 7
+                },
+                {
+                    "type": "AIR",
+                    "texture": "air.png",
+                    "x-size": 3
+                },
+                {
+                    "type": "MUD",
+                    "texture": "mud.png",
+                    "x-size": 1
+                },
+                {
+                    "type": "AIR",
+                    "texture": "air.png",
+                    "x-size": 19
+                },
+                {
+                    "type": "GROUND",
+                    "texture": "ground.png",
+                    "x-size": 2
+                }
+            ],
+            [
+                {
+                    "type": "GROUND",
+                    "texture": "ground.png",
+                    "x-size": 32
+                }
+            ],
+            [
+                {
+                    "type": "GROUND",
+                    "texture": "ground.png",
+                    "x-size": 32
+                }
+            ]
+        ]
+    ]
+]

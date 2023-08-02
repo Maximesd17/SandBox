@@ -81,20 +81,25 @@ GameMap SandBox::getMap() const
 
 
 void SandBox::set_sprite_textures()
-{
-    int x = 1;
+{    
+    sf::Vector2f scale, pos, size;
+    pos = {0, 0};
+    size = {(_window_size.width / _map.getWidth()), (_window_size.height / _map.getHeight())};
     for (GameMapObject &map_element : _map.getObjects()) {
-//       std::cout << map_element.getTexture() << std::endl;
         map_element.setSprite(_textures[map_element.getTexture()]);
-        if (x >= this->_map.getWidth()) {
-            x = 0;
-        }
 
-        x++;
+        scale.x = SCALE_W(_map.getWidth(), _textures[map_element.getTexture()].getSize().x);
+        scale.y = SCALE_H(_map.getHeight(), _textures[map_element.getTexture()].getSize().y);
+        map_element.getSprite().setScale(scale);
+        map_element.getSprite().setPosition(pos);
+        if (pos.x >= (_map.getWidth() - 1) * size.x) {
+            pos.x = 0;
+            pos.y += size.y;
+        }
+        else
+            pos.x += size.x;
     }
 
-    std::cout << "Scale X: " << SCALE_BY_WIDTH(_window_size.width / _map.getWidth()) << std::endl;
-    std::cout << "Scale y: " << SCALE_BY_HEIGHT(_window_size.height / _map.getHeight()) << std::endl;
 }
 
 
