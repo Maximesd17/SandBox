@@ -3,7 +3,7 @@
 
 #include "GameSprite.hpp"
 
-class GameEntity : GameSprite
+class GameEntity : public GameSprite
 {
 public:
   virtual void computeMoves(double, double) = 0;

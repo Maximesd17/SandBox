@@ -42,6 +42,7 @@ public:
   void set_sprite_textures();
 
   void display_map();
+  void display_entity();
 
   #define SCALE_H(obj_height, real_size) ((_window_size.height / static_cast<double>(obj_height)) / real_size)
   #define SCALE_W(obj_width, real_size) ((_window_size.width / static_cast<double>(obj_width)) / real_size)

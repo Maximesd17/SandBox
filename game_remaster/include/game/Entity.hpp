@@ -3,7 +3,7 @@
 
 #include "GameEntity.hpp"
 
-class Entity : GameEntity
+class Entity : public GameEntity
 {
 private:
   static int _nextId;

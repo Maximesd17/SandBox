@@ -22,6 +22,7 @@ SandBox::SandBox()
         {"PLATFORM", "platform.png"},
         {"START", "start.png"},
         {"WALL", "wall.png"},
+        {"PLAYER", "../player.png"},
     };
 
     for (std::map<const std::string, const std::string>::const_iterator it = textures_paths.begin(); it != textures_paths.end(); it++) {
@@ -48,14 +49,14 @@ void SandBox::loop()
 {
     while (_window.isOpen())
     {
+        this->display_map();
+        this->display_entity();
+
         if (this->_event_manager.fetchEvent())
         {
-            //_window.clear(sf::Color::Green);
+            _window.clear(sf::Color::Green);
         }
-        else
-            //_window.clear(sf::Color::Black);
 
-        this->display_map();
         _window.display();
     }
 }
@@ -105,19 +106,21 @@ void SandBox::set_sprite_textures()
 
 void SandBox::display_map()
 {
-
-    int x = 1;
     for (GameMapObject &map_element : _map.getObjects())
     {
         //map_element.setSprite(_textures[map_element.getTexture()]);
-
         _window.draw(map_element.getSprite());
-
-        if (x >= this->_map.getWidth()) {
-            x = 0;
-        }
-
-        x++;
     }
 
+}
+
+void SandBox::display_entity()
+{
+    std::map<const std::string, GameEntity &>::iterator it = _entities.begin();
+    while (it != this->_entities.end())
+    {
+        
+        //map_element.setSprite(_textures[map_element.getTexture()]);
+        _window.draw(it->second.getSprite());
+    }
 }

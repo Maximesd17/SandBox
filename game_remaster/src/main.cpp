@@ -16,6 +16,7 @@ int main(int argc, char* argv[]) {
 
     JsonParser parser;
 
+    // this is a debug part to print the parsed json
     // JsonData jsonData = parser.parse_simple(json);
     // jsonData.print();
 
