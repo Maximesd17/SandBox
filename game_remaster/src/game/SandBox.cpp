@@ -32,6 +32,13 @@ SandBox::SandBox()
             std::cerr << "[!!] Texture not loaded: " << map_resources_folder + it->second << std::endl;
         //_window.draw(sf::Sprite(_textures[it->second]));
     }
+
+    Entity player;
+    sf::Vector2f scale, pos, size;
+    player.setSprite(_textures["../player.png"]);
+    player.getSprite().setPosition({_window_size.width / 2, _window_size.height / 2});
+    _entities.push_back(player);
+
 }
 
 
@@ -83,13 +90,7 @@ GameMap SandBox::getMap() const
 
 void SandBox::set_sprite_textures()
 {    
-    // have a crash maybe init memory or a thing like this ?
-    Entity player;
     sf::Vector2f scale, pos, size;
-    player.setSprite(_textures["PLAYER"]);
-    player.getSprite().setPosition({_window_size.width / 2, _window_size.height / 2});
-    // _entities.insert({"PLAYER", player});
-    
     pos = {0, 0};
     size = {(_window_size.width / _map.getWidth()), (_window_size.height / _map.getHeight())};
     for (GameMapObject &map_element : _map.getObjects()) {
@@ -122,10 +123,8 @@ void SandBox::display_map()
 
 void SandBox::display_entity()
 {
-    std::map<const std::string, GameEntity &>::iterator it = _entities.begin();
-    while (it != this->_entities.end())
+    for (GameEntity &entity : this->_entities)
     {
-        std::cout << "youhou" << std::endl;
-        _window.draw(it->second.getSprite());
+        _window.draw(entity.getSprite());
     }
 }

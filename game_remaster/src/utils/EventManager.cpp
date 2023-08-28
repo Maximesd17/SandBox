@@ -1,6 +1,6 @@
 #include "EventManager.hpp"
 
-EventManager::EventManager(sf::RenderWindow &window, GameCamera &camera, std::map<const std::string, GameEntity&> &entities)
+EventManager::EventManager(sf::RenderWindow &window, GameCamera &camera, std::vector<Entity> &entities)
 :_window(window), _camera(camera), _entities(entities)
 {
 }

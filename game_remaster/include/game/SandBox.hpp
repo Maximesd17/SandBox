@@ -26,7 +26,7 @@ private:
   sf::VideoMode _window_size;
   GameCamera _camera;
   EventManager _event_manager;
-  std::map<const std::string, GameEntity&> _entities;
+  std::vector<Entity> _entities;
   std::map<const std::string, GameSpriteObject&> _sprites;
   std::map<const std::string, GameSoundObject&> _sounds;
   std::map<const int, GameMapObject&> _map_data;

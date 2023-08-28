@@ -8,17 +8,17 @@
 #include <iostream>
 #include <SFML/Window/Event.hpp>
 #include "GameCamera.hpp"
-#include "GameEntity.hpp"
+#include "Entity.hpp"
 
 class EventManager
 {
 private:
     sf::RenderWindow &_window;
     GameCamera &_camera;
-    std::map<const std::string, GameEntity&> &_entities;
+    std::vector<Entity> &_entities;
 
 public:
-    EventManager(sf::RenderWindow &, GameCamera &, std::map<const std::string, GameEntity&> &);
+    EventManager(sf::RenderWindow &, GameCamera &, std::vector<Entity> &);
     ~EventManager();
 
     bool fetchEvent();
