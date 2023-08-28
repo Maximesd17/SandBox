@@ -7,6 +7,7 @@
 #include <SFML/Graphics.hpp>
 #include <SFML/Graphics/RenderWindow.hpp>
 #include "GameEntity.hpp"
+#include "Entity.hpp"
 #include "GameSpriteObject.hpp"
 #include "GameSoundObject.hpp"
 #include "GameMapObject.hpp"

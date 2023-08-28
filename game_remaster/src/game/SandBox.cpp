@@ -83,7 +83,13 @@ GameMap SandBox::getMap() const
 
 void SandBox::set_sprite_textures()
 {    
+    // have a crash maybe init memory or a thing like this ?
+    Entity player;
     sf::Vector2f scale, pos, size;
+    player.setSprite(_textures["PLAYER"]);
+    player.getSprite().setPosition({_window_size.width / 2, _window_size.height / 2});
+    // _entities.insert({"PLAYER", player});
+    
     pos = {0, 0};
     size = {(_window_size.width / _map.getWidth()), (_window_size.height / _map.getHeight())};
     for (GameMapObject &map_element : _map.getObjects()) {
@@ -119,8 +125,7 @@ void SandBox::display_entity()
     std::map<const std::string, GameEntity &>::iterator it = _entities.begin();
     while (it != this->_entities.end())
     {
-        
-        //map_element.setSprite(_textures[map_element.getTexture()]);
+        std::cout << "youhou" << std::endl;
         _window.draw(it->second.getSprite());
     }
 }

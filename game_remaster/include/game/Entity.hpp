@@ -16,6 +16,8 @@ public:
   void gravity();
   void jump();
   unsigned int getId() const;
+  using GameEntity::setSprite;
+  using GameEntity::getSprite;
 };
   
 
