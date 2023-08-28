@@ -75,4 +75,7 @@ void MySandBox::Scenes::SubScenes::SSPauseGame::display()
     _button_continue.display(window);
     _button_menu.display(window);
     _button_exit.display(window);
+    _button_continue.makeSound();
+    _button_menu.makeSound();
+    _button_exit.makeSound();
 }

@@ -55,4 +55,7 @@ void MySandBox::Scenes::SubScenes::SSMainMenu::display()
     _play_button.display(window);
     _settings_button.display(window);
     _exit_button.display(window);
+    _play_button.makeSound();
+    _settings_button.makeSound();
+    _exit_button.makeSound();
 }

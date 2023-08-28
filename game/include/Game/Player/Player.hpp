@@ -18,6 +18,7 @@
 #include "ControllerMoves.hpp"
 #include "LogManager.hpp"
 #include "Entity.hpp"
+#include "Sound.hpp"
 
 namespace MySandBox {
     namespace Game {
@@ -57,6 +58,7 @@ namespace MySandBox {
                 void setJumpHeight(int height);
                 bool checkEndPointCollision(const sf::FloatRect& endPosition);
                 void setTextureSize(float texture_size);
+                void makeSound();
             protected:
             private:
                 void computeYMoves(float directionY, const std::vector<sf::FloatRect> &collisionBlocks, const sf::Vector2f &);
@@ -86,6 +88,7 @@ namespace MySandBox {
                 int _player_width;
                 int _player_height;
                 float _texture_size;
+                bool walking_is_played;
 
 
                 std::shared_ptr<MySandBox::Game::Player::Moves::IMoves> _moves;
@@ -95,6 +98,8 @@ namespace MySandBox {
                 PlayerState _state;
                 PlayerDirection _direction;
                 LogManager _log_manager;
+                MySandBox::Game::Sound::Sound walking_sf;
+                MySandBox::Game::Sound::Sound jumping_sf;
             };
         }
     }

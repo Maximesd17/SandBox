@@ -39,6 +39,10 @@ MySandBox::Game::Player::Player::Player()
     _player_height = 32;
     _texture_size = 40;
     _moves = std::make_shared<Moves::KeyboardMoves>();
+
+    walking_sf.loadSound("resources/sounds/footsteps.wav");
+    walking_sf.loopSetter(true);
+    jumping_sf.loadSound("resources/sounds/jump.wav");
 }
 
 /*********Destructor*********/
@@ -467,4 +471,18 @@ bool MySandBox::Game::Player::Player::checkEndPointCollision(const sf::FloatRect
 
     if (playerBounds.intersects(endPosition))return true;
     return false;
+}
+/********makeSound********/
+/* Enables player sounds */
+/********makeSound********/
+void MySandBox::Game::Player::Player::makeSound(){
+    if (_state == JUMPING)
+        jumping_sf.playSound();
+    if (_state == WALKING && walking_is_played == false){
+        walking_sf.playSound();
+        walking_is_played = true;
+    }
+    if (_state == PLAYER_IDLE)
+        walking_sf.stopSound();
+        walking_is_played = false;
 }
