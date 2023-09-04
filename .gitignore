@@ -2,7 +2,8 @@
 MySandBox
 *.o
 *.a
-unit_tests
+unit_tests/
 *.gcno
 *.gcda
 build/
+errors/

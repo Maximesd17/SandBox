@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>MySandBox Documentation</title>
+  <link rel="stylesheet" type="text/css" href="../style.css">
+</head>
+<body>
+  <div class="container">
+    <h1>MySandBox - DOC - SandBox</h1>
+    <div class="description">
+      <h2>Description</h2>
+      <p>
+        This class represents the sandbox environment and manages the game's main loop, window creation, scenes, and framerate.
+      </p>
+    </div>
+
+    <div class="code">
+      <h2>Code</h2>
+      <pre>
+        /*
+        ** EPITECH PROJECT, 2022
+        ** MySandBox
+        ** File description:
+        ** SandBox
+        */
+        
+        #include "SandBox.hpp"
+        #include "SMenu.hpp"
+        #include "SGame.hpp"
+        #include <iostream>
+        
+        /*********Constructor*********/
+        /* This create a windows     */
+        /* using SFML lib and        */
+        /* init the scenes of game   */ 
+        /*********Constructor*********/ 
+        MySandBox::SandBox::SandBox() : _game(_window)
+        {
+            _window_size = getStevensMode;
+            _window.create(sf::VideoMode(_window_size.width, _window_size.height), "MySandBox");
+            _framerate = 60;
+            _window.setFramerateLimit(_framerate);
+            _game.init();
+            _scenes[MySandBox::Scenes::MENU] = std::make_shared<MySandBox::Scenes::SMenu>(_state, _game);
+            _scenes[MySandBox::Scenes::GAME] = std::make_shared<MySandBox::Scenes::SGame>(_state, _game);
+        
+        }
+        
+        
+        /*********Destructor*********/
+        /* This destroy the sandbox */
+        /*********Destructor*********/ 
+        MySandBox::SandBox::~SandBox()
+        {
+        }
+        
+        
+        /**********checkElapsedTime***********/
+        /* Check if enough time has elapsed  */
+        /* based on the desired framerate    */
+        /**********checkElapsedTime***********/
+        bool MySandBox::SandBox::checkElapsedTime()
+        {
+            if (_deltaTime.getElapsedTime().asMilliseconds() > 1000 / _framerate ||
+                _deltaTime.getElapsedTime().asMilliseconds() <= 0) {
+                _deltaTime.restart();
+                return true;
+            }
+            return false;
+        }
+        
+        /*****Main loop of the sandbox*****/
+        /*  a loop to cach actions        */
+        /*****Main loop of the sandbox*****/
+        int MySandBox::SandBox::loop()
+        {
+            while (_window.isOpen()) {
+                if (!checkElapsedTime())
+                    continue;
+                _window.clear(sf::Color::Black);
+                if (_scenes[_state.getScene()]->events())
+                    break;
+                _scenes[_state.getScene()]->update();
+                _scenes[_state.getScene()]->display();
+                _window.display();
+            }
+            return 0;
+        }
+        
+        
+      </pre>
+    </div>
+
+    <div class="function">
+      <h2>Constructor</h2>
+      <p>
+        This constructor creates a sandbox window using the SFML library and initializes the game scenes.
+      </p>
+      <pre>
+        MySandBox::SandBox::SandBox()
+      </pre>
+    </div>
+
+    <div class="function">
+      <h2>Destructor</h2>
+      <p>
+        This destructor destroys the sandbox.
+      </p>
+      <pre>
+        MySandBox::SandBox::~SandBox()
+      </pre>
+    </div>
+
+    <div class="function">
+      <h2>checkElapsedTime</h2>
+      <p>
+        This function checks if enough time has elapsed based on the desired framerate.
+      </p>
+      <pre>
+        bool MySandBox::SandBox::checkElapsedTime()
+      </pre>
+    </div>
+
+    <div class="function">
+      <h2>loop</h2>
+      <p>
+        This is the main loop of the sandbox. It continuously processes actions, updates scenes, and displays the window.
+      </p>
+      <pre>
+        int MySandBox::SandBox::loop()
+      </pre>
+    </div>
+
+    <div class="location">
+      <h2>Location</h2>
+      <p>
+        This file source is at src/SandBox.cpp<br>
+        This file header is at include/SandBox.hpp
+      </p>
+    </div>
+  </div>
+</body>
+</html>
