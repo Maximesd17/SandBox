@@ -34,6 +34,10 @@ namespace MySandBox {
             RIGHT,
             LEFT,
         };
+        enum PlayerControlledBy {
+            JOYSTICK,
+            KEYBOARD
+        };
         namespace Player {
             class Player {
             public:
@@ -89,14 +93,16 @@ namespace MySandBox {
                 int _player_height;
                 float _texture_size;
                 bool walking_is_played;
+                bool _is_moves_manual_changed;
 
 
-                std::shared_ptr<MySandBox::Game::Player::Moves::IMoves> _moves;
+                std::map<PlayerControlledBy, std::shared_ptr<MySandBox::Game::Player::Moves::IMoves> > _moves;
                 sf::Vector2f _position;
                 size_t _sprite_index;
                 sf::Sprite _player;
                 PlayerState _state;
                 PlayerDirection _direction;
+                PlayerControlledBy _controlled_by;
                 LogManager _log_manager;
                 MySandBox::Game::Sound::Sound walking_sf;
                 MySandBox::Game::Sound::Sound jumping_sf;

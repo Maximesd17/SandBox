@@ -34,11 +34,15 @@ MySandBox::Game::Player::Player::Player()
     _death_frame = 0;
 
     _state = PLAYER_IDLE;
-    _direction = RIGHT;
+    _direction = PlayerDirection::RIGHT;
     _player_width = 32;
     _player_height = 32;
     _texture_size = 40;
-    _moves = std::make_shared<Moves::KeyboardMoves>();
+
+    _controlled_by = KEYBOARD;
+    _is_moves_manual_changed = false;
+    _moves[JOYSTICK] = std::make_shared<Moves::ControllerMoves>();
+    _moves[KEYBOARD] = std::make_shared<Moves::KeyboardMoves>();
 
     walking_sf.loadSound("resources/sounds/footsteps.wav");
     walking_sf.loopSetter(true);
@@ -76,7 +80,14 @@ void MySandBox::Game::Player::Player::setTextureSize(float size)
 /*********events************/
 void MySandBox::Game::Player::Player::events(sf::Event& event)
 {
-    _moves->events(event);
+    if (sf::Joystick::isConnected(0) && !_is_moves_manual_changed) {
+        std::cout << "GAMEPAD CONNECTED" << std::endl;
+        _controlled_by = JOYSTICK;
+    } else {
+        std::cout << "GAMEPAD DISCONNECTED" << std::endl;
+        _controlled_by = KEYBOARD;
+    }
+    _moves[_controlled_by]->events(event);
 }
 
 /*********ApplyGravity*********/
@@ -195,7 +206,7 @@ void MySandBox::Game::Player::Player::computeXMoves(float directionX, const std:
 /*********update*********/
 void MySandBox::Game::Player::Player::update(const std::vector<sf::FloatRect>& collisionBlocks, const sf::Vector2f& map_size)
 {
-    sf::Vector2f direction = _moves->getLastMove();
+    sf::Vector2f direction = _moves[_controlled_by]->getLastMove();
 
     computeXMoves(direction.x, collisionBlocks);
     computeYMoves(direction.y, collisionBlocks, map_size);

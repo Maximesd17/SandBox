@@ -21,16 +21,26 @@ MySandBox::Game::Player::Moves::ControllerMoves::ControllerMoves()
 /*********Destructor*********/ 
 MySandBox::Game::Player::Moves::ControllerMoves::~ControllerMoves()
 {
+    sf::Vector2f direction = sf::Vector2f(0, 0);
+    sf::Joystick gamepad;
+
+    if (gamepad.getAxisPosition(0, gamepad.PovX) != 0) // Left - Right
+        direction.x += (gamepad.getAxisPosition(0, gamepad.PovX) / 100);
+    if (gamepad.getAxisPosition(0, gamepad.X) < -1 || gamepad.getAxisPosition(0, gamepad.X) > 1) // Left - Right
+        direction.x += (gamepad.getAxisPosition(0, gamepad.X) / 100);
+    if(gamepad.isButtonPressed(0, 1) == 1)
+        direction.y -= 1;
+
+    _lastMove = direction;
 }
 
 void MySandBox::Game::Player::Moves::ControllerMoves::computeDirection()
 {
-    // TODO @lasamo: implementer les directions avec la manette reage le fichier keyboardMoves
-
 }
 
 void MySandBox::Game::Player::Moves::ControllerMoves::events(sf::Event &event)
 {
+    computeDirection();
 }
 
 sf::Vector2f MySandBox::Game::Player::Moves::ControllerMoves::getLastMove()
