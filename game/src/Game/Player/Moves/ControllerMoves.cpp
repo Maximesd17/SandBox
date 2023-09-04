@@ -21,6 +21,10 @@ MySandBox::Game::Player::Moves::ControllerMoves::ControllerMoves()
 /*********Destructor*********/ 
 MySandBox::Game::Player::Moves::ControllerMoves::~ControllerMoves()
 {
+}
+
+void MySandBox::Game::Player::Moves::ControllerMoves::computeDirection()
+{
     sf::Vector2f direction = sf::Vector2f(0, 0);
     sf::Joystick gamepad;
 
@@ -32,10 +36,6 @@ MySandBox::Game::Player::Moves::ControllerMoves::~ControllerMoves()
         direction.y -= 1;
 
     _lastMove = direction;
-}
-
-void MySandBox::Game::Player::Moves::ControllerMoves::computeDirection()
-{
 }
 
 void MySandBox::Game::Player::Moves::ControllerMoves::events(sf::Event &event)
